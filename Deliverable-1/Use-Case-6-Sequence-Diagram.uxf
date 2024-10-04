@@ -1,0 +1,27 @@
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLGeneric</id><coordinates><x>200</x><y>90</y><w>100</w><h>30</h></coordinates><panel_attributes>_UI_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>420</x><y>90</y><w>100</w><h>30</h></coordinates><panel_attributes>_Backend_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>670</x><y>90</y><w>100</w><h>30</h></coordinates><panel_attributes>_DB_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>240</x><y>120</y><w>20</w><h>560</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>110</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>110</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLFrame</id><coordinates><x>100</x><y>160</y><w>890</w><h>580</h></coordinates><panel_attributes>if process = success
+--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--
+else</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>460</x><y>160</y><w>20</w><h>520</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>250</x><y>560</y><w>230</w><h>40</h></coordinates><panel_attributes>display(user, ProcessError)
+lt=&lt;-</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>460</x><y>670</y><w>30</w><h>130</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>240</x><y>670</y><w>30</w><h>140</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>710</x><y>160</y><w>20</w><h>160</h></coordinates><panel_attributes></panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>280</y><w>30</w><h>520</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;500</additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>210</y><w>260</w><h>40</h></coordinates><panel_attributes>getAddressInfo(user)
+lt=&lt;-</panel_attributes><additional_attributes>240;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>180</y><w>260</w><h>40</h></coordinates><panel_attributes>addOrderInfo(user, order)
+lt=&lt;-</panel_attributes><additional_attributes>240;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>260</y><w>260</w><h>40</h></coordinates><panel_attributes>updateStock(order)
+lt=&lt;-</panel_attributes><additional_attributes>240;20;10;20</additional_attributes></element><element><id>UMLFrame</id><coordinates><x>390</x><y>180</y><w>420</w><h>110</h></coordinates><panel_attributes>critical</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>250</x><y>410</y><w>230</w><h>40</h></coordinates><panel_attributes>Display(user, receiptPage)
+lt=&lt;-</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>470</x><y>310</y><w>280</w><h>90</h></coordinates><panel_attributes>setupReceiptPage(user, order)
+lt=&lt;-</panel_attributes><additional_attributes>10;70;90;70;90;10;10;10</additional_attributes></element></diagram>
