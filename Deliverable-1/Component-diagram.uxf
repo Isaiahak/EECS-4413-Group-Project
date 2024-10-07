@@ -1,0 +1,74 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><element><id>UMLGeneric</id><coordinates><x>1024</x><y>400</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+Auction </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>360</x><y>248</y><w>200</w><h>528</h></coordinates><panel_attributes>symbol=component
+MIddleware</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>688</x><y>248</y><w>176</w><h>664</h></coordinates><panel_attributes>symbol=component
+Backend
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>48</x><y>248</y><w>216</w><h>440</h></coordinates><panel_attributes>symbol=component
+UI	</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1024</x><y>296</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+Catalogue </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1024</x><y>512</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+Payment </panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>976</x><y>240</y><w>208</w><h>376</h></coordinates><panel_attributes>symbol=component
+DB</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>712</x><y>768</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+Credential 
+Handler</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>1016</x><y>704</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+User Credentials</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>392</x><y>296</y><w>144</w><h>88</h></coordinates><panel_attributes>symbol=component
+Router</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>712</x><y>552</y><w>128</w><h>72</h></coordinates><panel_attributes>symbol=component
+Payment 
+process</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>712</x><y>384</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+Bidding process
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>688</x><y>24</y><w>176</w><h>160</h></coordinates><panel_attributes>symbol=component
+Auction Live 
+Server</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>72</x><y>320</y><w>160</w><h>80</h></coordinates><panel_attributes>symbol=component
+Display</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>72</x><y>496</y><w>160</w><h>80</h></coordinates><panel_attributes>symbol=component
+Pages</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>392</x><y>544</y><w>144</w><h>80</h></coordinates><panel_attributes>symbol=component
+Json
+Handler</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>240</y><w>104</w><h>112</h></coordinates><panel_attributes>lt=()-[]
+
+
+Events
+Notifier</panel_attributes><additional_attributes>110;10;110;80;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>840</x><y>112</y><w>104</w><h>144</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;10;100;10;100;150</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>712</x><y>80</y><w>136</w><h>80</h></coordinates><panel_attributes>symbol=component
+Auction Notifier</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>712</x><y>280</y><w>128</w><h>72</h></coordinates><panel_attributes>symbol=component
+Event Handler</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>224</x><y>528</y><w>96</w><h>72</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;10;90;10;90;60</additional_attributes></element><element><id>Relation</id><coordinates><x>880</x><y>328</y><w>160</w><h>48</h></coordinates><panel_attributes>lt=()-[]
+
+
+Manage Catalogue</panel_attributes><additional_attributes>10;20;180;20</additional_attributes></element><element><id>Relation</id><coordinates><x>912</x><y>440</y><w>128</w><h>48</h></coordinates><panel_attributes>lt=()-[]
+
+
+Manage Auction</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>984</x><y>664</y><w>184</w><h>144</h></coordinates><panel_attributes>symbol=component
+Credential DB</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>912</x><y>728</y><w>144</w><h>104</h></coordinates><panel_attributes>lt=()-[]
+
+
+Manage Credentials</panel_attributes><additional_attributes>10;110;50;110;50;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>792</y><w>88</w><h>64</h></coordinates><panel_attributes>lt=()-[]
+
+
+Credential 
+Verification</panel_attributes><additional_attributes>10;20;90;20</additional_attributes></element><element><id>Relation</id><coordinates><x>512</x><y>472</y><w>144</w><h>360</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;10;80;10;80;420;150;420</additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>800</y><w>96</w><h>40</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;20;90;20</additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>432</y><w>96</w><h>48</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;10;80;10;80;30;90;30</additional_attributes></element><element><id>Relation</id><coordinates><x>456</x><y>640</y><w>72</w><h>48</h></coordinates><panel_attributes>lt=()-[]
+Verification</panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>392</x><y>672</y><w>144</w><h>80</h></coordinates><panel_attributes>symbol=component
+Security</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>448</x><y>616</y><w>40</w><h>40</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>20;10;20;20</additional_attributes></element><element><id>Relation</id><coordinates><x>144</x><y>440</y><w>104</w><h>72</h></coordinates><panel_attributes>lt=()-[v]
+Page Components</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>136</x><y>392</y><w>40</w><h>64</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>20;10;20;50</additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>344</y><w>80</w><h>88</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;90;60;90;70;20</additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>408</y><w>64</w><h>184</h></coordinates><panel_attributes>lt=[]-</panel_attributes><additional_attributes>10;210;60;210;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>576</y><w>120</w><h>72</h></coordinates><panel_attributes>lt=()-[]
+
+
+CollectData
+
+</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>296</y><w>112</w><h>48</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>113;11;20;10;20;30</additional_attributes></element><element><id>Relation</id><coordinates><x>224</x><y>456</y><w>88</w><h>72</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>13;71;80;70;80;20</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>280</y><w>128</w><h>192</h></coordinates><panel_attributes>lt=()-[]
+
+
+
+
+
+
+Page 
+Display
+
+</panel_attributes><additional_attributes>10;220;10;70;140;70</additional_attributes></element><element><id>Relation</id><coordinates><x>528</x><y>320</y><w>128</w><h>64</h></coordinates><panel_attributes>lt=()-[]
+
+
+         Event 
+                 Notification</panel_attributes><additional_attributes>140;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>832</x><y>544</y><w>112</w><h>80</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>13;81;80;80;80;20;110;20</additional_attributes></element><element><id>Relation</id><coordinates><x>928</x><y>544</y><w>112</w><h>48</h></coordinates><panel_attributes>lt=()-[]
+
+
+Manage Payment</panel_attributes><additional_attributes>10;20;120;20</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>416</y><w>96</w><h>32</h></coordinates><panel_attributes>lt=()-[]
+Bidding</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>576</y><w>96</w><h>32</h></coordinates><panel_attributes>lt=()-[]
+Payment</panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>448</x><y>512</y><w>40</w><h>48</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>23;41;20;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>392</x><y>408</y><w>128</w><h>80</h></coordinates><panel_attributes>symbol=component
+Controller</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>456</x><y>480</y><w>72</w><h>48</h></coordinates><panel_attributes>lt=()-[]
+
+     Data 
+     Process</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>512</x><y>416</y><w>136</w><h>40</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>Relation</id><coordinates><x>512</x><y>448</y><w>136</w><h>168</h></coordinates><panel_attributes>lt=[]-(</panel_attributes><additional_attributes>10;10;120;10;120;180;140;180</additional_attributes></element></diagram>
