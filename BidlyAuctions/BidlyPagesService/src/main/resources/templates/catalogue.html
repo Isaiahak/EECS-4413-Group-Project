@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Auction Catalogue</title>
+</head>
+<body>
+<h1>Available Auctions</h1>
+<ul>
+  <th:block th:each="auction : ${auctions}">
+    <li th:text="${auction.title} + ' - ' + ${auction.highestBid}"></li>
+  </th:block>
+</ul>
+</body>
+</html>
