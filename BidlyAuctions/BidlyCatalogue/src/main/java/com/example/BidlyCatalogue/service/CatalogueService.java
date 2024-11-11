@@ -8,10 +8,10 @@ import com.example.BidlyCatalogue.repo.CatalogueRepo;
 import com.example.BidlyCatalogue.websocket.AuctionWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -31,7 +31,7 @@ public class CatalogueService {
         try{
             auction = auctionRepo.save(auction);
             System.out.println("Auction Add Passed");
-            updateAuction(auction);
+            updateCatalogue(auction);
         }catch (DataIntegrityViolationException e){
             System.out.println("Auction Add Failed");
             return false;
@@ -40,13 +40,13 @@ public class CatalogueService {
     }
 
     @Transactional
-    public void updateAuction(Auction auction){
+    public void updateCatalogue(Auction auction){
         CatalogueItem catalogueItem = new CatalogueItem();
 
         catalogueItem.setAid(auction.getAid());
         catalogueItem.setTitle(auction.getTitle());
-        catalogueItem.getCurrent_highest_bid(auction.getHighestBid());
-        catalogueItem.setTime_remaining(auction.getTimeRemaining());
+        catalogueItem.setHighestBid(auction.getHighestBid());
+        catalogueItem.setAuctionTime(auction.getTimeRemaining());
 
         try{
             catalogueRepo.save(catalogueItem);
@@ -54,5 +54,25 @@ public class CatalogueService {
         } catch (Exception e) {
             System.out.println("Cataloged Add Failed");
         }
+    }
+
+    @Transactional
+    public List<CatalogueItem> fetchCatalogue (){
+        return catalogueRepo.findAll();
+    }
+
+    @Scheduled(fixedDelay = 5000)
+    public void sendCatalogueUpdate() throws Exception {
+        List<CatalogueItem> catalogueList = fetchCatalogue();
+        for(CatalogueItem item : catalogueList){
+            System.out.println(item.getAuctionTime()+item.getHighestBid());
+        }
+        webSocketHandler.sendAuctionUpdate(catalogueList);
+    }
+
+    @Transactional
+    public Auction fetchAuction(Long aid){
+
+        return auctionRepo.findByAid(aid);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.BidlyPagesService.config;
 
+import com.example.BidlyPagesService.webSocket.AuctionWebSocketHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.CloseStatus;
@@ -19,31 +20,6 @@ public class WebSocketConfig {
     }
     @Bean
     public WebSocketHandler webSocketHandler() {
-        return new WebSocketHandler() {
-            @Override
-            public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
-            }
-
-            @Override
-            public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-
-            }
-
-            @Override
-            public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-
-            }
-
-            @Override
-            public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-
-            }
-
-            @Override
-            public boolean supportsPartialMessages() {
-                return false;
-            }
-        };  // Standard WebSocket client to connect to the WebSocket server
+        return new AuctionWebSocketHandler();  // Standard WebSocket client to connect to the WebSocket server
     }
 }

@@ -1,7 +1,9 @@
 package com.example.BidlyPagesService.controller;
 
 import com.example.BidlyPagesService.api.ApiService;
+import com.example.BidlyPagesService.dto.Auction;
 import com.example.BidlyPagesService.dto.LoginRequestDTO;
+import com.example.BidlyPagesService.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,9 @@ public class PagesController {
 
     @Autowired
     private ApiService apiService;
+
+    @Autowired
+    private AuctionService auctionService;
 
     @GetMapping("/main")
     public String index() {
@@ -74,8 +79,21 @@ public class PagesController {
     }
 
     @GetMapping("/catalogue")
-    public ModelAndView getCatalogue() {
-        return new ModelAndView("catalogue");
+    public String getCatalogue(Model model) {
+        model.addAttribute("auctionList", auctionService.getAllAuctions());
+        return "catalogue";
+    }
+
+    @GetMapping("/auction")
+    public String viewAuction(@RequestParam("auctionId") Long auctionId, Model model) {
+        // Assuming you have a service to fetch auction details
+        Auction auction = apiService.callCatalogueGetAuction(auctionId);
+
+        // Add auction details to the model
+        model.addAttribute("auction", auction);
+
+        // Return the auction detail page view
+        return "auctionSpecific"; // Make sure you have the corresponding Thymeleaf template
     }
 
 }

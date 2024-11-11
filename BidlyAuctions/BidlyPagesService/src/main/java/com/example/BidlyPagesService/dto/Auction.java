@@ -1,11 +1,24 @@
 package com.example.BidlyPagesService.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Auction {
-    private String id;
+    @JsonProperty("aid")
+    private Long aid;
+
+    @JsonProperty("title")
     private String title;
+
+    @JsonProperty("desc")
     private String desc;
+
+    @JsonProperty("highestBid")
     private int highestBid;
+
+    @JsonProperty("type")
     private String type;
+
+    @JsonProperty("timeRemaining")
     private String timeRemaining;
 
 
@@ -17,12 +30,16 @@ public class Auction {
         this.timeRemaining = timeRemaining;
     }
 
-    public String getId() {
-        return id;
+    public Auction(){
+
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Long getAid() {
+        return aid;
+    }
+
+    public void setAid(Long aid) {
+        this.aid = aid;
     }
 
     public String getTitle() {

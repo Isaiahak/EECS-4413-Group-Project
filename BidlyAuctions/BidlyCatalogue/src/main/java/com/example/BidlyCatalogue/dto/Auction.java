@@ -34,6 +34,9 @@ public class Auction {
         this.type = type;
         this.timeRemaining = timeRemaining;
     }
+    public Auction(){
+
+    }
 
     public Long getAid() {
         return aid;

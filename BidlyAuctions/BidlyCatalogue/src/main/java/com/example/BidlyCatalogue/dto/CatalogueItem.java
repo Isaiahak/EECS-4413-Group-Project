@@ -14,9 +14,14 @@ public class CatalogueItem {
     @Column(name = "aid")
     private long aid;
 
+    @Column(name = "title")
     private String title;
-    private int current_highest_bid;
-    private String time_remaining;
+
+    @Column(name = "highestBid")
+    private int highestBid;
+
+    @Column(name = "auctionTime")
+    private String auctionTime;
 
     public long getAid() {
         return aid;
@@ -34,19 +39,19 @@ public class CatalogueItem {
         this.title = title;
     }
 
-    public int getCurrent_highest_bid(int highestBid) {
-        return current_highest_bid;
+    public int getHighestBid () {
+        return this.highestBid;
     }
 
-    public void setCurrent_highest_bid(int current_highest_bid) {
-        this.current_highest_bid = current_highest_bid;
+    public void setHighestBid(int highestBid) {
+        this.highestBid = highestBid;
     }
 
-    public String getTime_remaining() {
-        return time_remaining;
+    public String getAuctionTime() {
+        return auctionTime;
     }
 
-    public void setTime_remaining(String time_remaining) {
-        this.time_remaining = time_remaining;
+    public void setAuctionTime(String auctionTime) {
+        this.auctionTime = auctionTime;
     }
 }

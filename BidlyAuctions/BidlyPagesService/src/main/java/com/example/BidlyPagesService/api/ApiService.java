@@ -61,4 +61,16 @@ public class ApiService {
 
         return respose.getBody();
     }
+
+    public Auction callCatalogueGetAuction(Long aid){
+        String url = "http://localhost:8084/api/catalogue/fetch-auction";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Long> requestEntity = new HttpEntity<>(aid, headers);
+        ResponseEntity<Auction> response = restTemplate.postForEntity(url, requestEntity, Auction.class);
+
+        return response.getBody();
+    }
 }

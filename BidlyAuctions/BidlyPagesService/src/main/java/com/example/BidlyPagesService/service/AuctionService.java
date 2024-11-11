@@ -1,7 +1,7 @@
 package com.example.BidlyPagesService.service;
 
 
-import com.example.BidlyPagesService.dto.Auction;
+import com.example.BidlyPagesService.dto.CatalogueItem;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 public class AuctionService {
 
-    private final List<Auction> auctionList = new CopyOnWriteArrayList<>();
+    private final List<CatalogueItem> auctionList = new CopyOnWriteArrayList<>();
 
-    public void updateAuctions(List<Auction> auctions){
+    public void updateAuctions(List<CatalogueItem> catalogueItems){
         auctionList.clear();
-        auctionList.addAll(auctions);
+        auctionList.addAll(catalogueItems);
 
     }
 
-    public List<Auction> getAllAuctions(){
+    public List<CatalogueItem> getAllAuctions(){
         return auctionList;
     }
 }
