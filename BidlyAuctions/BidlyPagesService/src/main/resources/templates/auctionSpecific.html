@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Auction Details</title>
+</head>
+<body>
+
+<h1>Auction Details</h1>
+
+<div>
+    <h3 th:text="${auction.title}"></h3>
+    <p th:text="'Price: $' + ${auction.highestBid}"></p>
+    <p th:text="'Time Remaining: ' + ${auction.timeRemaining}"></p>
+
+    <!-- Optional: Form to place a bid -->
+    <form action="/place-bid" method="POST">
+        <input type="hidden" name="auctionId" th:value="${auction.aid}">
+        <input type="number" name="bidAmount" placeholder="Enter bid amount">
+        <button type="submit">Place Bid</button>
+    </form>
+</div>
+
+</body>
+</html>
