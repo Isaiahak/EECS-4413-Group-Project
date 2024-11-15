@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(auctionWebSocketHandler, "/auction-updates")
+        registry.addHandler(auctionWebSocketHandler, "/auction-update")
                 .setAllowedOrigins("*");  // Allow all origins, or specify if needed
     }
 }

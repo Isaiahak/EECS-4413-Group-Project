@@ -9,17 +9,24 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.WebSocketHandler;
-import com.example.BidlyPagesService.webSocket.AuctionWebSocketClient;
+//import com.example.BidlyPagesService.webSocket.AuctionWebSocketClient;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 @Configuration
-public class WebSocketConfig {
+@EnableWebSocket
+public class WebSocketConfig implements WebSocketConfigurer {
 
-    @Bean
-    public WebSocketClient webSocketClient() {
-        return new StandardWebSocketClient();  // Standard WebSocket client to connect to the WebSocket server
+    private final AuctionWebSocketHandler auctionWebSocketHandler;
+
+    public WebSocketConfig(AuctionWebSocketHandler auctionWebSocketHandler) {
+        this.auctionWebSocketHandler = auctionWebSocketHandler;
     }
-    @Bean
-    public WebSocketHandler webSocketHandler() {
-        return new AuctionWebSocketHandler();  // Standard WebSocket client to connect to the WebSocket server
+
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        registry.addHandler(auctionWebSocketHandler, "/auction-updates")
+                .setAllowedOrigins("*");  // Allow all origins, or specify if needed
     }
 }

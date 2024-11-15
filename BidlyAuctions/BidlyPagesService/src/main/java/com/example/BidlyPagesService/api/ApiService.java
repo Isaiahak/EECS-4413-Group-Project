@@ -1,14 +1,16 @@
 package com.example.BidlyPagesService.api;
 import com.example.BidlyPagesService.dto.Auction;
+import com.example.BidlyPagesService.dto.CatalogueItem;
 import com.example.BidlyPagesService.dto.LoginRequestDTO;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import com.example.BidlyPagesService.dto.UpdateAuctionRequest;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class ApiService {
@@ -43,23 +45,25 @@ public class ApiService {
         HttpHeaders headers = new HttpHeaders();
 
         headers.setContentType(MediaType.APPLICATION_JSON);
-
+        System.out.println("seding login request");
         HttpEntity<LoginRequestDTO> requestEntity = new HttpEntity<>(lr, headers);
         ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
         return response.getBody();
     }
 
-    public boolean callCatalogueAddAuction(Auction auction){
+    public CatalogueItem callCatalogueAddAuction(Auction auction){
         String url = "http://localhost:8084/api/catalogue/add-auction";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<Auction> requestEntity = new HttpEntity<Auction>(auction, headers);
-        ResponseEntity<Boolean> respose = restTemplate.postForEntity(url, requestEntity, Boolean.class);
-
-        return respose.getBody();
+        ResponseEntity<CatalogueItem> response =
+                restTemplate.exchange(url,
+                        HttpMethod.POST, requestEntity, new ParameterizedTypeReference<CatalogueItem>() {
+                        });
+        return response.getBody();
     }
 
     public Auction callCatalogueGetAuction(Long aid){
@@ -70,6 +74,45 @@ public class ApiService {
 
         HttpEntity<Long> requestEntity = new HttpEntity<>(aid, headers);
         ResponseEntity<Auction> response = restTemplate.postForEntity(url, requestEntity, Auction.class);
+
+        return response.getBody();
+    }
+
+    public List<CatalogueItem> callCatalogueGetCatalogue(){
+        String url = "http://localhost:8084/api/catalogue/fetch-catalogue";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
+        ResponseEntity<List<CatalogueItem>> response =
+                restTemplate.exchange(url,
+                        HttpMethod.POST, requestEntity, new ParameterizedTypeReference<List<CatalogueItem>>() {
+                        });
+
+        return response.getBody();
+    }
+
+    public boolean callCataloguePlaceBid(Long aid, int bidAmount){
+        System.out.println(aid);
+        UpdateAuctionRequest updateRequest = new UpdateAuctionRequest();
+        updateRequest.setAid(aid);
+        updateRequest.setBid(bidAmount);
+        String url = "http://localhost:8084/api/catalogue/place-bid";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<UpdateAuctionRequest> requestEntity = new HttpEntity<>(updateRequest, headers);
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+
+        return response.getBody();
+    }
+
+    public Long fetchUid(String username){
+        String url = "http://localhost:8081/api/fetch-uid";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>(username, headers);
+        ResponseEntity<Long> response = restTemplate.postForEntity(url, requestEntity, Long.class);
 
         return response.getBody();
     }

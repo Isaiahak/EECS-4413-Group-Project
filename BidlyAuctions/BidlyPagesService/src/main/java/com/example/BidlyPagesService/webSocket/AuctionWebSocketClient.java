@@ -9,7 +9,7 @@ import org.springframework.web.socket.client.WebSocketClient;
 @Component
 public class AuctionWebSocketClient {
 
-    private static final String WEBSOCKET_URL = "ws://localhost:8084/auction-updates";  // URL of your WebSocket server (change to correct server's port)
+    private static final String WEBSOCKET_URL = "ws://localhost:8086/live";  // URL of your WebSocket server (change to correct server's port)
 
     private final WebSocketClient webSocketClient;
     private final WebSocketHandler webSocketHandler;

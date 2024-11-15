@@ -4,6 +4,7 @@ import com.example.BidlyPagesService.api.ApiService;
 import com.example.BidlyPagesService.dto.Auction;
 import com.example.BidlyPagesService.dto.LoginRequestDTO;
 import com.example.BidlyPagesService.service.AuctionService;
+import com.example.BidlyPagesService.service.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,9 @@ public class PagesController {
 
     @Autowired
     private AuctionService auctionService;
+
+    @Autowired
+    private SubscriberService subscriberService;
 
     @GetMapping("/main")
     public String index() {
@@ -65,7 +69,6 @@ public class PagesController {
         lr.setPassword(password);
         lr.setUsername(username);
         boolean success = apiService.callLoginService(lr);
-
         if(success){
             return "redirect:/catalogue";
             //Make a request to catalogue
@@ -80,7 +83,7 @@ public class PagesController {
 
     @GetMapping("/catalogue")
     public String getCatalogue(Model model) {
-        model.addAttribute("auctionList", auctionService.getAllAuctions());
+
         return "catalogue";
     }
 
@@ -94,6 +97,16 @@ public class PagesController {
 
         // Return the auction detail page view
         return "auctionSpecific"; // Make sure you have the corresponding Thymeleaf template
+    }
+
+    @PostMapping("/auction")
+    public String placeBid(@RequestParam("auctionId") Long auctionId,@RequestParam("bidAmount") int bidAmount, @RequestParam String username, Model model) {
+        // Assuming you have a service to fetch auction details
+        Boolean bidSuccess = apiService.callCataloguePlaceBid(auctionId, bidAmount);
+        subscriberService.subscribe(auctionId, username);
+
+        // Return the auction detail page view
+        return "redirect:/auction?auctionId="+auctionId; // Make sure you have the corresponding Thymeleaf template
     }
 
 }

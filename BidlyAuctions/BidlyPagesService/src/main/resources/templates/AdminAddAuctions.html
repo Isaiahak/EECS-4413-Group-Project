@@ -24,9 +24,15 @@
     <option value="forward">Forward</option>
   </select><br><br>
 
-  <label for="timeRemaining">Time Remaining:</label>
-  <input type="text" id="timeRemaining" name="timeRemaining" placeholder="e.g., 2 days, 5 hours, 1 day 3 hours" required><br><br>
-
+  <label for="timeRemaining">Auction Duration:</label>
+  <div id = "timeRemaining">
+    <label for="days">Days</label>
+    <input type="number" id="days" name="days" required min="0" step="1"><br><br>
+    <label for="hours">Hours</label>
+    <input type="number" id="hours" name="hours" required min="0" step="1"><br><br>
+    <label for="mins">Mins</label>
+    <input type="number" id="mins" name="mins" required min="1" step="1"><br><br>
+  </div>
   <button type="submit">Submit Auction</button>
 </form>
 

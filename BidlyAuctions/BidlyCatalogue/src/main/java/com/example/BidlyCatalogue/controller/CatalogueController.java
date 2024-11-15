@@ -1,11 +1,15 @@
 package com.example.BidlyCatalogue.controller;
 
 
+import com.example.BidlyCatalogue.api.LiveServerApi;
 import com.example.BidlyCatalogue.dto.Auction;
+import com.example.BidlyCatalogue.dto.CatalogueItem;
+import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.service.CatalogueService;
 import com.example.BidlyCatalogue.websocket.AuctionWebSocketHandler;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,19 +27,20 @@ public class CatalogueController {
     private CatalogueService catalogueService;
 
     @Autowired
+    private LiveServerApi liveServerApi;
+
+    @Autowired
     private AuctionWebSocketHandler auctionWebSocketHandler;
 
     @PostMapping("/add-auction")
-    public ResponseEntity<Boolean> addAuction(@RequestBody Auction auction) throws Exception {
-        if(catalogueService.addAuction(auction)){
-//            List<Auction> auctionList = new ArrayList<>();
-//            auctionList.add(auction);
-//            auctionList.add(auction);
-//            System.out.println("Firing Socket");
-//            auctionWebSocketHandler.sendAuctionUpdate(auctionList);
-            return ResponseEntity.ok(true);
+    public CatalogueItem addAuction(@RequestBody Auction auction) throws Exception {
+        Auction createdAuction = catalogueService.addAuction(auction);
+        if(createdAuction == null){
+            return null;
         }
-        return ResponseEntity.ok(false);
+        CatalogueItem newCatalogueItem = catalogueService.updateCatalogue(createdAuction);
+        liveServerApi.callLiveServerAddAuction(newCatalogueItem);
+        return newCatalogueItem;
     }
 
     @PostMapping("/fetch-auction")
@@ -43,5 +48,22 @@ public class CatalogueController {
         Auction auction = catalogueService.fetchAuction(aid);
 
         return ResponseEntity.ok(auction);
+    }
+
+    @PostMapping("/fetch-catalogue")
+    public List<CatalogueItem> getCatalogue(){
+        return catalogueService.fetchCatalogue();
+    }
+
+    @PostMapping("/place-bid")
+    public ResponseEntity<Boolean> placeBid(@RequestBody UpdateAuctionRequest updateRequest) {
+        System.out.println(updateRequest.getAid());
+        boolean success = catalogueService.updateBid(updateRequest);
+        if(success){
+            liveServerApi.callLiveServerUpdateBid(updateRequest);
+            return ResponseEntity.ok(true);
+        }else{
+            return ResponseEntity.ok(false);
+        }
     }
 }

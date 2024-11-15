@@ -3,6 +3,7 @@ package com.example.BidlyCatalogue.service;
 
 import com.example.BidlyCatalogue.dto.Auction;
 import com.example.BidlyCatalogue.dto.CatalogueItem;
+import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.repo.AuctionRepo;
 import com.example.BidlyCatalogue.repo.CatalogueRepo;
 import com.example.BidlyCatalogue.websocket.AuctionWebSocketHandler;
@@ -27,20 +28,20 @@ public class CatalogueService {
     private AuctionWebSocketHandler webSocketHandler;
 
     @Transactional
-    public boolean addAuction(Auction auction){
+    public Auction addAuction(Auction auction){
         try{
             auction = auctionRepo.save(auction);
             System.out.println("Auction Add Passed");
             updateCatalogue(auction);
         }catch (DataIntegrityViolationException e){
             System.out.println("Auction Add Failed");
-            return false;
+            return null;
         }
-        return true;
+        return auction;
     }
 
     @Transactional
-    public void updateCatalogue(Auction auction){
+    public CatalogueItem updateCatalogue(Auction auction){
         CatalogueItem catalogueItem = new CatalogueItem();
 
         catalogueItem.setAid(auction.getAid());
@@ -49,10 +50,12 @@ public class CatalogueService {
         catalogueItem.setAuctionTime(auction.getTimeRemaining());
 
         try{
-            catalogueRepo.save(catalogueItem);
+            catalogueItem = catalogueRepo.save(catalogueItem);
             System.out.println("catalogue Add Passed");
+            return catalogueItem;
         } catch (Exception e) {
             System.out.println("Cataloged Add Failed");
+            return null;
         }
     }
 
@@ -61,18 +64,30 @@ public class CatalogueService {
         return catalogueRepo.findAll();
     }
 
-    @Scheduled(fixedDelay = 5000)
-    public void sendCatalogueUpdate() throws Exception {
-        List<CatalogueItem> catalogueList = fetchCatalogue();
-        for(CatalogueItem item : catalogueList){
-            System.out.println(item.getAuctionTime()+item.getHighestBid());
-        }
-        webSocketHandler.sendAuctionUpdate(catalogueList);
-    }
 
     @Transactional
     public Auction fetchAuction(Long aid){
 
         return auctionRepo.findByAid(aid);
+    }
+
+    @Transactional
+    public CatalogueItem fetchCatalogueItem(Long aid){
+        return catalogueRepo.findByAid(aid);
+    }
+
+    @Transactional
+    public boolean updateBid(UpdateAuctionRequest updateRequest){
+        Auction auction = auctionRepo.findByAid(updateRequest.getAid());
+        auction.setHighestBid(updateRequest.getBid());
+        auctionRepo.save(auction);
+
+        CatalogueItem catalogueItem = catalogueRepo.findByAid(updateRequest.getAid());
+        catalogueItem.setHighestBid(updateRequest.getBid());
+        catalogueRepo.save(catalogueItem);
+
+
+
+        return true;
     }
 }

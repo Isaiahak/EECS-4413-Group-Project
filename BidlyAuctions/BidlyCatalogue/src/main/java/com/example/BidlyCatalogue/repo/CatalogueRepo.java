@@ -5,4 +5,5 @@ import com.example.BidlyCatalogue.dto.CatalogueItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CatalogueRepo extends JpaRepository<CatalogueItem,Long> {
+    CatalogueItem findByAid(Long id);
 }

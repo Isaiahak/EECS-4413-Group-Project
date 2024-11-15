@@ -29,10 +29,11 @@ public class LoginService {
         String username = lr.getUsername();
         String password = lr.getPassword();
 
-        if(!loginSecurityCheck(username, password)){
+        if(loginSecurityCheck(username, password)){
+            System.out.println("security fail");
             return false;
         }
-
+        System.out.println("security pass");
         return matchData(username, password);
 
     }
@@ -47,7 +48,11 @@ public class LoginService {
 
     public boolean matchData(String username, String pass){
         UserCreds uc = ucRepo.findByUsername(username);
-
+        System.out.println(uc.getUsername()+uc.getPassword());
         return passEncoder.matches(pass, uc.getPassword());
+    }
+
+    public Long fetchUid(String username){
+        return ucRepo.findByUsername(username).getUid();
     }
 }

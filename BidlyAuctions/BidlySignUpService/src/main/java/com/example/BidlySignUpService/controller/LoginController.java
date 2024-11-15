@@ -17,10 +17,17 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Boolean> verifyLogin(@RequestBody LoginRequestDTO lr){
+        System.out.println("Starting login seqeunce");
         if(loginService.login(lr)){
             return ResponseEntity.ok(true);
         }else{
             return ResponseEntity.ok(false);
         }
     }
+
+    @PostMapping("/fetch-uid")
+    public ResponseEntity<Long> fetchUid(@RequestBody String username){
+        return ResponseEntity.ok(loginService.fetchUid(username));
+    }
+
 }
