@@ -1,0 +1,17 @@
+#auctionList { /* Allow wrapping to new rows if there's not enough space */
+    gap: 20px;               /* Adds space between the items */
+    padding: 0;                 /* Remove any default padding */
+    margin: 0;
+}
+
+.auction-item {
+    display:flex;
+    justify-content:space-between;
+    width: calc(100% - 20px); /* Each item takes up one-third of the container width (minus the gap) */
+    box-sizing: border-box;     /* Ensure padding and borders are included in width calculation */
+    border: 1px solid #ccc;     /* Optional: Border around each item */
+    padding: 10px;              /* Optional: Padding inside each item */
+    background-color: #f9f9f9;  /* Optional: Background color */
+    border-radius: 8px;         /* Optional: Rounded corners */
+    text-align: center;         /* Optional: Center the text */
+}

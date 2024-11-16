@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Auction Details</title>
+</head>
+<body onload="initAuctionSpecific()">
+
+<h1>Auction Details</h1>
+
+<div>
+    <h3 th:text="${auction.title}"></h3>
+    <!-- The price text includes 'Price: $' before the number -->
+    <p id="highestBid" th:text="'Price: $' + ${auction.highestBid}"></p>
+    <p th:text="'Time Remaining: ' + ${auction.timeRemaining}"></p>
+
+    <!-- Optional: Form to place a bid -->
+    <form action="/auction" method="POST">
+        <input type="hidden" name="auctionId" th:value="${auction.aid}">
+        <input type="hidden" name="username" value="admin">
+        <input type="number" name="bidAmount" id="bidInput" placeholder="Enter bid amount">
+        <button type="submit">Place Bid</button>
+    </form>
+</div>
+
+<!-- Link to your external JS file -->
+<script th:src="@{/js/auctionSpecific.js}"></script>
+
+</body>
+</html>

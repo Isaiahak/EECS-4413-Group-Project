@@ -1,0 +1,27 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+</head>
+<body>
+<h2>Sign Up</h2>
+<form action="/signup" method="post">
+  Username: <input type="text" name="username" required><br>
+  Password: <input type="password" name="password" required><br>
+  First Name: <input type="text" name="firstName" required><br>
+  Last Name: <input type="text" name="lastName" required><br>
+  Street: <input type="text" name="street" required><br>
+  City: <input type="text" name="city" required><br>
+  Province: <input type="text" name="province" required><br>
+  Zipcode: <input type="text" name="zipcode" required><br>
+  <button type="submit">Sign Up</button>
+</form>
+
+<!-- This part is for displaying error messages -->
+<div id="error-message" style="color: red;">
+  <p th:text="${errorMessage}" style="display: ${errorMessage != null} ? 'block' : 'none';"></p>
+</div>
+</body>
+</html>

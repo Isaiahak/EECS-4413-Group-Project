@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Auction Catalogue</title>
+  <link rel="stylesheet" th:href="@{/css/catalogue.css}"/>
+</head>
+
+<body>
+<h1>Catalogue</h1>
+<h3 id="username">admin</h3>
+
+<!-- Container where the auction items will be displayed -->
+<div id="auctionList">
+  <!-- Auction items will be dynamically added here -->
+</div>
+
+<input type="button" id="bidNowButton" value="Bid Now" disabled onclick="placeBid()">
+<!-- Include the external JavaScript file -->
+<script th:src="@{/js/catalogue.js}"> </script>
+</body>
+</html>
