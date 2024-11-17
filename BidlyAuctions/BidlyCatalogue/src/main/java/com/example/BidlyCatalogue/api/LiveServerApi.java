@@ -1,10 +1,11 @@
 package com.example.BidlyCatalogue.api;
-
 import com.example.BidlyCatalogue.dto.CatalogueItem;
 import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
+import com.example.BidlyCatalogue.dto.Auction;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,5 +37,14 @@ public class LiveServerApi {
         HttpEntity<UpdateAuctionRequest> requestEntity = new HttpEntity<>(updateAuctionRequest, headers);
         restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
+    }
+    public boolean callRemoveAuction(Auction auction){
+        String url = "http://localhost:8086/api/live/remove-auction";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Auction> requestEntity = new HttpEntity<>(auction, headers);
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+
+        return response.getBody();
     }
 }

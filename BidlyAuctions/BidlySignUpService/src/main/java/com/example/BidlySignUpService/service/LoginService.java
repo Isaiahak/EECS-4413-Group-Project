@@ -5,14 +5,12 @@ import com.example.BidlySignUpService.api.SecurityApi;
 import com.example.BidlySignUpService.dto.LoginRequestDTO;
 import com.example.BidlySignUpService.dto.UserDataDTO;
 import com.example.BidlySignUpService.model.UserCreds;
+import com.example.BidlySignUpService.model.UserInfo;
 import com.example.BidlySignUpService.repo.UserCredsRepo;
-import org.apache.logging.log4j.message.AsynchronouslyFormattable;
+import com.example.BidlySignUpService.repo.UserInfoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 
 //Login Service
 //TODO: Move password encoding to the security component.
@@ -21,6 +19,9 @@ public class LoginService {
 
     @Autowired
     private UserCredsRepo ucRepo;
+
+    @Autowired
+    private UserInfoRepo userInfoRepo;
 
     @Autowired
     private SecurityApi securityApi;
@@ -64,5 +65,10 @@ public class LoginService {
 
     public Long fetchUid(String username){
         return ucRepo.findByUsername(username).getUid();
+    }
+
+    public UserInfo fetchUserInfo(long username){
+        UserInfo info = userInfoRepo.findByUsername(username);
+        return info;
     }
 }

@@ -4,14 +4,13 @@ package com.example.BidlyCatalogue.controller;
 import com.example.BidlyCatalogue.api.LiveServerApi;
 import com.example.BidlyCatalogue.dto.Auction;
 import com.example.BidlyCatalogue.dto.CatalogueItem;
+import com.example.BidlyCatalogue.dto.PaymentInfo;
 import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.service.CatalogueService;
+import com.example.BidlyCatalogue.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +25,9 @@ public class CatalogueController {
 
     @Autowired
     private LiveServerApi liveServerApi;
+
+    @Autowired
+    private PaymentService paymentService;
 
     @PostMapping("/add-auction")
     public CatalogueItem addAuction(@RequestBody Auction auction) throws Exception {
@@ -58,6 +60,22 @@ public class CatalogueController {
             liveServerApi.callLiveServerUpdateBid(updateRequest);
             return ResponseEntity.ok(true);
         }else{
+            return ResponseEntity.ok(false);
+        }
+    }
+
+    @PostMapping("/fetch-catalogueitem")
+    public ResponseEntity<CatalogueItem> fetchCatalogueItem(@RequestBody long itemid){
+        return ResponseEntity.ok(catalogueService.fetchCatalogueItem(itemid));
+    }
+
+    @GetMapping("/process")
+    public ResponseEntity<Boolean> doPaymentProcess(@RequestBody PaymentInfo paymentInfo){
+        boolean result = paymentService.processPayment(paymentInfo);
+        if(result == true){
+            return ResponseEntity.ok(true);
+        }
+        else{
             return ResponseEntity.ok(false);
         }
     }

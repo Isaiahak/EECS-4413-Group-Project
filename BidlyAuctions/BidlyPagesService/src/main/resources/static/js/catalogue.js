@@ -42,6 +42,7 @@ socket.onmessage = function(event) {
                 break;
             case "closed":
                 console.log("processing closed")
+                window.location.href = message.redirectUrl;
                 closed(message.data);
             default:
                 console.error("Unknown message type:", message.type);

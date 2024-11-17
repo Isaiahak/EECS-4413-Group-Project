@@ -57,6 +57,7 @@ public class LiveServerWebSocketHandler extends TextWebSocketHandler {
         ObjectNode messageWrapper = mapper.createObjectNode();
         messageWrapper.put("type", "closed");
         messageWrapper.put("data", aid);
+        messageWrapper.put("redirectUrl","/pay-now");
 
         String auctionsJSON = mapper.writeValueAsString(messageWrapper);
         System.out.println("Sending message: " + auctionsJSON);

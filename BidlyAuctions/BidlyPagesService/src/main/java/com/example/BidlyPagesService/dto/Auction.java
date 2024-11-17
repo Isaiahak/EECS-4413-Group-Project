@@ -26,13 +26,21 @@ public class Auction {
     @JsonProperty("timeRemaining")
     private String timeRemaining;
 
+    @JsonProperty("itemid")
+    private long itemid;
 
-    public Auction( String title, String desc, int highestBid, String type, String timeRemaining) {
+    @JsonProperty("userid")
+    private long userid;
+
+
+    public Auction(String title, String desc, int highestBid, String type, String timeRemaining, long itemid, long userid) {
         this.title = title;
         this.desc = desc;
         this.highestBid = highestBid;
         this.type = type;
         this.timeRemaining = timeRemaining;
+        this.itemid =itemid;
+        this.userid = userid;
     }
 
     public Auction(){
@@ -85,5 +93,21 @@ public class Auction {
 
     public void setTimeRemaining(String timeRemaining) {
         this.timeRemaining = timeRemaining;
+    }
+
+    public long getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(long itemid) {
+        this.itemid = itemid;
+    }
+
+    public long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(long userid) {
+        this.userid = userid;
     }
 }

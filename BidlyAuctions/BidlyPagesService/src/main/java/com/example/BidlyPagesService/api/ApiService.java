@@ -1,10 +1,13 @@
 package com.example.BidlyPagesService.api;
+
 import com.example.BidlyPagesService.dto.Auction;
 import com.example.BidlyPagesService.dto.CatalogueItem;
 import com.example.BidlyPagesService.dto.LoginRequestDTO;
 import com.example.BidlyPagesService.dto.UpdateAuctionRequest;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import com.example.BidlyPagesService.dto.PaymentInfo;
+import com.example.BidlyPagesService.dto.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -91,6 +94,18 @@ public class ApiService {
         return response.getBody();
     }
 
+    public CatalogueItem callGetACatalogueItem(long itemid){
+        String url = "http://localhost:8084/api/catalogue/fetch-catalogueitem";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Long> requestEntity = new HttpEntity<>(itemid, headers);
+        ResponseEntity<CatalogueItem> response = restTemplate.postForEntity(url, requestEntity, CatalogueItem.class);
+
+        return response.getBody();
+
+    }
+
+
     public boolean callCataloguePlaceBid(Long aid, int bidAmount){
         System.out.println(aid);
         UpdateAuctionRequest updateRequest = new UpdateAuctionRequest();
@@ -112,6 +127,26 @@ public class ApiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(username, headers);
         ResponseEntity<Long> response = restTemplate.postForEntity(url, requestEntity, Long.class);
+
+        return response.getBody();
+    }
+
+    public boolean sendPaymentInfo(PaymentInfo paymentInfo){
+        String url = "https://localhsot8084/api/catalogue/process";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<PaymentInfo> requestEntity = new HttpEntity<>(paymentInfo, headers);
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+
+        return response.getBody();
+    }
+
+    public UserInfo fetchUserInfo(long userid){
+        String url = "http://localhost:8081/api/fetch-uinfo";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Long> requestEntity = new HttpEntity<>(userid, headers);
+        ResponseEntity<UserInfo> response = restTemplate.postForEntity(url, requestEntity, UserInfo.class);
 
         return response.getBody();
     }

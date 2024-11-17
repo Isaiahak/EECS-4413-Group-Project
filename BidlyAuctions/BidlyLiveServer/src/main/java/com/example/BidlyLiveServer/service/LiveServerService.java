@@ -1,6 +1,7 @@
 package com.example.BidlyLiveServer.service;
 
 
+import com.example.BidlyLiveServer.dto.Auction;
 import com.example.BidlyLiveServer.dto.CatalogueItem;
 import com.example.BidlyLiveServer.dto.LiveUpdate;
 import com.example.BidlyLiveServer.dto.UpdateAuctionRequest;
@@ -8,7 +9,6 @@ import com.example.BidlyLiveServer.repo.CatalogueDB;
 import com.example.BidlyLiveServer.websocket.LiveServerWebSocketHandler;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,5 +121,16 @@ public class LiveServerService {
 
     public void auctionEnd(Long aid) throws Exception {
         liveServerWebSocketHandler.sendAuctionClosed(aid);
+    }
+
+    public boolean removeAuction(Auction auction){
+        boolean returnValue = false;
+        for (LiveUpdate update : updates){
+            if(update.getAid().equals(auction.getAid())){
+                updates.remove(update);
+                return true;
+            }
+        }
+        return returnValue;
     }
 }
