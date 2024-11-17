@@ -1,5 +1,7 @@
 package com.example.BidlyPagesService.dto;
 
+//Catalogue Item DTO, used to send and recieve catalogue information.
+//This is mainly used to add or remove auctions from the webpage.
 public class CatalogueItem {
 
     private long aid;

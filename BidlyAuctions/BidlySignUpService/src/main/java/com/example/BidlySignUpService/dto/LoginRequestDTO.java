@@ -1,5 +1,6 @@
 package com.example.BidlySignUpService.dto;
 
+//Login request DTO, received from Pages Microservice to process a login
 public class LoginRequestDTO {
     private String username;
     private String password;

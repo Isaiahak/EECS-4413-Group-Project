@@ -3,6 +3,7 @@ package com.example.BidlySignUpService.model;
 import jakarta.persistence.*;
 
 
+//User Credentials Object. This class defines the table structure of the userCreds table, and is used to perform DB operations
 @Entity
 @Table(name = "usercreds")
 public class UserCreds {

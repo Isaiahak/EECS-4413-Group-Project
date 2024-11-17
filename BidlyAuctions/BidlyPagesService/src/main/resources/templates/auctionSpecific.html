@@ -5,24 +5,26 @@
 </head>
 <body onload="initAuctionSpecific()">
 
-<h1>Auction Details</h1>
+<div id = header>
+    <h1>Auction Details</h1>
+    <h3 id="username" th:text="${uid}"></h3>
+</div>
+
 
 <div>
     <h3 th:text="${auction.title}"></h3>
-    <!-- The price text includes 'Price: $' before the number -->
-    <p id="highestBid" th:text="'Price: $' + ${auction.highestBid}"></p>
-    <p th:text="'Time Remaining: ' + ${auction.timeRemaining}"></p>
 
-    <!-- Optional: Form to place a bid -->
+    <p th:id="'price-' + ${auction.aid}" th:text="'Price: $' + ${auction.highestBid}"></p>
+    <p th:id="'timeRemaining-' + ${auction.aid}" th:text="'Time Remaining: ' + ${auction.timeRemaining}"></p>
+
     <form action="/auction" method="POST">
-        <input type="hidden" name="auctionId" th:value="${auction.aid}">
+        <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
         <input type="hidden" name="username" value="admin">
         <input type="number" name="bidAmount" id="bidInput" placeholder="Enter bid amount">
         <button type="submit">Place Bid</button>
     </form>
 </div>
 
-<!-- Link to your external JS file -->
 <script th:src="@{/js/auctionSpecific.js}"></script>
 
 </body>

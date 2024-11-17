@@ -2,6 +2,11 @@ package com.example.BidlyPagesService.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+//Auction DTO Used to create and send auction information to Catalogue Service
+//NOTE: During development, the catalogue service was not able to read the AuctionDTO
+//      Unless the JsonProperty tags were used. It seems to be working without it now
+//      However, we will keep this here untill proper testing is done.
 public class Auction {
     @JsonProperty("aid")
     private Long aid;

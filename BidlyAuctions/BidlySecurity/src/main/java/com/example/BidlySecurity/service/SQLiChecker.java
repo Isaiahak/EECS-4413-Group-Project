@@ -4,9 +4,10 @@ import com.example.BidlySecurity.dto.UserDataDTO;
 import org.springframework.stereotype.Service;
 import java.util.regex.*;
 
+//SQLi check service.
 @Service
 public class SQLiChecker {
-
+    //SQL injection pattern
     private static final String SQLi_PATTERN =
             "(?i)(select\\s+.*\\s+from|insert\\s+into|update" +
                     "\\s+.*set|delete\\s+from|drop\\s+table|union" +
@@ -20,7 +21,6 @@ public class SQLiChecker {
         if(input == null || input.trim().isEmpty()){
             return false;
         }
-
         Pattern pattern = Pattern.compile(SQLi_PATTERN);
         Matcher matcher = pattern.matcher(input);
         return matcher.find();

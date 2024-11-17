@@ -1,5 +1,6 @@
 package com.example.BidlyPagesService.dto;
 
+//Live Update DTO, sent from Live Server Service, used to update time and highest bid in real time
 public class LiveUpdate {
 
     private Long aid;

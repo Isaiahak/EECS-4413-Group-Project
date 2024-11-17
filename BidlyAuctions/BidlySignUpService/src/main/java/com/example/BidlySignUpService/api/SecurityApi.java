@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 
+
+//REST api to perform security checks.
 @Service
 public class SecurityApi {
 

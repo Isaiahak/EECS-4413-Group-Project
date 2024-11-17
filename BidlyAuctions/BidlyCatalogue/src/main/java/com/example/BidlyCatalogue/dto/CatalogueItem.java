@@ -6,6 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+//Catalogue Item DTO, used to send to Live Server and Pages Microservices.
+//Defines table structure for catalogue table in DB
+//Used to perform DB operations.
 @Entity
 @Table(name = "catalogue")
 public class CatalogueItem {

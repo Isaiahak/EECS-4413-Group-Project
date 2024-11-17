@@ -15,3 +15,8 @@
     border-radius: 8px;         /* Optional: Rounded corners */
     text-align: center;         /* Optional: Center the text */
 }
+
+.header{
+    display:flex;
+    justify-content:space-between;
+}
