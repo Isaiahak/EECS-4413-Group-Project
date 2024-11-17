@@ -5,6 +5,7 @@ const usernameField = document.getElementById('username');
 socket.onopen = function() {
     console.log(" js WebSocket connection established.");
     const usernameValue = usernameField.innerHTML;
+    console.log(usernameValue);
     socket.send(JSON.stringify({type:'connect', data:usernameValue}));
 };
 

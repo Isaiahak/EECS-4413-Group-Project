@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+//REST receiver for signup services.
+//TODO: Convert this to correct rest service and request.
 @Controller
 public class SignUpController {
 
@@ -20,18 +22,6 @@ public class SignUpController {
                                  @RequestParam String street, @RequestParam String city,
                                  @RequestParam String province, @RequestParam String zipcode) {
         boolean success = signUpService.signUp(username, password, firstName, lastName, street, city, province, zipcode);
-//
-//        ModelAndView modelAndView = new ModelAndView("signup"); // Return to signup page
-//        if (success) {
-//            modelAndView.setViewName("signUpSuccess"); // Redirect to success page if sign up succeeded
-//        } else {
-//            modelAndView.addObject("errorMessage", "Username is already in use."); // Add error message for duplicate username
-//        }
         return ResponseEntity.ok(success);
-    }
-
-    @GetMapping("/signup")
-    public ModelAndView showSignUpForm() {
-        return new ModelAndView("signup"); // This should match the name of your JSP file
     }
 }

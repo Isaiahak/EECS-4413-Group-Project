@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 
+//Controller for admin/testing purposes, will not be available to the users
 @Controller
 public class AdminController {
 
@@ -23,11 +24,13 @@ public class AdminController {
     @Autowired
     AuctionWebSocketHandler webSocketHandler;
 
+    //Get Mapping for submit Auction page. Here, we will be able to add new auctions
     @GetMapping("/submit-auction")
     public String getAuction(Model model){
         return "AdminAddAuctions";
     }
 
+    //Post Mapping for submit auction page, to add the new auction in to the system.
     @PostMapping("/submit-auction")
     public String addAuction(@RequestParam String title,
                              @RequestParam String desc,
@@ -37,9 +40,13 @@ public class AdminController {
                              @RequestParam int hours,
                              @RequestParam int mins) throws IOException {
 
-        String timeRemaining = String.format("%dD:%dh:%dm:%ds", days, hours, mins, 0);;
+        //Create Auction DTO to send to cataloge via REST
+        //Catalogue will complete the creation process
+        String timeRemaining = String.format("%dD:%dh:%dm:%ds", days, hours, mins, 0);
         Auction auction = new Auction(title, desc, startingPrice, type, timeRemaining);
 
+        //Catalogue Microservice returns the newly created auction catalogue item
+        //This service will use this catalogue Object to push a dynamic update to clients
         CatalogueItem newCatalogue = apiService.callCatalogueAddAuction(auction);
 
         if(newCatalogue != null){

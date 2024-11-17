@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+//Sign Up Service
+//TODO: Move password encoding to BidlySecurity.
+//TODO: Convert all params from signUp method into a DTO | this service will still work with the current implementation
 @Service
 public class SignUpService {
 
@@ -27,6 +30,7 @@ public class SignUpService {
     private SecurityApi securityApi;
 
     private final BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+
 
     @Transactional
     public boolean signUp(String username, String password, String firstName, String lastName,
@@ -44,27 +48,24 @@ public class SignUpService {
         data.add(province);
         data.add(zipcode);
 
+        //perform SQLi check before performing DB operation.
         if(securityApi.callSecurityService(data)){
-            System.out.println("Weaint letting that happen");
             return false;
         }
 
-
         System.out.println("Checking for Existing User");
         if (ucRepo.existsByUsername(username)) {
-            System.out.println("Exists");
-            return false; // Indicate that the username is already in use
+            return false;
         }
 
+        //This is to be moved to BidlySecurity
         String passHash = passEncoder.encode(password);
         System.out.println("Hashed Pass is " + passHash);
+
 
         UserCreds uc = new UserCreds();
         uc.setUsername(username);
         uc.setPassword(passHash);
-
-
-
         try {
             uc = ucRepo.save(uc); // Try to save UserCreds
             System.out.println("Creds success");
@@ -82,16 +83,13 @@ public class SignUpService {
         uinf.setCity(city);
         uinf.setProvince(province);
         uinf.setZipcode(zipcode);
-
         try {
             uinfRepo.save(uinf); // Save UserInfo
             System.out.println("info success");
         } catch (Exception e) {
-            // Handle any exceptions that may occur during the save
             System.out.println("info fail");
-            return false; // Indicate failure
+            return false;
         }
-
-        return true; // Indicate success
+        return true;
     }
 }

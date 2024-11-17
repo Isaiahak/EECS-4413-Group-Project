@@ -6,10 +6,7 @@ import com.example.BidlyCatalogue.dto.Auction;
 import com.example.BidlyCatalogue.dto.CatalogueItem;
 import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.service.CatalogueService;
-import com.example.BidlyCatalogue.websocket.AuctionWebSocketHandler;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+//REST Controller for performing operations from Pages Microservice.
 @RestController
 @RequestMapping("/api/catalogue")
 public class CatalogueController {
@@ -28,9 +26,6 @@ public class CatalogueController {
 
     @Autowired
     private LiveServerApi liveServerApi;
-
-    @Autowired
-    private AuctionWebSocketHandler auctionWebSocketHandler;
 
     @PostMapping("/add-auction")
     public CatalogueItem addAuction(@RequestBody Auction auction) throws Exception {

@@ -1,6 +1,7 @@
 package com.example.BidlySignUpService.model;
 import jakarta.persistence.*;
 
+//User Information Object. This class defines the table structure of the userInfo table, and is used to perform DB operations
 @Entity
 @Table(name = "userinfo")
 public class UserInfo {

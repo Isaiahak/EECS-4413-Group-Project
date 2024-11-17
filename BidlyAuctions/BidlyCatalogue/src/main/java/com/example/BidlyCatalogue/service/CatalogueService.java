@@ -6,14 +6,12 @@ import com.example.BidlyCatalogue.dto.CatalogueItem;
 import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.repo.AuctionRepo;
 import com.example.BidlyCatalogue.repo.CatalogueRepo;
-import com.example.BidlyCatalogue.websocket.AuctionWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
+
 
 @Service
 public class CatalogueService {
@@ -24,9 +22,7 @@ public class CatalogueService {
     @Autowired
     private CatalogueRepo catalogueRepo;
 
-    @Autowired
-    private AuctionWebSocketHandler webSocketHandler;
-
+    //Adds a new auction to the Auctions DB
     @Transactional
     public Auction addAuction(Auction auction){
         try{
@@ -40,10 +36,10 @@ public class CatalogueService {
         return auction;
     }
 
+    //Adds a new catalogue item into the Auctions DB
     @Transactional
     public CatalogueItem updateCatalogue(Auction auction){
         CatalogueItem catalogueItem = new CatalogueItem();
-
         catalogueItem.setAid(auction.getAid());
         catalogueItem.setTitle(auction.getTitle());
         catalogueItem.setHighestBid(auction.getHighestBid());
@@ -76,18 +72,18 @@ public class CatalogueService {
         return catalogueRepo.findByAid(aid);
     }
 
+    //Updates Auction DB with new bid amount.
     @Transactional
     public boolean updateBid(UpdateAuctionRequest updateRequest){
+        //Update the bid for the current auction in the DB
         Auction auction = auctionRepo.findByAid(updateRequest.getAid());
         auction.setHighestBid(updateRequest.getBid());
         auctionRepo.save(auction);
 
+        //Update the bid for the current catalogue item in the DB
         CatalogueItem catalogueItem = catalogueRepo.findByAid(updateRequest.getAid());
         catalogueItem.setHighestBid(updateRequest.getBid());
         catalogueRepo.save(catalogueItem);
-
-
-
         return true;
     }
 }

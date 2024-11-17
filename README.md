@@ -1,9 +1,9 @@
 "# EECS-4413-Group-Project" 
 # EECS-4413-Group-Project
 
-LATEST UPDATE:  Live server implemented using a basic pubsub design, and websocket communication. 
-                All clients are responsible for building the webpage as required, this is to
-                prevent page refresh and support dynamic page building. 
+LATEST UPDATE:  Auction Specific page is receiving real time updates and pub sub feature is able to broadcast
+                to any page that starts a websocket connection. Code cleaned up and commented on all microservices.
+                Unused files deleted. 
 
 
 LATEST ISSUES:  The Pub Sub implementation is pretty basic, so it does not handle disconnects or 
@@ -11,6 +11,8 @@ LATEST ISSUES:  The Pub Sub implementation is pretty basic, so it does not handl
                 sub implementation, however this may force the clients to listen to the live server 
                 directly, breaking the layered arch rules. All the components in this push are 
                 fully functional. All thats required is code cleanup and event handling for winning auctions.
+                Auction that end without any subscribers will throw null error, will need to change the logic
+                for that
 
 SETUP (TEMPORARY)
 As of now the applications will not work from the github repo.

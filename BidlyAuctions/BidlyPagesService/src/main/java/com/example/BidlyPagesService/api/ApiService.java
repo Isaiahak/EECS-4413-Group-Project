@@ -39,15 +39,14 @@ public class ApiService {
         return restTemplate.postForObject(url, requestBody, Boolean.class);
     }
 
-    public boolean callLoginService(LoginRequestDTO lr){
+    public String callLoginService(LoginRequestDTO lr){
         String url = "http://localhost:8081/api/login";
 
         HttpHeaders headers = new HttpHeaders();
 
         headers.setContentType(MediaType.APPLICATION_JSON);
-        System.out.println("seding login request");
         HttpEntity<LoginRequestDTO> requestEntity = new HttpEntity<>(lr, headers);
-        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
 
         return response.getBody();
     }

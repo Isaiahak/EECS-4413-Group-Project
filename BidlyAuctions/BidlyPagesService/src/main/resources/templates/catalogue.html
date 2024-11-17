@@ -6,8 +6,11 @@
 </head>
 
 <body>
-<h1>Catalogue</h1>
-<h3 id="username">admin</h3>
+<div id="header">
+  <h1>Catalogue</h1>
+  <h3 th:id="username" th:text="${uid}"></h3>
+</div>
+
 
 <!-- Container where the auction items will be displayed -->
 <div id="auctionList">

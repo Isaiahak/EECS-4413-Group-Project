@@ -1,8 +1,6 @@
 package com.example.BidlyPagesService.config;
 
-
 import com.example.BidlyPagesService.webSocket.AuctionWebSocketHandler;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;

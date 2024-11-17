@@ -1,5 +1,6 @@
 package com.example.BidlyPagesService.dto;
 
+//UpdateAuctionRequest, used to send auction bid updates to Catalogue Service
 public class UpdateAuctionRequest {
     private Long aid;
     private int bid;

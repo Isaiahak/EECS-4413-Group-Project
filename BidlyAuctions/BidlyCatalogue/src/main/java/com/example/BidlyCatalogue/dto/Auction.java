@@ -2,7 +2,9 @@ package com.example.BidlyCatalogue.dto;
 
 import jakarta.persistence.*;
 
-
+//Auction DTO, received from Pages to create auctions.
+//Defines table structure for auction table in DB
+//Used to perform DB operations.
 @Entity
 @Table(name = "auction")
 public class Auction {

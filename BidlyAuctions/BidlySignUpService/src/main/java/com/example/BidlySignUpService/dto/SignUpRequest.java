@@ -1,5 +1,7 @@
 package com.example.BidlySignUpService.dto;
 
+//Sign up request DTO, received from the Pages Microservice to process sign up
+//TODO (OPTIONAL): Remove constructor params | This is tied to signup api call, so we will need to  reformat that as needed
 public class SignUpRequest {
     private String username;
     private String password;

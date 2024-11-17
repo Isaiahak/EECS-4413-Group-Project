@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+//REST Recieiver for login services
 @RestController
 @RequestMapping("/api")
 public class LoginController {
@@ -16,12 +17,12 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<Boolean> verifyLogin(@RequestBody LoginRequestDTO lr){
-        System.out.println("Starting login seqeunce");
-        if(loginService.login(lr)){
-            return ResponseEntity.ok(true);
+    public ResponseEntity<String> verifyLogin(@RequestBody LoginRequestDTO lr){
+        String uid = loginService.login(lr);
+        if(uid != null){
+            return ResponseEntity.ok(uid);
         }else{
-            return ResponseEntity.ok(false);
+            return ResponseEntity.ok(null);
         }
     }
 
