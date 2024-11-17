@@ -27,7 +27,7 @@ public class AdminController {
     //Get Mapping for submit Auction page. Here, we will be able to add new auctions
     @GetMapping("/submit-auction")
     public String getAuction(Model model){
-        return "AdminAddAuctions";
+        return "AdminSelectCreateAuction";
     }
 
     //Post Mapping for submit auction page, to add the new auction in to the system.
