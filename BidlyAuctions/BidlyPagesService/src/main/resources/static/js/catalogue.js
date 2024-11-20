@@ -148,6 +148,22 @@ function closed(aid){
 searchInput.addEventListener("input", function() {
     var query = searchInput.value.toLowerCase(); // Get the current search query
     var auctionItems = document.querySelectorAll('.auction-item'); // Get all auction items
+<<<<<<< HEAD
+=======
+
+    auctionItems.forEach(function(item) {
+        var title = item.querySelector('h3').textContent.toLowerCase(); // Get the title of each auction item
+
+        // If the title includes the search query, show the item; otherwise, hide it
+        if (title.includes(query)) {
+            item.style.display = '';  // Show the item
+        } else {
+            item.style.display = 'none';  // Hide the item
+        }
+    });
+});
+
+>>>>>>> f9ba1c2ae254b1e4bca6b1ca9b3886b8de173716
 
     auctionItems.forEach(function(item) {
         var title = item.querySelector('h3').textContent.toLowerCase(); // Get the title of each auction item

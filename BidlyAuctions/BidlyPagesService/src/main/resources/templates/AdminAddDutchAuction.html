@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Dutch Auction</title>
+</head>
+<body>
+
+<h1>Create Auction</h1>
+<form action="/submit-auction" method="POST">
+  <label for="title">Title:</label>
+  <input type="text" id="title" name="title" required><br><br>
+
+  <label for="desc">Description:</label>
+  <textarea id="desc" name="desc" rows="4" required></textarea><br><br>
+
+  <label for="startingPrice">Starting Price (integer):</label>
+  <input type="number" id="startingPrice" name="startingPrice" required min="1" step="1"><br><br>
+  <input type="hidden" id="type" value="dutch">
+  <label for="timeRemaining">Price Reduction Interval:</label>
+  <div id = "timeRemaining">
+    <label for="days">Days</label>
+    <input type="number" id="days" name="days" required min="0" step="1"><br><br>
+    <label for="hours">Hours</label>
+    <input type="number" id="hours" name="hours" required min="0" step="1"><br><br>
+    <label for="mins">Mins</label>
+    <input type="number" id="mins" name="mins" required min="1" step="1"><br><br>
+  </div>
+
+  <label for="reductionAmount">Reduce Price By:</label>
+  <input type="number" id="reductionAmount" name="reductionAmount" required min="10" step="10"><br><br>
+
+  <button type="submit">Submit Auction</button>
+</form>
+
+</body>
+</html>
