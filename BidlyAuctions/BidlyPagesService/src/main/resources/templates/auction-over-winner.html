@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Item Information</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Item Description</td>
+        <td>${itemDescription}</td>
+    </tr>
+    <tr>
+        <td>Shipping Price</td>
+        <td>${shippingPrice}</td>
+    </tr>
+    <tr>
+        <td>Expedited Shipping</td>
+        <td>${expeditedShipping}</td>
+    </tr>
+    <tr>
+        <td>Winning Price</td>
+        <td>${finalPrice}</td>
+    </tr>
+    <tr>
+        <td>HighestBidder</td>
+        <td>${highestBidder}</td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Shipping Options</h2>
+<form action="/auction-over-winner" method="post">
+    <label>
+        <input type="radio" name="shipping" value="expedited" checked>
+        Standard Shipping (5-7 days)
+    </label>
+    <button type="submit">Pay Now</button>
+</form>
+</body>
+</html>

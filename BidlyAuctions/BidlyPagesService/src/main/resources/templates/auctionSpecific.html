@@ -19,7 +19,7 @@
 
     <form action="/auction" method="POST">
         <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
-        <input type="hidden" name="username" th:value="${uid}">
+        <input type="hidden" name="username" value="admin">
         <input type="number" name="bidAmount" id="bidInput" placeholder="Enter bid amount">
         <button type="submit">Place Bid</button>
     </form>

@@ -7,22 +7,39 @@
 
 <body>
 <div id="header">
+  <div class="logo-container">
+    <svg class="logo" viewBox="0 0 100 100">
+      <!-- Circle background -->
+      <circle cx="50" cy="50" r="45" fill="#2e7d32"/>
+
+      <!-- Gavel head -->
+      <rect x="30" y="25" width="40" height="20" rx="5" fill="white"/>
+
+      <!-- Gavel handle -->
+      <rect x="45" y="45" width="10" height="35" rx="2" fill="white"/>
+
+      <!-- Sound waves / bid indication -->
+      <path d="M 65,15 Q 75,25 75,35" stroke="white" fill="none" stroke-width="3"/>
+      <path d="M 70,10 Q 85,25 85,40" stroke="white" fill="none" stroke-width="3"/>
+
+      <!-- Dollar sign -->
+      <text x="25" y="65" fill="white" font-size="20" font-weight="bold">$</text>
+    </svg>
+    <span class="brand-name">BidlyAuctions</span>
+  </div>
   <h1>Catalogue</h1>
-  <h3 th:id="username" th:text="${uid}"></h3>
+  <div id="username" th:text="${uid}"></div>
 </div>
-
-<!-- A search bar to find items -->
-<div id="searchBar">
-  <input type="text" id="searchInput" name="search" placeholder="Search auction items..." />
-</div>
-
-
 <!-- Container where the auction items will be displayed -->
-<div id="auctionList">
-  <!-- Auction items will be dynamically added here -->
-</div>
+<div class="container">
+  <div id="auctionList">
 
-<input type="button" id="bidNowButton" value="Bid Now" disabled onclick="placeBid()">
+  </div>
+
+  <div id="bidNowContainer">
+    <button id="bidNowButton" onclick="placeBid()" disabled>Bid Now</button>
+  </div>
+</div>
 <!-- Include the external JavaScript file -->
 <script th:src="@{/js/catalogue.js}"> </script>
 </body>
