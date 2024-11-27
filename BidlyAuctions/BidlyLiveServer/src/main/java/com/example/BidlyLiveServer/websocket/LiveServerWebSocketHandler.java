@@ -57,10 +57,10 @@ public class LiveServerWebSocketHandler extends TextWebSocketHandler {
         ObjectNode messageWrapper = mapper.createObjectNode();
         messageWrapper.put("type", "closed");
         messageWrapper.put("data", aid);
+        messageWrapper.put("redirectUrl","/auction-results");
 
         String auctionsJSON = mapper.writeValueAsString(messageWrapper);
         System.out.println("Sending message: " + auctionsJSON);
-
         for(WebSocketSession session: sessions){
             if (session.isOpen()) {
                 System.out.println("Session is open, sending message.");

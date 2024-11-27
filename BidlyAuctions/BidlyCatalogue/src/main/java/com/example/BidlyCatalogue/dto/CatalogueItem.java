@@ -26,6 +26,24 @@ public class CatalogueItem {
     @Column(name = "auctionTime")
     private String auctionTime;
 
+    @Column(name = "initialPrice")
+    private String initialPrice;
+
+    @Column(name = "shippingDate")
+    private String shippingDate;
+
+    @Column(name = "expeditedShipping")
+    private double expeditedShipping;
+
+    @Column(name = "type")
+    private String type;
+
+    @Column(name = "shippingPrice")
+    private String shippingPrice;
+
+    @Column(name = "itemid")
+    private long itemid;
+
     public long getAid() {
         return aid;
     }
@@ -56,5 +74,53 @@ public class CatalogueItem {
 
     public void setAuctionTime(String auctionTime) {
         this.auctionTime = auctionTime;
+    }
+
+    public String getInitialPrice() {
+        return initialPrice;
+    }
+
+    public void setInitialPrice(String initialPrice) {
+        this.initialPrice = initialPrice;
+    }
+
+    public String getShippingDate() {
+        return shippingDate;
+    }
+
+    public void setShippingDate(String shippingDate) {
+        this.shippingDate = shippingDate;
+    }
+
+    public double getExpeditedShipping() {
+        return expeditedShipping;
+    }
+
+    public void setExpeditedShipping(double expeditedShipping) {
+        this.expeditedShipping = expeditedShipping;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getShippingPrice() {
+        return shippingPrice;
+    }
+
+    public void setShippingPrice(String shippingPrice) {
+        this.shippingPrice = shippingPrice;
+    }
+
+    public long getItemID() {
+        return itemid;
+    }
+
+    public void setItemID(long itemID) {
+        this.itemid = itemID;
     }
 }

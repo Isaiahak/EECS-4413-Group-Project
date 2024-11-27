@@ -1,10 +1,11 @@
 package com.example.BidlyCatalogue.api;
-
 import com.example.BidlyCatalogue.dto.CatalogueItem;
 import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
+import com.example.BidlyCatalogue.dto.Auction;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -29,7 +30,7 @@ public class LiveServerApi {
     }
 
     //REST call to inform the live server that a user has placed a bid on an auction.
-    public void callLiveServerUpdateBid(UpdateAuctionRequest updateAuctionRequest){
+    public void callLiveServerUpdateBid(UpdateAuctionRequest updateAuctionRequest) {
         String url = "http://localhost:8086/api/live/update-bid";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

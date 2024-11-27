@@ -27,6 +27,7 @@ public class AuctionWebSocketHandler extends TextWebSocketHandler implements Web
 
     @Autowired
     private ApiService apiService;
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
@@ -85,13 +86,15 @@ public class AuctionWebSocketHandler extends TextWebSocketHandler implements Web
             //If type is closed, request all subsribers for that auction and send them the alert
             else if(jsonNode.get("type").asText().equals("closed")) {
                 Long aid = objectMapper.convertValue(jsonNode.get("data"), Long.class);
+                String redirectUrl = objectMapper.convertValue(jsonNode.get("redirectUrl"), String.class);
                 ArrayList<WebSocketSession> auctionSubs = subscriberService.endAuction(aid);
                 //if no one is subscribed to the auction, do nothing.
                 if(auctionSubs.isEmpty()){
                     return;
                 }
-                String formattedClosed = buildMessage("closed", aid);
+                String formattedClosed = buildMessageWithRedirect("closed", aid, redirectUrl);
                 for (WebSocketSession client : auctionSubs) {
+                    // auctionsubs are null
                     client.sendMessage(new TextMessage(formattedClosed));
                 }
             }
@@ -141,4 +144,19 @@ public class AuctionWebSocketHandler extends TextWebSocketHandler implements Web
             return "";
         }
     }
+
+    private String buildMessageWithRedirect(String type, Object data, String redirect){
+        try{
+            ObjectNode message = objectMapper.createObjectNode();
+            message.put("type", type);
+            message.set("data", objectMapper.valueToTree(data));
+            message.put("redirectUrl",redirect);
+            return objectMapper.writeValueAsString(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+
 }

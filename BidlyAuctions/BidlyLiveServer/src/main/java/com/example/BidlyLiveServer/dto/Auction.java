@@ -1,4 +1,4 @@
-package com.example.BidlyCatalogue.dto;
+package com.example.BidlyLiveServer.dto;
 
 import jakarta.persistence.*;
 
@@ -19,7 +19,7 @@ public class Auction {
     @Column(name = "\"desc\"")
     private String desc;
 
-    @Column(name = "currentHighestBid")
+    @Column(name = "currentHighestBidder")
     private int highestBid;
 
     @Column(name = "type")
@@ -33,8 +33,6 @@ public class Auction {
 
     @Column(name = "highestBidder")
     private String userid;
-
-
 
 
     public Auction( String title, String desc, int highestBid, String type, String timeRemaining) {

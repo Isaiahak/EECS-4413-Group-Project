@@ -1,14 +1,13 @@
-package com.example.BidlySignUpService.model;
-import jakarta.persistence.*;
+package com.example.BidlyPagesService.dto;
+
+
 
 //User Information Object. This class defines the table structure of the userInfo table, and is used to perform DB operations
-@Entity
-@Table(name = "userinfo")
-public class UserInfo {
-    @Id
-    @Column(name = "username")
-    private String username;
 
+
+public class UserInfo {
+
+    private String uid;
     private String firstName;
     private String lastName;
     private String street;
@@ -16,8 +15,8 @@ public class UserInfo {
     private String province;
     private String zipcode;
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
     public String getFirstName() {
@@ -45,8 +44,8 @@ public class UserInfo {
     }
 
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public void setFirstName(String firstName) {

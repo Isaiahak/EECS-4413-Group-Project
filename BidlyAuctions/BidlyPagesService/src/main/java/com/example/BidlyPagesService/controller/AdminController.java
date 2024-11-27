@@ -27,7 +27,7 @@ public class AdminController {
     //Get Mapping for submit Auction page. Here, we will be able to add new auctions
     @GetMapping("/submit-auction")
     public String getAuction(Model model){
-        return "AdminSelectCreateAuction";
+        return "AdminAddAuctions";
     }
 
     //Post Mapping for submit auction page, to add the new auction in to the system.
@@ -43,6 +43,7 @@ public class AdminController {
         //Create Auction DTO to send to cataloge via REST
         //Catalogue will complete the creation process
         String timeRemaining = String.format("%dD:%dh:%dm:%ds", days, hours, mins, 0);
+
         Auction auction = new Auction(title, desc, startingPrice, type, timeRemaining);
 
         //Catalogue Microservice returns the newly created auction catalogue item

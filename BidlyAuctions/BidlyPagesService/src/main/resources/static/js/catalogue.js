@@ -79,7 +79,7 @@ function initCatalogue(catalogueItems) {
                 <input type="radio" id="itemSelect" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid})">
                 <h3>${item.title}</h3>
                 <p id="price-${item.aid}">Price: $${item.highestBid}</p>
-                <p id="timeRemaining-${item.aid}">Time Remaining: ${item.auctionTime}</p>
+                <p id="timeRemaining-${item.aid}">Time Remaining: CLOSED</p>
             `;
 
             auctionListContainer.appendChild(itemElement);

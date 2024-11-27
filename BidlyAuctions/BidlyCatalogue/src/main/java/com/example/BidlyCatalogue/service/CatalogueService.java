@@ -1,16 +1,16 @@
 package com.example.BidlyCatalogue.service;
-
-
 import com.example.BidlyCatalogue.dto.Auction;
 import com.example.BidlyCatalogue.dto.CatalogueItem;
 import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.repo.AuctionRepo;
 import com.example.BidlyCatalogue.repo.CatalogueRepo;
+import com.example.BidlyCatalogue.repo.PaymentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -22,7 +22,9 @@ public class CatalogueService {
     @Autowired
     private CatalogueRepo catalogueRepo;
 
-    //Adds a new auction to the Auctions DB
+    @Autowired
+    private PaymentRepo paymentRepo;
+
     @Transactional
     public Auction addAuction(Auction auction){
         try{
@@ -67,17 +69,37 @@ public class CatalogueService {
         return auctionRepo.findByAid(aid);
     }
 
+    public boolean removeAuction(Long aid){
+        Optional<Auction> auction = auctionRepo.findById(aid);
+        Auction realAuction = auction.get();
+        if(auction!= null){
+            auctionRepo.delete(realAuction);
+            return true;
+        }
+        return false;
+    }
+
     @Transactional
     public CatalogueItem fetchCatalogueItem(Long aid){
         return catalogueRepo.findByAid(aid);
     }
 
-    //Updates Auction DB with new bid amount.
+    public boolean removeCatalogue(Long id){
+        Optional<CatalogueItem> catalogue = catalogueRepo.findById(id);
+        CatalogueItem realCatalogue = catalogue.get();
+        if(catalogue!=null){
+            catalogueRepo.delete(realCatalogue);
+            return true;
+        }
+        return false;
+    }
+
     @Transactional
     public boolean updateBid(UpdateAuctionRequest updateRequest){
         //Update the bid for the current auction in the DB
         Auction auction = auctionRepo.findByAid(updateRequest.getAid());
         auction.setHighestBid(updateRequest.getBid());
+        auction.setUserid(updateRequest.getUid());
         auctionRepo.save(auction);
 
         //Update the bid for the current catalogue item in the DB
