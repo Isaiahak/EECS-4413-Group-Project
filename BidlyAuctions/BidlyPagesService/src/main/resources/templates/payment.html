@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -44,32 +44,21 @@
         </tr>
         </tbody>
     </table>
-    <table>
-        <thead>
-        <tr>
-            <th>Credit Card</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Card Number</td>
-            <td><input type="text" name="cardNumber" value=""></td>
-        </tr>
-        <tr>
-            <td>Name on Card</td>
-            <td><input type="text" name="nameOnCard" value=""></td>
-        </tr>
-        <tr>
-            <td>Exp. Date</td>
-            <td><input type="text" name="expirationDate" value=""></td>
-        </tr>
-        <tr>
-            <td>Security Code</td>
-            <td><input type="text" name="securityCode" value=""></td>
-        </tr>
-        </tbody>
-    </table>
-    <form action="/process" method="post">
+
+    <h3>Card Information</h3>
+    <form action="/payment" method="post">
+        <label for="cardNumber">Card Number</label>
+        <input type="text" id="CardNumber"  name="cardNumber" >
+
+        <label for="cardName">Name On Card</label>
+        <input type="text" id="cardName"  name="nameOnCard" >
+
+        <label for="expirationDate">Exp. Date</label>
+        <input type="text" id="expirationDate"  name="expirationDate" >
+
+        <label for="securityCode">Security Code</label>
+        <input type="text" id="securityCode"  name="securityCode" >
+        <input type="hidden" name="FinalPrice" th:value="${finalPrice}">
         <button type="submit">Submit</button>
     </form>
 </div>

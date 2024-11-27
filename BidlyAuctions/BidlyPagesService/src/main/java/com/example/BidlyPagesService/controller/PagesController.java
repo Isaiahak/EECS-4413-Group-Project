@@ -132,7 +132,7 @@ public class PagesController {
     }
 
     @GetMapping("/auction-results")
-    public String getAuctionResults(@RequestParam("aid") Long aid, Model model, RedirectAttributes redirectAttributes){
+    public String getAuctionResults(@RequestParam("auctionId") Long aid, Model model, RedirectAttributes redirectAttributes){
         String auctionEndRedirect;
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
@@ -140,9 +140,11 @@ public class PagesController {
         //return "auction-results";String
 
         Auction auctionResults = apiService.callCatalogueGetAuction(aid);
-        if (auctionResults.getUserid().compareTo(uid) != 0) {
+        System.out.println(auctionResults.getUserid() + " " + uid);
+        if (auctionResults.getUserid().compareTo(uid) == 0) {
             auctionEndRedirect = "redirect:/auction-over-winner";
-            redirectAttributes.addAttribute("auction", auctionResults);
+            redirectAttributes.addFlashAttribute("auction", auctionResults);
+            System.out.println(auctionResults.getAid());
         }
         else {
             auctionEndRedirect = "redirect:/auction-over";
@@ -152,51 +154,59 @@ public class PagesController {
     }
 
     @GetMapping("/auction-over-winner")
-    public String setupAuctionEndDisplay(Model model, @RequestParam("aid") Auction auction){
-        CatalogueItem item = apiService.callGetACatalogueItem(auction.getItemid());
+    public String setupAuctionEndDisplay(Model model, @ModelAttribute("auction") Auction auction, RedirectAttributes redirectAttributes){
+        System.out.println(auction.getAid());
+        CatalogueItem item = apiService.callGetACatalogueItem(auction.getAid());
         String itemDescription = item.getTitle();
         double shippingPrice = item.getShippingPrice();
         double expeditedShipping = item.getExpeditedShipping();
         double winningPrice = auction.getHighestBid();
         String highestBidder = auction.getUserid();
-        model.addAttribute("Item Description",itemDescription);
-        model.addAttribute("Shipping Price", shippingPrice);
-        model.addAttribute("Expedited Shipping", expeditedShipping);
-        model.addAttribute("Winning Price", winningPrice);
+        model.addAttribute("ItemDescription",itemDescription);
+        model.addAttribute("ShippingPrice", shippingPrice);
+        model.addAttribute("ExpeditedShipping", expeditedShipping);
+        model.addAttribute("WinningPrice", winningPrice);
         model.addAttribute("HighestBidder", highestBidder);
         model.addAttribute("auction", auction);
+        redirectAttributes.addFlashAttribute("auction", auction);
         return "auction-over-winner";
     }
 
     @PostMapping("/auction-over-winner")
-    public String setupPayNow(@RequestParam("shipping") String shippingtype,
-                              @RequestParam(value = "action", required = false) String action,
-                              @RequestParam("Auction") Auction auction,
-                              @RequestParam("Expedited Shipping") double expeditedShipping,
-                              @RequestParam("Shipping Price") double shippingPrice,
-                              @RequestParam("auctionId") long auctionId,
-                              @RequestParam("HighestBidder") long highestBidder,
-                              @RequestParam("Item Description") String itemDescription,
+    public String setupPayNow(Model model, @ModelAttribute("auction") Auction auction, @RequestParam("shipping") String shippingtype,
+                             // @RequestParam(value = "action", required = false) String action,
+                              @ModelAttribute("ExpeditedShipping") double expeditedShipping,
+                              @ModelAttribute("ShippingPrice") double shippingPrice,
+                              @ModelAttribute("auctionId") long auctionId,
+                              @ModelAttribute("HighestBidder") String highestBidder,
+                              @ModelAttribute("ItemDescription") String itemDescription,
                               RedirectAttributes redirectAttributes) {
         double finalPrice;
-        if ("submit".equals(action)) {
-            redirectAttributes.addAttribute("Auction", auction);
+        System.out.println(auction.getAid());
+        //if ("submit".equals(action)) {
+            System.out.println("submit");
+            redirectAttributes.addFlashAttribute("Auction", auction);
             if ("expedited".equals(shippingtype)) {
                 finalPrice = auction.getHighestBid() + expeditedShipping;
-                redirectAttributes.addAttribute("Final Price", finalPrice);
+                model.addAttribute("FinalPrice", finalPrice);
+                redirectAttributes.addAttribute("FinalPrice", finalPrice);
             } else if ("no-expedited".equals(shippingtype)) {
                 finalPrice = auction.getHighestBid() + shippingPrice;
-                redirectAttributes.addAttribute("Final Price", finalPrice);
+                model.addAttribute("FinalPrice", finalPrice);
+                redirectAttributes.addAttribute("FinalPrice", finalPrice);
             }
+            System.out.println("payment");
             return "redirect:/payment";
-        }
-        return "/auction-over-winner";
+        //}
     }
 
 
 
     @GetMapping("/payment")
-    public String getPaymentPage(@RequestParam("uid") String uid, @RequestParam("auction") Auction auction, Model model){
+    public String getPaymentPage(@ModelAttribute("auction") Auction auction, @RequestParam("FinalPrice") double finalPrice, Model model, RedirectAttributes redirectAttributes){
+        System.out.println(auction.getAid());
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
         UserInfo userInfo = apiService.fetchUserInfo(uid);
         String firstName = userInfo.getFirstName();
         String lastName  = userInfo.getLastName();
@@ -204,26 +214,31 @@ public class PagesController {
         String city = userInfo.getCity();
         String province = userInfo.getProvince();
         String postalCode = userInfo.getZipcode();
+        model.addAttribute("finalPrice", finalPrice);
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("street", street);
         model.addAttribute("city", city);
         model.addAttribute("province", province);
         model.addAttribute("postalCode", postalCode);
+        redirectAttributes.addFlashAttribute("auction", auction);
 
         return "payment";
     }
 
     @PostMapping("/payment")
-    public String processPayment(@RequestParam("cardNumber") String cardNumber,
+    public String processPayment(Model model, @RequestParam("cardNumber") String cardNumber,
                                  @RequestParam("nameOnCard") String name,
                                  @RequestParam("expirationDate") String expDate,
                                  @RequestParam("securityCode") String securityCode,
-                                 @RequestParam("uid") String uid,
-                                 @RequestParam("auction") Auction auction,
-                                 @RequestParam("Fina lPrice") double finalPrice,
+                                 @ModelAttribute("auction") Auction auction,
+                                 @RequestParam("FinalPrice") Double finalPrice,
                                  RedirectAttributes redirectAttributes
                                  ) {
+        System.out.println(auction.getAid());
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+
         String returnString = "catalogue"; // TODO make a failed process page;
         PaymentInfo paymentInfo = new PaymentInfo();
         paymentInfo.setCardNumber(cardNumber);
@@ -235,16 +250,21 @@ public class PagesController {
         paymentInfo.setFinalPrice(finalPrice);
         boolean result = apiService.sendPaymentInfo(paymentInfo);
         if (result == true) {
+            System.out.println("Receipt");
             returnString = "redirect:/receipt";
-            redirectAttributes.addAttribute("auction", auction);
-            redirectAttributes.addAttribute("Final Price", finalPrice);
+            redirectAttributes.addFlashAttribute("auction", auction);
+            redirectAttributes.addAttribute("FinalPrice", finalPrice);
 
         }
+        System.out.println("catalogue");
         return returnString;
     }
 
     @GetMapping("/receipt")
-    public String getReceiptInfo(@RequestParam("uid") String uid,@RequestParam("auction") Auction auction,@RequestParam("Final Price") double finalPrice, Model model) {
+    public String getReceiptInfo(@ModelAttribute("auction") Auction auction,@RequestParam("FinalPrice") double finalPrice, Model model) {
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+
         UserInfo userInfo = apiService.fetchUserInfo(uid);
         String firstName = userInfo.getFirstName();
         String lastName  = userInfo.getLastName();

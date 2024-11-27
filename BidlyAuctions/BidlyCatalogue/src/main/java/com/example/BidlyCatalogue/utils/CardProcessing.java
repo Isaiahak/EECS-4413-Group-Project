@@ -14,8 +14,8 @@ public class CardProcessing {
         public boolean processCard(String cardNumber, String name, String expDate, String securityCode) {
             boolean result = true;
             int lastDigit = cardNumber.charAt(cardNumber.length());
-            if (lastDigit == 7)
-                result = false;
+//            if (lastDigit == 7)
+//                result = false;
 
             return result;
         }
@@ -27,8 +27,8 @@ public class CardProcessing {
         public boolean processCard(String cardNumber, String name, String expDate, String securityCode) {
             boolean result = true;
             int lastDigit = cardNumber.charAt(cardNumber.length());
-            if (lastDigit == 1)
-                result = false;
+//            if (lastDigit == 1)
+//                result = false;
 
         return result;
         }
@@ -40,8 +40,8 @@ public class CardProcessing {
         public boolean processCard(String cardNumber, String name, String expDate, String securityCode) {
             boolean result = true;
             int lastDigit = cardNumber.charAt(cardNumber.length());
-            if (lastDigit == 4)
-                result = false;
+//            if (lastDigit == 4)
+//                result = false;
 
             return result;
 

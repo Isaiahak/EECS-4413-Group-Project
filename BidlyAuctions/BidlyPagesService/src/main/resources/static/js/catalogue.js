@@ -137,8 +137,9 @@ function placeBid() {
     }
 }
 
-function closed(aid){
-    alert("Auction" + aid + "Has Ended")
+function closed(auction){
+    alert("Auction" + auction.aid + "Has Ended");
+    window.location.href = `${auction.redirectUrl}?auctionId=${aid}`;
 }
 
 // Function to filter auction items based on search input

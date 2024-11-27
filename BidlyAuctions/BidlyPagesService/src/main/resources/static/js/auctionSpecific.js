@@ -16,7 +16,7 @@ socket.onmessage = function(event) {
         switch (message.type) {
             case "closed":
                 console.log("processing closed")
-                closed(message.data);
+                closed(message.data, message.redirectUrl);
                 break;
             case "update":
                 console.log("Processing 'bidUpdate' message");
@@ -38,8 +38,12 @@ socket.onclose = function() {
 };
 
 
-function closed(aid){
-    alert("Auction" + aid + "Has Ended")
+function closed(aid, url){
+    alert("Auction " + aid + "Has Ended")
+    console.log("redirecting " + url +" " + aid);
+    window.location.href = `${url}?auctionId=${aid}`;
+
+
 }
 function update(updates) {
     var auctionId = document.getElementById('auctionId').value;

@@ -6,13 +6,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "catalogue")
+@Table(name = "payment")
 public class Payment {
     @Id
     @Column(name = "paymentID")
     private long paymentID;
 
-    @Column(name = "itemID")
+    @Column(name = "auctionId")
     private long itemID;
 
     @Column(name = "aid")

@@ -58,7 +58,7 @@ public class PaymentService{
             Auction auction = catalogueService.fetchAuction(paymentInfo.getAid());
             payment.setAuctionID(auction.getAid());
             payment.setFinalPrice(auction.getHighestBid());
-            payment.setItemID(auction.getItemid());
+            payment.setItemID(auction.getAid());
             addPayment(payment);
             catalogueService.removeAuction(payment.getAuctionID());
             //liveServerApi.callRemoveAuction(auction); done when the auction closes by the live server instead
@@ -68,6 +68,7 @@ public class PaymentService{
 
             result = true;
         }
+        System.out.println(result);
         return result;
     }
 
