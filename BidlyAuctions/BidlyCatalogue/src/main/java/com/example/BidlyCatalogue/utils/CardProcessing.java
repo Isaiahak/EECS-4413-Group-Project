@@ -39,7 +39,7 @@ public class CardProcessing {
         @Override
         public boolean processCard(String cardNumber, String name, String expDate, String securityCode) {
             boolean result = true;
-            int lastDigit = cardNumber.charAt(cardNumber.length());
+//            int lastDigit = cardNumber.charAt(cardNumber.length());
 //            if (lastDigit == 4)
 //                result = false;
 

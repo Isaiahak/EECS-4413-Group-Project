@@ -16,6 +16,9 @@ public class PaymentInfo{
 
     private double finalPrice;
 
+    public PaymentInfo(){
+    }
+
     public double getFinalPrice() {
         return finalPrice;
     }

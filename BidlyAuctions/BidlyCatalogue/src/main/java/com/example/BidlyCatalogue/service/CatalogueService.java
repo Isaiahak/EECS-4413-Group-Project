@@ -86,8 +86,9 @@ public class CatalogueService {
 
     public boolean removeCatalogue(Long id){
         Optional<CatalogueItem> catalogue = catalogueRepo.findById(id);
-        CatalogueItem realCatalogue = catalogue.get();
-        if(catalogue!=null){
+
+        if(catalogue.isPresent()){
+            CatalogueItem realCatalogue = catalogue.get();
             catalogueRepo.delete(realCatalogue);
             return true;
         }

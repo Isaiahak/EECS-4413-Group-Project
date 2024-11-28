@@ -58,6 +58,7 @@
 
         <label for="securityCode">Security Code</label>
         <input type="text" id="securityCode"  name="securityCode" >
+        <input type="hidden" name="auctionId" th:value="${auctionId}">
         <input type="hidden" name="FinalPrice" th:value="${finalPrice}">
         <button type="submit">Submit</button>
     </form>

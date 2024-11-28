@@ -63,7 +63,7 @@ public class PaymentService{
             catalogueService.removeAuction(payment.getAuctionID());
             //liveServerApi.callRemoveAuction(auction); done when the auction closes by the live server instead
             // remove subscription for the auction on auction end
-            catalogueService.removeCatalogue(payment.getItemID());
+            catalogueService.removeCatalogue(payment.getAuctionID());
             // figure out how to remove the auction for the auctions being displayed
 
             result = true;

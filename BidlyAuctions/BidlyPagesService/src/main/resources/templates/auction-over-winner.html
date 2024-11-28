@@ -28,7 +28,7 @@
     </tr>
     <tr>
         <td>Winning Price</td>
-        <td th:text="${FinalPrice}"></td>
+        <td th:text="${WinningPrice}"></td>
     </tr>
     <tr>
         <td>HighestBidder</td>
@@ -45,6 +45,7 @@
         <input type="hidden" name="ShippingPrice" th:value="${ShippingPrice}">
         <input type="hidden" name="auctionId" th:value="${auction.aid}">
         <input type="hidden" name="HighestBidder" th:value="${HighestBidder}">
+        <input type="hidden" name="WinningPrice" th:value="${WinningPrice}">
         <input type="hidden" name="ItemDescription" th:value="${ItemDescription}">
 
 

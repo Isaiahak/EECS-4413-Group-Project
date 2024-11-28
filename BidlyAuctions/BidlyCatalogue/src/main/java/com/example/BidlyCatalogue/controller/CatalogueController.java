@@ -70,7 +70,7 @@ public class CatalogueController {
         return ResponseEntity.ok(catalogueService.fetchCatalogueItem(itemid));
     }
 
-    @GetMapping("/process")
+    @PostMapping("/process")
     public ResponseEntity<Boolean> doPaymentProcess(@RequestBody PaymentInfo paymentInfo){
         boolean result = paymentService.processPayment(paymentInfo);
         if(result == true){

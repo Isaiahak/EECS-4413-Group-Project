@@ -134,7 +134,7 @@ public class ApiService {
     }
 
     public boolean sendPaymentInfo(PaymentInfo paymentInfo){
-        String url = "https://localhsot8084/api/catalogue/process";
+        String url = "http://localhost:8084/api/catalogue/process";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<PaymentInfo> requestEntity = new HttpEntity<>(paymentInfo, headers);
