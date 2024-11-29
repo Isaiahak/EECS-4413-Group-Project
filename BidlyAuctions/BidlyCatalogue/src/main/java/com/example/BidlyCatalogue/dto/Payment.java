@@ -1,16 +1,14 @@
 package com.example.BidlyCatalogue.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "payment")
 public class Payment {
     @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "paymentID")
-    private long paymentID;
+    private Long paymentID;
 
     @Column(name = "auctionId")
     private long itemID;
@@ -25,7 +23,7 @@ public class Payment {
         return paymentID;
     }
 
-    public void setPaymentID(int paymentID) {
+    public void setPaymentID(Long paymentID) {
         this.paymentID = paymentID;
     }
 

@@ -261,7 +261,7 @@ public class PagesController {
     }
 
     @GetMapping("/receipt")
-    public String getReceiptInfo(@RequestParam("auction") Long aid,@RequestParam("FinalPrice") double finalPrice, Model model) {
+    public String getReceiptInfo(@RequestParam("auctionId") Long aid,@RequestParam("FinalPrice") double finalPrice, Model model) {
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
 
@@ -272,9 +272,12 @@ public class PagesController {
         String city = userInfo.getCity();
         String province = userInfo.getProvince();
         String postalCode = userInfo.getZipcode();
-        CatalogueItem item = apiService.callGetACatalogueItem(aid);
-        long itemID = item.getAid();
-        String shippingDate = item.getShippingDate();
+
+        // TODO: Shipping address is not set when an auction is created, we need to handle that.
+        // TODO: We cannot use the Catalogue item to retrieve information since the process payment method removes it.
+        //String shippingDate = item.getShippingDate();
+        //model.addAttribute("shippingDate", shippingDate);
+
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("street", street);
@@ -282,8 +285,8 @@ public class PagesController {
         model.addAttribute("province", province);
         model.addAttribute("postalCode", postalCode);
         model.addAttribute("finalPrice", finalPrice);
-        model.addAttribute("itemID", itemID);
-        model.addAttribute("shippingDate", shippingDate);
+        model.addAttribute("itemID", aid);
+
         return "receipt";
     }
 
