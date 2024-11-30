@@ -1,6 +1,7 @@
 package com.example.BidlyLiveServer.service;
 
 
+
 import com.example.BidlyLiveServer.dto.CatalogueItem;
 import com.example.BidlyLiveServer.dto.LiveUpdate;
 import com.example.BidlyLiveServer.dto.UpdateAuctionRequest;
@@ -8,7 +9,6 @@ import com.example.BidlyLiveServer.repo.CatalogueDB;
 import com.example.BidlyLiveServer.websocket.LiveServerWebSocketHandler;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +49,12 @@ public class LiveServerService {
     }
 
     public void updateTime() throws Exception {
-
+        if(updates.size() == 0){
+            return ;
+        }
         for(LiveUpdate time: updates){
-            if(time.getTimeRemaining().equals("CLOSED")){
-                continue;
-            }
+
+
 
             StringTokenizer tokenizer = new StringTokenizer(time.getTimeRemaining(), ":Dhms", false);
             int days = Integer.parseInt(tokenizer.nextToken().trim());
@@ -113,7 +114,7 @@ public class LiveServerService {
         //inefficient, will switch to hashmap later
         for(LiveUpdate update : updates){
             if(update.getAid().equals(updateRequest.getAid())){
-                System.out.println("fpund");
+                System.out.println("found");
                 update.setHighestBid(updateRequest.getBid());
             }
         }
@@ -121,5 +122,17 @@ public class LiveServerService {
 
     public void auctionEnd(Long aid) throws Exception {
         liveServerWebSocketHandler.sendAuctionClosed(aid);
+        removeAuction(aid);
+    }
+
+    public boolean removeAuction(Long aid){
+        boolean returnValue = false;
+        for (LiveUpdate update : updates){
+            if(update.getAid().equals(aid)){
+                updates.remove(update);
+                return true;
+            }
+        }
+        return returnValue;
     }
 }

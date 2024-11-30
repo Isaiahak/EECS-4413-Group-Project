@@ -5,6 +5,7 @@ const usernameField = document.getElementById('username');
 socket.onopen = function() {
     console.log(" js WebSocket connection established.");
     const usernameValue = usernameField.innerHTML;
+    console.log(usernameValue);
     socket.send(JSON.stringify({type:'connect', data:usernameValue}));
 };
 
@@ -78,7 +79,7 @@ function initCatalogue(catalogueItems) {
                 <input type="radio" id="itemSelect" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid})">
                 <h3>${item.title}</h3>
                 <p id="price-${item.aid}">Price: $${item.highestBid}</p>
-                <p id="timeRemaining-${item.aid}">Time Remaining: ${item.auctionTime}</p>
+                <p id="timeRemaining-${item.aid}">Time Remaining: CLOSED</p>
             `;
 
             auctionListContainer.appendChild(itemElement);
@@ -136,9 +137,27 @@ function placeBid() {
     }
 }
 
-function closed(aid){
-    alert("Auction" + aid + "Has Ended")
+function closed(auction){
+    alert("Auction" + auction.aid + "Has Ended");
+    window.location.href = `${auction.redirectUrl}?auctionId=${aid}`;
 }
+
+// Function to filter auction items based on search input
+searchInput.addEventListener("input", function() {
+    var query = searchInput.value.toLowerCase(); // Get the current search query
+    var auctionItems = document.querySelectorAll('.auction-item'); // Get all auction items
+
+    auctionItems.forEach(function(item) {
+        var title = item.querySelector('h3').textContent.toLowerCase(); // Get the title of each auction item
+
+        // If the title includes the search query, show the item; otherwise, hide it
+        if (title.includes(query)) {
+            item.style.display = '';  // Show the item
+        } else {
+            item.style.display = 'none';  // Hide the item
+        }
+    });
+});
 
 
 

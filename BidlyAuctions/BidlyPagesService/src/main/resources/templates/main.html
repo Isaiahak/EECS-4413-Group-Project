@@ -1,13 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up / Login</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
 </head>
 <body>
-<h1>Welcome!</h1>
-<button onclick="location.href='/signup'">Sign Up</button>
-<button onclick="location.href='/login'">Login</button>
+<div class="container">
+  <svg class="logo" viewBox="0 0 100 100">
+    <!-- Circle background -->
+    <circle cx="50" cy="50" r="45" fill="#17921d"/>
+
+    <!-- Gavel head -->
+    <rect x="30" y="25" width="40" height="20" rx="5" fill="white"/>
+
+    <!-- Gavel handle -->
+    <rect x="45" y="45" width="10" height="35" rx="2" fill="white"/>
+
+    <!-- Sound waves / bid indication -->
+    <path d="M 65,15 Q 75,25 75,35" stroke="white" fill="none" stroke-width="3"/>
+    <path d="M 70,10 Q 85,25 85,40" stroke="white" fill="none" stroke-width="3"/>
+
+    <!-- Dollar sign -->
+    <text x="25" y="65" fill="white" font-size="20" font-weight="bold">$</text>
+  </svg>
+  <div class="name">
+    <h1 class="bidly">Bidly</h1>
+    <h1 class="auctions">Auctions</h1>
+  </div>
+  <div class="button-container">
+    <button class="btn btn-login" onclick="location.href='/login'">Login</button>
+    <button class="btn btn-signup" onclick="location.href='/signup'">Sign Up</button>
+  </div>
+</div>
 </body>
 </html>

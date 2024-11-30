@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Item Information</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Attribute</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>Item Description</td>
+        <td th:text="${ItemDescription}"></td>
+    </tr>
+    <tr>
+        <td>Shipping Price</td>
+        <td th:text="${ShippingPrice}"></td>
+    </tr>
+    <tr>
+        <td>Expedited Shipping</td>
+        <td th:text="${ExpeditedShipping}"></td>
+    </tr>
+    <tr>
+        <td>Winning Price</td>
+        <td th:text="${WinningPrice}"></td>
+    </tr>
+    <tr>
+        <td>HighestBidder</td>
+        <td th:text="${HighestBidder}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h2>Shipping Options</h2>
+<form action="/auction-over-winner" method="post">
+    <label>
+        <input type="radio" name="shipping" value="expedited" checked>
+        <input type="hidden" name="ExpeditedShipping" th:value="${ExpeditedShipping}">
+        <input type="hidden" name="ShippingPrice" th:value="${ShippingPrice}">
+        <input type="hidden" name="auctionId" th:value="${auction.aid}">
+        <input type="hidden" name="HighestBidder" th:value="${HighestBidder}">
+        <input type="hidden" name="WinningPrice" th:value="${WinningPrice}">
+        <input type="hidden" name="ItemDescription" th:value="${ItemDescription}">
+
+
+        Standard Shipping (5-7 days)
+    </label>
+    <button type="submit">Pay Now</button>
+</form>
+</body>
+</html>

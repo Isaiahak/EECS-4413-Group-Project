@@ -4,13 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign Up Success</title>
+  <link rel="stylesheet" th:href="@{/css/signupSuccess.css}"/>
+
 </head>
 <body>
-<h2>Sign Up Successful!</h2>
-<p>sign-up was successful!</p>
+<div class="success-container">
+  <h2>Sign Up Successful!</h2>
+  <p>Your sign-up was successful! You can now login.</p>
 
-<form action="/login" method="get">
-  <button type="submit">Login</button>
-</form>
+  <form action="/login" method="get">
+    <button type="submit">Login</button>
+  </form>
+</div>
 </body>
 </html>

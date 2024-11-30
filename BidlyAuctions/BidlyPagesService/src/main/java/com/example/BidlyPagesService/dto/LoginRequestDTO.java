@@ -1,5 +1,6 @@
 package com.example.BidlyPagesService.dto;
 
+//Login Request DTO, used to send login requests to the sign up service.
 public class LoginRequestDTO {
     private String username;
     private String password;

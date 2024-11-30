@@ -2,7 +2,9 @@ package com.example.BidlyCatalogue.dto;
 
 import jakarta.persistence.*;
 
-
+//Auction DTO, received from Pages to create auctions.
+//Defines table structure for auction table in DB
+//Used to perform DB operations.
 @Entity
 @Table(name = "auction")
 public class Auction {
@@ -17,7 +19,7 @@ public class Auction {
     @Column(name = "\"desc\"")
     private String desc;
 
-    @Column(name = "currentHighestBidder")
+    @Column(name = "currentHighestBid")
     private int highestBid;
 
     @Column(name = "type")
@@ -25,6 +27,14 @@ public class Auction {
 
     @Column(name = "time_limit")
     private String timeRemaining;
+
+    @Column(name = "itemID")
+    private long itemid;
+
+    @Column(name = "highestBidder")
+    private String userid;
+
+
 
 
     public Auction( String title, String desc, int highestBid, String type, String timeRemaining) {
@@ -84,5 +94,21 @@ public class Auction {
 
     public void setTimeRemaining(String timeRemaining) {
         this.timeRemaining = timeRemaining;
+    }
+
+    public long getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(long itemid) {
+        this.itemid = itemid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

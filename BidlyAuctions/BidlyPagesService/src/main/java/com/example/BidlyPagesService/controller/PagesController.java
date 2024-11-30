@@ -2,26 +2,31 @@ package com.example.BidlyPagesService.controller;
 
 import com.example.BidlyPagesService.api.ApiService;
 import com.example.BidlyPagesService.dto.Auction;
+import com.example.BidlyPagesService.dto.CatalogueItem;
 import com.example.BidlyPagesService.dto.LoginRequestDTO;
-import com.example.BidlyPagesService.service.AuctionService;
+import com.example.BidlyPagesService.dto.UserInfo;
+import com.example.BidlyPagesService.dto.PaymentInfo;
 import com.example.BidlyPagesService.service.SubscriberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+//Main Controller for Bidly Auctions
+//This is the Controller Component defined in system architecture.
 @Controller
+@SessionAttributes("uid")
 public class PagesController {
 
     @Autowired
     private ApiService apiService;
 
-    @Autowired
-    private AuctionService auctionService;
-
+    //Subscriber service to track user sessions.
     @Autowired
     private SubscriberService subscriberService;
+
 
     @GetMapping("/main")
     public String index() {
@@ -34,15 +39,15 @@ public class PagesController {
     }
 
     @PostMapping("/signup")
-    public ModelAndView handleSignUp(@RequestParam String username, @RequestParam String password,
-                                     @RequestParam String firstName, @RequestParam String lastName,
-                                     @RequestParam String street, @RequestParam String city,
-                                     @RequestParam String province, @RequestParam String zipcode) {
+    public ModelAndView handleSignUp(@RequestParam String username, @RequestParam String password, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String street, @RequestParam String city, @RequestParam String province, @RequestParam String zipcode) {
+        //May not be required
         ModelAndView modelAndView = new ModelAndView();
 
-        // Call the Signup Service with individual parameters
-        boolean success = apiService.callSignUpService(username, password, firstName, lastName,
-                street, city, province, zipcode);
+        //REST call to SignUp Microservice to initiate and complete the signup process
+        boolean success = apiService.callSignUpService(username, password, firstName, lastName, street, city, province, zipcode);
+
+        //For this project, the "Username is already taken" message will display if that username already exists
+        //or if there is a positive on SQLi check.
         if (success) {
             modelAndView.setViewName("signupSuccess"); // Redirect to success page
             modelAndView.addObject("successMessage", "Sign up successful! You can now log in.");
@@ -58,20 +63,26 @@ public class PagesController {
         model.addAttribute("successMessage", "Sign up successful! You can now log in.");
         return "signupSuccess"; // Success page
     }
+
     @GetMapping("/login")
     public ModelAndView login(){
         return new ModelAndView("login");
     }
 
     @PostMapping("/login")
-    public String postLogin(@RequestParam String username, @RequestParam String password){
+    public String postLogin(@RequestParam String username, @RequestParam String password, Model model, RedirectAttributes redirectAttributes){
+        //Create LoginRequestDTO for REST call to SignUpService
         LoginRequestDTO lr = new LoginRequestDTO();
         lr.setPassword(password);
         lr.setUsername(username);
-        boolean success = apiService.callLoginService(lr);
-        if(success){
+
+        //REST Call to SignUpService to complete login process
+        String uid = apiService.callLoginService(lr);
+
+        //Login fails if there is no match between username or password, and if positive on SQLi check.
+        if(uid != null){
+            model.addAttribute("uid", uid);
             return "redirect:/catalogue";
-            //Make a request to catalogue
         }else{
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("login");
@@ -83,30 +94,205 @@ public class PagesController {
 
     @GetMapping("/catalogue")
     public String getCatalogue(Model model) {
-
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
         return "catalogue";
     }
 
+    //Get mapping for when user selects place bid in the catalogue page.
     @GetMapping("/auction")
     public String viewAuction(@RequestParam("auctionId") Long auctionId, Model model) {
-        // Assuming you have a service to fetch auction details
-        Auction auction = apiService.callCatalogueGetAuction(auctionId);
 
-        // Add auction details to the model
+        //REST call to retrieve selected auction information
+        //This information will be used by this microservice to generate
+        //the auction specific page with the correct information.
+        Auction auction = apiService.callCatalogueGetAuction(auctionId);
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println("we got to this part get map");
         model.addAttribute("auction", auction);
 
-        // Return the auction detail page view
-        return "auctionSpecific"; // Make sure you have the corresponding Thymeleaf template
+        return "auctionSpecific";
     }
 
-    @PostMapping("/auction")
-    public String placeBid(@RequestParam("auctionId") Long auctionId,@RequestParam("bidAmount") int bidAmount, @RequestParam String username, Model model) {
-        // Assuming you have a service to fetch auction details
-        Boolean bidSuccess = apiService.callCataloguePlaceBid(auctionId, bidAmount);
-        subscriberService.subscribe(auctionId, username);
 
-        // Return the auction detail page view
-        return "redirect:/auction?auctionId="+auctionId; // Make sure you have the corresponding Thymeleaf template
+    //Post mapping for when user selects place bid button.
+    @PostMapping("/auction")
+    public String placeBid(@RequestParam("auctionId") Long auctionId, @RequestParam("bidAmount") int bidAmount, Model model) {
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println(uid);
+        //REST call to catalogue to process and update the placed bid.
+        boolean bidSuccess = apiService.callCataloguePlaceBid(auctionId, bidAmount, uid);
+        if (bidSuccess)
+        //Once a users bid is successful, they are now subscribed to that auction.
+            subscriberService.subscribe(auctionId,uid);
+
+        return "redirect:/auction?auctionId="+auctionId;
+    }
+
+    @GetMapping("/auction-results")
+    public String getAuctionResults(@RequestParam("auctionId") Long aid, Model model, RedirectAttributes redirectAttributes){
+        String auctionEndRedirect;
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println(uid);
+        //return "auction-results";String
+
+        Auction auctionResults = apiService.callCatalogueGetAuction(aid);
+        System.out.println(auctionResults.getUserid() + " " + uid);
+        if (auctionResults.getUserid().compareTo(uid) == 0) {
+            auctionEndRedirect = "redirect:/auction-over-winner";
+            redirectAttributes.addFlashAttribute("auction", auctionResults);
+            System.out.println(auctionResults.getAid());
+        }
+        else {
+            auctionEndRedirect = "redirect:/auction-over";
+        }
+        return auctionEndRedirect;
+
+    }
+
+    @GetMapping("/auction-over-winner")
+    public String setupAuctionEndDisplay(Model model){
+        Auction auction = (Auction)model.asMap().get("auction");
+        System.out.println("Auction over winner get" + auction.getAid());
+        CatalogueItem item = apiService.callGetACatalogueItem(auction.getAid());
+        String itemDescription = item.getTitle();
+        double shippingPrice = item.getShippingPrice();
+        double expeditedShipping = item.getExpeditedShipping();
+        double winningPrice = auction.getHighestBid();
+        String highestBidder = auction.getUserid();
+        model.addAttribute("ItemDescription",itemDescription);
+        model.addAttribute("ShippingPrice", shippingPrice);
+        model.addAttribute("ExpeditedShipping", expeditedShipping);
+        model.addAttribute("WinningPrice", winningPrice);
+        model.addAttribute("HighestBidder", highestBidder);
+        model.addAttribute("auction", auction);
+        return "auction-over-winner";
+    }
+
+    @PostMapping("/auction-over-winner")
+    public String setupPayNow(Model model, @RequestParam("shipping") String shippingtype,
+                             // @RequestParam(value = "action", required = false) String action,
+                              @RequestParam("ExpeditedShipping") double expeditedShipping,
+                              @RequestParam("ShippingPrice") double shippingPrice,
+                              @ModelAttribute("auctionId") Long aid,
+                              @ModelAttribute("WinningPrice") double winPrice,
+                              @ModelAttribute("ItemDescription") String itemDescription,
+                              RedirectAttributes redirectAttributes) {
+        double finalPrice;
+        System.out.println(aid);
+        //if ("submit".equals(action)) {
+            System.out.println("submit");
+            redirectAttributes.addAttribute("auctionId", aid);
+            if ("expedited".equals(shippingtype)) {
+                finalPrice = winPrice + expeditedShipping;
+                model.addAttribute("FinalPrice", finalPrice);
+                redirectAttributes.addAttribute("FinalPrice", finalPrice);
+            } else if ("no-expedited".equals(shippingtype)) {
+                finalPrice = winPrice + shippingPrice;
+                model.addAttribute("FinalPrice", finalPrice);
+                redirectAttributes.addAttribute("FinalPrice", finalPrice);
+            }
+            System.out.println("payment");
+            return "redirect:/payment";
+        //}
+    }
+
+
+
+    @GetMapping("/payment")
+    public String getPaymentPage(@RequestParam("auctionId") Long aid, @RequestParam("FinalPrice") double finalPrice, Model model, RedirectAttributes redirectAttributes){
+        System.out.println(aid);
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        UserInfo userInfo = apiService.fetchUserInfo(uid);
+        String firstName = userInfo.getFirstName();
+        String lastName  = userInfo.getLastName();
+        String street  = userInfo.getStreet();
+        String city = userInfo.getCity();
+        String province = userInfo.getProvince();
+        String postalCode = userInfo.getZipcode();
+        model.addAttribute("finalPrice", finalPrice);
+        model.addAttribute("firstName", firstName);
+        model.addAttribute("lastName", lastName);
+        model.addAttribute("street", street);
+        model.addAttribute("city", city);
+        model.addAttribute("province", province);
+        model.addAttribute("postalCode", postalCode);
+        model.addAttribute("auctionId", aid);
+
+        return "payment";
+    }
+
+    @PostMapping("/payment")
+    public String processPayment(Model model, @RequestParam("cardNumber") String cardNumber,
+                                 @RequestParam("nameOnCard") String name,
+                                 @RequestParam("expirationDate") String expDate,
+                                 @RequestParam("securityCode") String securityCode,
+                                 @RequestParam("auctionId") Long aid,
+                                 @RequestParam("FinalPrice") Double finalPrice,
+                                 RedirectAttributes redirectAttributes
+                                 ) {
+        System.out.println(aid);
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+
+        String returnString = "catalogue"; // TODO make a failed process page;
+        PaymentInfo paymentInfo = new PaymentInfo();
+        paymentInfo.setCardNumber(cardNumber);
+        paymentInfo.setName(name);
+        paymentInfo.setExpDate(expDate);
+        paymentInfo.setSecurityCode(securityCode);
+        paymentInfo.setUid(uid);
+        paymentInfo.setAid(aid);
+        paymentInfo.setFinalPrice(finalPrice);
+        boolean result = apiService.sendPaymentInfo(paymentInfo);
+        if (result == true) {
+            System.out.println("Receipt");
+            returnString = "redirect:/receipt";
+            redirectAttributes.addAttribute("auctionId", aid);
+            redirectAttributes.addAttribute("FinalPrice", finalPrice);
+
+        }
+        System.out.println("catalogue");
+        return returnString;
+    }
+
+    @GetMapping("/receipt")
+    public String getReceiptInfo(@RequestParam("auctionId") Long aid,@RequestParam("FinalPrice") double finalPrice, Model model) {
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+
+        UserInfo userInfo = apiService.fetchUserInfo(uid);
+        String firstName = userInfo.getFirstName();
+        String lastName  = userInfo.getLastName();
+        String street  = userInfo.getStreet();
+        String city = userInfo.getCity();
+        String province = userInfo.getProvince();
+        String postalCode = userInfo.getZipcode();
+
+        // TODO: Shipping address is not set when an auction is created, we need to handle that.
+        // TODO: We cannot use the Catalogue item to retrieve information since the process payment method removes it.
+        //String shippingDate = item.getShippingDate();
+        //model.addAttribute("shippingDate", shippingDate);
+
+        model.addAttribute("firstName", firstName);
+        model.addAttribute("lastName", lastName);
+        model.addAttribute("street", street);
+        model.addAttribute("city", city);
+        model.addAttribute("province", province);
+        model.addAttribute("postalCode", postalCode);
+        model.addAttribute("finalPrice", finalPrice);
+        model.addAttribute("itemID", aid);
+
+        return "receipt";
+    }
+
+    @PostMapping("/receipt")
+    public String backToCatalogue(){
+        return "redirect:/catalogue";
     }
 
 }

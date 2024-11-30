@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+//REST Controller for security operations.
 @RestController
 @RequestMapping("/api/sec")
 public class SecurityController {

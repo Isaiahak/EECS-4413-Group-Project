@@ -1,5 +1,6 @@
 package com.example.BidlyPagesService.dto;
 
+//User Session DTO. used internally by this microservice to track user sessions and subscriptions.
 import org.springframework.web.socket.WebSocketSession;
 
 public class UserSession {
@@ -9,6 +10,7 @@ public class UserSession {
     public UserSession() {
     }
 
+    //THIS CODE IS HERE IN CASE WE SWITCH TO TRACKING USER ID INSTEAD OF USERNAME
 //    public Long getUid() {
 //        return uid;
 //    }
