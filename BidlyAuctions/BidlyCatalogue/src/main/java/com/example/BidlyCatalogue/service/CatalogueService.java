@@ -46,6 +46,7 @@ public class CatalogueService {
         catalogueItem.setTitle(auction.getTitle());
         catalogueItem.setHighestBid(auction.getHighestBid());
         catalogueItem.setAuctionTime(auction.getTimeRemaining());
+        catalogueItem.setType(auction.getType());
 
         try{
             catalogueItem = catalogueRepo.save(catalogueItem);

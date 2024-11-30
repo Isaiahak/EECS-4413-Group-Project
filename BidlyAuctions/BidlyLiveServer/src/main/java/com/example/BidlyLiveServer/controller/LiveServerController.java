@@ -23,12 +23,12 @@ public class LiveServerController {
     public void updateBid(@RequestBody UpdateAuctionRequest updateRequest){
         liveServerService.updateAuctionBid(updateRequest);
     }
-    /* now done internally
+
     @PostMapping("/remove-auction")
-    public void removeAuction(@RequestBody Auction auction){
-        liveServerService.removeAuction(auction);
+    public void removeAuction(@RequestBody long auctionid){
+        liveServerService.removeAuction(auctionid);
     }
-    */
+
 
 
 }

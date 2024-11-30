@@ -130,8 +130,13 @@ function selectAuction(auctionId) {
 function placeBid() {
     if (selectedAuctionId) {
         // Redirect to the auction page, passing the auction ID as a query parameter
+        if(catalogueItem.getType() == "dutch"){
+            window.location.href = `/dutch-auction?auctionId=${selectedAuctionId}`;
+        }
+        else{
+            window.location.href = `/auction?auctionId=${selectedAuctionId}`;
+        }
         console.log("redirecting");
-        window.location.href = `/auction?auctionId=${selectedAuctionId}`;
     } else {
         alert("Please select an auction to place a bid.");
     }

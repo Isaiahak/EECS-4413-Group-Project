@@ -7,6 +7,16 @@ public class LiveUpdate {
     private String timeRemaining;
     private int highestBid;
 
+    public int getInitialPrice() {
+        return initialPrice;
+    }
+
+    public void setInitialPrice(int initialPrice) {
+        this.initialPrice = initialPrice;
+    }
+
+    private int initialPrice;
+
     public LiveUpdate(){
     }
 

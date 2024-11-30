@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Auction Details</title>
+</head>
+<body onload="initAuctionSpecific()">
+
+<div id = header>
+    <h1>Auction Details</h1>
+    <h3 id="username" th:text="${uid}"></h3>
+</div>
+
+
+<div>
+    <h3 th:text="${auction.title}"></h3>
+
+    <p th:id="'price-' + ${auction.aid}" th:text="'Price: $' + ${auction.highestBid}"></p>
+
+    <form action="/dutch-auction" method="POST">
+        <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
+        <input type="hidden" name="username" th:value="${uid}">
+        <button type="submit">Buy out</button>
+    </form>
+</div>
+
+<script th:src="@{/js/auctionSpecific.js}"></script>
+
+</body>
+</html>

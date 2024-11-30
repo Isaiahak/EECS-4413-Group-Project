@@ -152,4 +152,12 @@ public class ApiService {
 
         return response.getBody();
     }
+
+    public void removeDutch(long auctionid){
+        String url = "http://localhost:8086/api/live/remove-auction";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Long> requestEntity = new HttpEntity<>(auctionid, headers);
+        restTemplate.postForEntity(url,requestEntity,Long.class);
+    }
 }

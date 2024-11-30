@@ -2,6 +2,7 @@ package com.example.BidlyLiveServer.service;
 
 
 
+import com.example.BidlyLiveServer.dto.Auction;
 import com.example.BidlyLiveServer.dto.CatalogueItem;
 import com.example.BidlyLiveServer.dto.LiveUpdate;
 import com.example.BidlyLiveServer.dto.UpdateAuctionRequest;
@@ -24,9 +25,9 @@ public class LiveServerService {
     @Autowired
     private ArrayList<LiveUpdate> updates;
 
+    @Autowired ArrayList<LiveUpdate> dutchAuctions;
     @Autowired
     private LiveServerWebSocketHandler liveServerWebSocketHandler;
-
 
     @Autowired
     private CatalogueDB catalogueRepo;
@@ -93,6 +94,19 @@ public class LiveServerService {
         }
     }
 
+    public void reducePrice() throws Exception {
+        if(dutchAuctions.size() == 0){
+            return ;
+        }
+        for(LiveUpdate time: dutchAuctions) {
+            if(time.getInitialPrice() / time.getHighestBid() == 2 ){
+                break;
+            }
+            time.setHighestBid((int) (time.getInitialPrice() * 0.9));
+        }
+
+    }
+
     @Scheduled(fixedDelay = 1000)
     public void pushUpdates() throws Exception {
         updateTime();
@@ -102,12 +116,29 @@ public class LiveServerService {
         }
     }
 
-    public void addAuction(CatalogueItem newAuction){
-        LiveUpdate newTimeUpdate = new LiveUpdate();
-        newTimeUpdate.setAid(newAuction.getAid());
-        newTimeUpdate.setTitle(newAuction.getTitle());
-        newTimeUpdate.setTimeRemaining(newAuction.getAuctionTime());
-        updates.add(newTimeUpdate);
+    @Scheduled(fixedDelay = 60000)
+    public void reduceDutch() throws Exception {
+        reducePrice();
+        liveServerWebSocketHandler.sendAuctionUpdate(updates);
+    }
+
+    public void addAuction(CatalogueItem newAuction) {
+        if (newAuction.getType().compareTo("dutch") == 0) {
+            LiveUpdate newTimeUpdate = new LiveUpdate();
+            newTimeUpdate.setAid(newAuction.getAid());
+            newTimeUpdate.setTitle(newAuction.getTitle());
+            newTimeUpdate.setHighestBid(newAuction.getHighestBid());
+            newTimeUpdate.setInitialPrice(newAuction.getHighestBid());
+            newTimeUpdate.setTimeRemaining("0D:0h:0m:1s");
+            dutchAuctions.add(newTimeUpdate);
+        }
+        else {
+            LiveUpdate newTimeUpdate = new LiveUpdate();
+            newTimeUpdate.setAid(newAuction.getAid());
+            newTimeUpdate.setTitle(newAuction.getTitle());
+            newTimeUpdate.setTimeRemaining(newAuction.getAuctionTime());
+            updates.add(newTimeUpdate);
+        }
     }
 
     public void updateAuctionBid(UpdateAuctionRequest updateRequest){
@@ -125,14 +156,12 @@ public class LiveServerService {
         removeAuction(aid);
     }
 
-    public boolean removeAuction(Long aid){
+    public void removeAuction(Long aid){
         boolean returnValue = false;
-        for (LiveUpdate update : updates){
+        for (LiveUpdate update : dutchAuctions){
             if(update.getAid().equals(aid)){
-                updates.remove(update);
-                return true;
+                dutchAuctions.remove(update);
             }
         }
-        return returnValue;
     }
 }

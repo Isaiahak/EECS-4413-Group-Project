@@ -109,7 +109,6 @@ public class PagesController {
         Auction auction = apiService.callCatalogueGetAuction(auctionId);
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
-        System.out.println("we got to this part get map");
         model.addAttribute("auction", auction);
 
         return "auctionSpecific";
@@ -129,6 +128,20 @@ public class PagesController {
             subscriberService.subscribe(auctionId,uid);
 
         return "redirect:/auction?auctionId="+auctionId;
+    }
+
+    @GetMapping("/dutch-auction")
+    public String display(@RequestParam("auctionId") Long auctionId, Model model){
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        model.addAttribute("auction", auction);
+        return "/dutch-auction"
+    }
+
+    @PostMapping("/dutch-auction")
+    public String buyout(){
+        apiService.removeDutch(auctionid);
+        return "redirect:/payment";
     }
 
     @GetMapping("/auction-results")
