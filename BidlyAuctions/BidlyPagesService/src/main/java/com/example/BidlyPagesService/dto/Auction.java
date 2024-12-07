@@ -32,17 +32,32 @@ public class Auction {
     @JsonProperty("userid")
     private String userid;
 
+    //for dutch auctions
 
-    public Auction(String title, String desc, int highestBid, String type, String timeRemaining) {
-        this.title = title;
-        this.desc = desc;
-        this.highestBid = highestBid;
-        this.type = type;
-        this.timeRemaining = timeRemaining;
+    @JsonProperty("reductionInterval")
+    private String reductionInterval;
+
+    @JsonProperty("reductionAmount")
+    private int reductionAmount;
+
+
+    public Auction() {
     }
 
-    public Auction(){
+    public String getReductionInterval() {
+        return reductionInterval;
+    }
 
+    public void setReductionInterval(String reductionInterval) {
+        this.reductionInterval = reductionInterval;
+    }
+
+    public int getReductionAmount() {
+        return reductionAmount;
+    }
+
+    public void setReductionAmount(int reductionAmount) {
+        this.reductionAmount = reductionAmount;
     }
 
     public Long getAid() {

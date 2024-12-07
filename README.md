@@ -1,20 +1,18 @@
 "# EECS-4413-Group-Project" 
 # EECS-4413-Group-Project
 
-LATEST UPDATE:  The entire backend functionality is complete. In this current state, the application will fully work on the back end.
+LATEST UPDATE:  The entire backend functionality and frontend is complete. In this current state, the application will fully work.
 
-IMPORTANT:      A constraint in the "payment" table in the "AuctionsDB" has been changed. Please delete the payment table or the paymentId 
-                column from the database before starting the catalogue service so Hibernate can correctly regenerate the table. 
+IMPORTANT:      A TON of fields in the AuctionDB have been added. Please delete the auction and catalogue tables before starting 
+                the catalogue service so Hibernate can correctly regenerate the table. 
 
-WHATS LEFT:     User interface DESIGN for auctionSpecific, auction over, auction over winner, payment, and receipt pages. Implementation 
-                of  Dutch auctions.
+WHATS LEFT:     DEPLOY
 
 LATEST ISSUES:  The Live server throws a null exception when there are no auctions left in the catalogue, this does not hinder 
                 the user experience but we will need to handle that. There has been little testing for user sign up, incorrect login,
-                existing user upon signup, and a user losing an auction, we need to make sure those functions are working correctly. 
-                The Receipt page is incorrectly trying to use model attributes, it needs to use th:text to set them. The Pub Sub 
-                implementation is pretty basic, so it does not handle disconnects or proper 3rd party bus. In the future we can use 
-                Kafka or RabbitMQ for a real pub sub implementation.
+                existing user upon signup, we need to make sure those functions are working correctly. The Pub Sub implementation is 
+                pretty basic, but we might be too far gone now to make changes. Currently There is no generation of shipping dates in 
+                the app or the database, we will need to create those and handle them for expedited vs standard shipping
 
 SETUP (TEMPORARY)
 As of now the applications will not work from the github repo.

@@ -1,13 +1,8 @@
 package com.example.BidlyPagesService.api;
 
-import com.example.BidlyPagesService.dto.Auction;
-import com.example.BidlyPagesService.dto.CatalogueItem;
-import com.example.BidlyPagesService.dto.LoginRequestDTO;
-import com.example.BidlyPagesService.dto.UpdateAuctionRequest;
+import com.example.BidlyPagesService.dto.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import com.example.BidlyPagesService.dto.PaymentInfo;
-import com.example.BidlyPagesService.dto.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -149,6 +144,21 @@ public class ApiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(userid, headers);
         ResponseEntity<UserInfo> response = restTemplate.postForEntity(url, requestEntity, UserInfo.class);
+
+        return response.getBody();
+    }
+
+    public boolean callCatalogueBuyout(Long aid, String uid) {
+        String url = "http://localhost:8084/api/catalogue/buyout";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        UpdateAuctionRequest updateRequest = new UpdateAuctionRequest();
+        updateRequest.setAid(aid);
+        updateRequest.setUid(uid);
+
+        HttpEntity<UpdateAuctionRequest> requestEntity = new HttpEntity<>(updateRequest, headers);
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
         return response.getBody();
     }

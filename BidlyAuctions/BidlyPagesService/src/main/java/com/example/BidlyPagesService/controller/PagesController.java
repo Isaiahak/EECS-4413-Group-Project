@@ -131,6 +131,34 @@ public class PagesController {
         return "redirect:/auction?auctionId="+auctionId;
     }
 
+    @GetMapping("/dutch-auction")
+    public String viewDutchAuction(@RequestParam("auctionId") Long auctionId, Model model) {
+
+        //REST call to retrieve selected auction information
+        //This information will be used by this microservice to generate
+        //the auction specific page with the correct information.
+        Auction auction = apiService.callCatalogueGetAuction(auctionId);
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println("we got to this part get map");
+        model.addAttribute("auction", auction);
+
+        return "dutchAuctionSpecific";
+    }
+
+
+    //Post mapping for when user selects place bid button.
+    @PostMapping("/dutch-auction")
+    public String buyout(@RequestParam("auctionId") Long auctionId, Model model) {
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println(uid);
+        //REST call to catalogue to process and update the placed bid.
+        boolean buyout = apiService.callCatalogueBuyout(auctionId, uid);
+
+        return "redirect:/auction-results?auctionId="+auctionId;
+    }
+
     @GetMapping("/auction-results")
     public String getAuctionResults(@RequestParam("auctionId") Long aid, Model model, RedirectAttributes redirectAttributes){
         String auctionEndRedirect;
@@ -190,7 +218,7 @@ public class PagesController {
                 finalPrice = winPrice + expeditedShipping;
                 model.addAttribute("FinalPrice", finalPrice);
                 redirectAttributes.addAttribute("FinalPrice", finalPrice);
-            } else if ("no-expedited".equals(shippingtype)) {
+            } else if ("standard".equals(shippingtype)) {
                 finalPrice = winPrice + shippingPrice;
                 model.addAttribute("FinalPrice", finalPrice);
                 redirectAttributes.addAttribute("FinalPrice", finalPrice);

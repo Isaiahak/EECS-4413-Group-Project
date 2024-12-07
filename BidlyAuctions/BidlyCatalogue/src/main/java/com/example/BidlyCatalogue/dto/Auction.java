@@ -34,6 +34,14 @@ public class Auction {
     @Column(name = "highestBidder")
     private String userid;
 
+    @Column(name = "reductionAmount")
+    private int reductionAmount;
+
+    @Column(name = "reductionInterval")
+    private String reductionInterval;
+
+
+
 
 
 
@@ -46,6 +54,22 @@ public class Auction {
     }
     public Auction(){
 
+    }
+
+    public int getReductionAmount() {
+        return reductionAmount;
+    }
+
+    public void setReductionAmount(int reductionAmount) {
+        this.reductionAmount = reductionAmount;
+    }
+
+    public String getReductionInterval() {
+        return reductionInterval;
+    }
+
+    public void setReductionInterval(String reductionInterval) {
+        this.reductionInterval = reductionInterval;
     }
 
     public Long getAid() {

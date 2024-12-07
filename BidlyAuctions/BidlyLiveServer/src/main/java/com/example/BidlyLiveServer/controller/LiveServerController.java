@@ -30,5 +30,10 @@ public class LiveServerController {
     }
     */
 
+    @PostMapping("/buyout")
+    public void buyout(@RequestBody UpdateAuctionRequest updateRequest){
+        liveServerService.auctionBuyout(updateRequest.getAid());
+    }
+
 
 }

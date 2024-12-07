@@ -86,4 +86,12 @@ public class CatalogueController {
         catalogueService.removeAuction(aid);
         return ResponseEntity.ok(true);
     }
+
+    @PostMapping("/buyout")
+    public ResponseEntity<Boolean> processBuyout(@RequestBody UpdateAuctionRequest updateRequest) {
+        boolean success = catalogueService.setBuyoutWinner(updateRequest);
+        liveServerApi.callLiveServerBuyout(updateRequest);
+        return  ResponseEntity.ok(success);
+    }
+
 }

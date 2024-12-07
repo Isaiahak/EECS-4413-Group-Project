@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt Page</title>
+    <link rel="stylesheet" href="/css/receiptPage.css">
+
 </head>
 <body>
+
+<!-- Logo -->
+<div class="logo-container">
+    <svg class="logo" viewBox="0 0 100 100">
+        <!-- Circle background -->
+        <circle cx="50" cy="50" r="45" fill="#17921d"/>
+
+        <!-- Gavel head -->
+        <rect x="30" y="25" width="40" height="20" rx="5" fill="white"/>
+
+        <!-- Gavel handle -->
+        <rect x="45" y="45" width="10" height="35" rx="2" fill="white"/>
+
+        <!-- Sound waves / bid indication -->
+        <path d="M 65,15 Q 75,25 75,35" stroke="white" fill="none" stroke-width="3"/>
+        <path d="M 70,10 Q 85,25 85,40" stroke="white" fill="none" stroke-width="3"/>
+
+        <!-- Dollar sign -->
+        <text x="25" y="65" fill="white" font-size="20" font-weight="bold">$</text>
+    </svg>
+    <div class="name">
+        <h1 id="LogoBT" class="bidly">Bidly</h1>
+        <h1 id="LogoAT" class="auctions">Auctions</h1>
+    </div>
+</div>
+
+
+
 <div class="container">
     <table>
         <thead>
@@ -16,39 +47,35 @@
         <tbody>
         <tr>
             <td>First Name</td>
-            <td>${firstName}</td>
+            <td th:text="${firstName}"></td>
         </tr>
         <tr>
             <td>Last Name</td>
-            <td>${lastName}</td>
+            <td th:text="${lastName}"></td>
         </tr>
         <tr>
             <td>Street</td>
-            <td>${street}</td>
+            <td th:text="${street}"></td>
         </tr>
         <tr>
             <td>City</td>
-            <td>${city}</td>
+            <td th:text="${city}"></td>
         </tr>
         <tr>
             <td>Province</td>
-            <td>${province}</td>
+            <td th:text="${province}"></td>
         </tr>
         <tr>
             <td>Country</td>
-            <td>${country}</td>
+            <td th:text="${country}"></td>
         </tr>
         <tr>
             <td>Postal Code</td>
-            <td>${postalCode}</td>
+            <td th:text="${postalCode}"></td>
         </tr>
         <tr>
             <td>Total Paid</td>
-            <td>${finalPrice}</td>
-        </tr>
-        <tr>
-            <td>Item ID</td>
-            <td>${itemID}</td>
+            <td th:text="${finalPrice"></td>
         </tr>
         </tbody>
     </table>

@@ -5,6 +5,7 @@ import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.repo.AuctionRepo;
 import com.example.BidlyCatalogue.repo.CatalogueRepo;
 import com.example.BidlyCatalogue.repo.PaymentRepo;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,9 @@ public class CatalogueService {
         catalogueItem.setTitle(auction.getTitle());
         catalogueItem.setHighestBid(auction.getHighestBid());
         catalogueItem.setAuctionTime(auction.getTimeRemaining());
+        catalogueItem.setReductionAmount(auction.getReductionAmount());
+        catalogueItem.setReductionInterval(auction.getReductionInterval());
+        catalogueItem.setType(auction.getType());
 
         try{
             catalogueItem = catalogueRepo.save(catalogueItem);
@@ -107,6 +111,15 @@ public class CatalogueService {
         CatalogueItem catalogueItem = catalogueRepo.findByAid(updateRequest.getAid());
         catalogueItem.setHighestBid(updateRequest.getBid());
         catalogueRepo.save(catalogueItem);
+        return true;
+    }
+
+    @Transactional
+    public boolean setBuyoutWinner(UpdateAuctionRequest updateRequest){
+        Auction auction = auctionRepo.findByAid(updateRequest.getAid());
+        auction.setUserid(updateRequest.getUid());
+        auctionRepo.save(auction);
+
         return true;
     }
 }

@@ -44,6 +44,12 @@ public class CatalogueItem {
     @Column(name = "itemid")
     private long itemid;
 
+    @Column(name = "reductionAmount")
+    private int reductionAmount;
+
+    @Column(name = "reductionInterval")
+    private String reductionInterval;
+
     public long getAid() {
         return aid;
     }
@@ -114,6 +120,22 @@ public class CatalogueItem {
 
     public void setShippingPrice(String shippingPrice) {
         this.shippingPrice = shippingPrice;
+    }
+
+    public int getReductionAmount() {
+        return reductionAmount;
+    }
+
+    public void setReductionAmount(int reductionAmount) {
+        this.reductionAmount = reductionAmount;
+    }
+
+    public String getReductionInterval() {
+        return reductionInterval;
+    }
+
+    public void setReductionInterval(String reductionInterval) {
+        this.reductionInterval = reductionInterval;
     }
 
     public long getItemID() {
