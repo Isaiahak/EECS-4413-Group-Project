@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Auction Details</title>
+    <link rel="stylesheet" th:href="@{/css/auctionSpecific.css}"/>
+</head>
+<body>
+<div id="header">
+    <div class="logo-container">
+        <svg class="logo" viewBox="0 0 100 100">
+            <!-- Circle background -->
+            <circle cx="50" cy="50" r="45" fill="#2e7d32"/>
+
+            <!-- Gavel head -->
+            <rect x="30" y="25" width="40" height="20" rx="5" fill="white"/>
+
+            <!-- Gavel handle -->
+            <rect x="45" y="45" width="10" height="35" rx="2" fill="white"/>
+
+            <!-- Sound waves / bid indication -->
+            <path d="M 65,15 Q 75,25 75,35" stroke="white" fill="none" stroke-width="3"/>
+            <path d="M 70,10 Q 85,25 85,40" stroke="white" fill="none" stroke-width="3"/>
+
+            <!-- Dollar sign -->
+            <text x="25" y="65" fill="white" font-size="20" font-weight="bold">$</text>
+        </svg>
+        <span class="brand-name">BidlyAuctions</span>
+    </div>
+    <h1>Catalogue</h1>
+    <div id="username" th:text="${uid}"></div>
+</div>
+
+<div class="auction-details">
+    <div class="titlecard">
+        <h3 th:text="${auction.title}"></h3>
+        <div class="auction-image">
+            <img src="/api/placeholder/500/350" alt="Auction Item Placeholder">
+        </div>
+    </div>
+    <div class="auction-info">
+
+
+        <div class="item-description">
+            <p th:text="${auction.desc}"></p>
+        </div>
+
+        <div class="price-time">
+            <p th:id="'price-' + ${auction.aid}" th:text="'Highest Bid: $' + ${auction.highestBid}"></p>
+            <p th:id="'timeRemaining-' + ${auction.aid}" th:text="'Time Remaining: ' + ${auction.timeRemaining}"></p>
+        </div>
+
+
+        <form action="/dutch-auction" method="POST">
+            <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
+            <input type="hidden" name="username" th:value="${uid}">
+            <button type="submit">BUYOUT</button>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/auctionSpecific.js}"></script>
+</body>
+</html>
