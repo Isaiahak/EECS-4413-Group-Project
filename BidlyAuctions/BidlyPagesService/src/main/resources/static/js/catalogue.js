@@ -71,13 +71,14 @@ function initCatalogue(catalogueItems) {
             itemElement.setAttribute("id", item.aid);
 
             itemElement.innerHTML = `
-                <input type="radio" id="itemSelect" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid},'${item.type}')">
+                <input type="radio" id="itemSelect-${item.aid}" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid},'${item.type}')">
                 <h3>${item.title}</h3>
                 <p id="price-${item.aid}">Price: $${item.highestBid}</p>
                 <p id="timeRemaining-${item.aid}">Time Remaining: CLOSED</p>
             `;
 
             auctionListContainer.appendChild(itemElement);
+
         });
     }, 0);  // Run after the current call stack has cleared
 }
@@ -91,7 +92,7 @@ function addCatItem(catalogueItem) {
 
         // You can customize the HTML based on the CatalogueItem fields
         itemElement.innerHTML = `
-            <input type="radio" id="itemSelect" name="auctionSelect" value="${catalogueItem.aid}" onclick="selectAuction(${catalogueItem.aid},${catalogueItem.type})">
+            <input type="radio" id="itemSelect-${catalogueItem.aid}" name="auctionSelect" value="${catalogueItem.aid}" onclick="selectAuction(${catalogueItem.aid},${catalogueItem.type})">
             <h3>${catalogueItem.title}</h3>
             <p id="price-${catalogueItem.aid}">Price: $${catalogueItem.highestBid}</p>
             <p id="timeRemaining-${catalogueItem.aid}">Time Remaining: ${catalogueItem.auctionTime}</p>
@@ -109,6 +110,11 @@ function update(updates){
 
         time.textContent = `Time Remaining: ${item.timeRemaining}`;
         bid.textContent = `Price: $${item.highestBid}`;
+
+        if(item.timeRemaining == "CLOSED"){
+            const radioButton = document.getElementById(`itemSelect-${item.aid}`);
+            radioButton.remove();
+        }
     });
 }
 

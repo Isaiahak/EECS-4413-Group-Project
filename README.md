@@ -1,18 +1,15 @@
 "# EECS-4413-Group-Project" 
 # EECS-4413-Group-Project
 
-LATEST UPDATE:  The entire backend functionality and frontend is complete. In this current state, the application will fully work.
+LATEST UPDATE:  Added Shipping dates and prevent buyout/bid after auction clsoed
 
-IMPORTANT:      A TON of fields in the AuctionDB have been added. Please delete the auction and catalogue tables before starting 
-                the catalogue service so Hibernate can correctly regenerate the table. 
+IMPORTANT:      In order to prevent buyout/bid after auction is closed, we need to update the auctionDB when an auction closes.
 
 WHATS LEFT:     DEPLOY
 
-LATEST ISSUES:  The Live server throws a null exception when there are no auctions left in the catalogue, this does not hinder 
-                the user experience but we will need to handle that. There has been little testing for user sign up, incorrect login,
-                existing user upon signup, we need to make sure those functions are working correctly. The Pub Sub implementation is 
-                pretty basic, but we might be too far gone now to make changes. Currently There is no generation of shipping dates in 
-                the app or the database, we will need to create those and handle them for expedited vs standard shipping
+LATEST ISSUES:  There has been little testing for user sign up, incorrect login, existing user upon signup, we need to make sure those 
+                functions are working correctly. The Pub Sub implementation is pretty basic, but we might be too far gone now to make 
+                changes.
 
 SETUP (TEMPORARY)
 As of now the applications will not work from the github repo.

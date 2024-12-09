@@ -218,10 +218,12 @@ public class PagesController {
                 finalPrice = winPrice + expeditedShipping;
                 model.addAttribute("FinalPrice", finalPrice);
                 redirectAttributes.addAttribute("FinalPrice", finalPrice);
+                redirectAttributes.addAttribute("shipping", shippingtype);
             } else if ("standard".equals(shippingtype)) {
                 finalPrice = winPrice + shippingPrice;
                 model.addAttribute("FinalPrice", finalPrice);
                 redirectAttributes.addAttribute("FinalPrice", finalPrice);
+                redirectAttributes.addAttribute("shipping", shippingtype);
             }
             System.out.println("payment");
             return "redirect:/payment";
@@ -231,7 +233,7 @@ public class PagesController {
 
 
     @GetMapping("/payment")
-    public String getPaymentPage(@RequestParam("auctionId") Long aid, @RequestParam("FinalPrice") double finalPrice, Model model, RedirectAttributes redirectAttributes){
+    public String getPaymentPage(@RequestParam("auctionId") Long aid, @RequestParam("FinalPrice") double finalPrice, @RequestParam("shipping") String shipping, Model model, RedirectAttributes redirectAttributes){
         System.out.println(aid);
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
@@ -250,6 +252,7 @@ public class PagesController {
         model.addAttribute("province", province);
         model.addAttribute("postalCode", postalCode);
         model.addAttribute("auctionId", aid);
+        model.addAttribute("shipping", shipping);
 
         return "payment";
     }
@@ -261,6 +264,7 @@ public class PagesController {
                                  @RequestParam("securityCode") String securityCode,
                                  @RequestParam("auctionId") Long aid,
                                  @RequestParam("FinalPrice") Double finalPrice,
+                                 @RequestParam("shipping") String shipping,
                                  RedirectAttributes redirectAttributes
                                  ) {
         System.out.println(aid);
@@ -282,14 +286,14 @@ public class PagesController {
             returnString = "redirect:/receipt";
             redirectAttributes.addAttribute("auctionId", aid);
             redirectAttributes.addAttribute("FinalPrice", finalPrice);
+            redirectAttributes.addAttribute("shipping", shipping);
 
         }
-        System.out.println("catalogue");
         return returnString;
     }
 
     @GetMapping("/receipt")
-    public String getReceiptInfo(@RequestParam("auctionId") Long aid,@RequestParam("FinalPrice") double finalPrice, Model model) {
+    public String getReceiptInfo(@RequestParam("auctionId") Long aid,@RequestParam("FinalPrice") double finalPrice, @RequestParam("shipping") String shipping, Model model) {
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
 
@@ -301,10 +305,15 @@ public class PagesController {
         String province = userInfo.getProvince();
         String postalCode = userInfo.getZipcode();
 
+
         // TODO: Shipping address is not set when an auction is created, we need to handle that.
         // TODO: We cannot use the Catalogue item to retrieve information since the process payment method removes it.
-        //String shippingDate = item.getShippingDate();
-        //model.addAttribute("shippingDate", shippingDate);
+        int shippingDays = 0;
+        if(shipping.equals("expedited")){
+            shippingDays =  (int) (Math.random() * (7 - 5 + 1)) + 5;
+        }else{
+            shippingDays = (int) (Math.random() * (4 - 2 + 1)) + 2;
+        }
 
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
@@ -314,6 +323,7 @@ public class PagesController {
         model.addAttribute("postalCode", postalCode);
         model.addAttribute("finalPrice", finalPrice);
         model.addAttribute("itemID", aid);
+        model.addAttribute("shipping", shippingDays);
 
         return "receipt";
     }

@@ -54,7 +54,7 @@
             <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
             <input type="hidden" name="username" th:value="${uid}">
             <input type="number" name="bidAmount" id="bidInput" th:min="${auction.highestBid}+1" placeholder="Enter bid amount" required>
-            <button type="submit">Place Bid</button>
+            <button id="bidButton" type="submit">Place Bid</button>
         </form>
     </div>
 </div>

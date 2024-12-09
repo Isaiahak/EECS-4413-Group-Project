@@ -6,10 +6,10 @@ socket.onopen = function() {
     const usernameValue = usernameField.innerHTML;
     console.log("sending message")
     socket.send(JSON.stringify({type:'connect', data:usernameValue}));
+    initAuctionSpecific();
 };
 
 socket.onmessage = function(event) {
-    console.log(event.data);
     try {
         const message = JSON.parse(event.data);
 
@@ -59,6 +59,11 @@ function update(updates) {
             if (timeElement) {
                 timeElement.textContent = `Time Remaining: ${item.timeRemaining}`;
             }
+            if(item.timeRemaining == "CLOSED"){
+                console.log("removing")
+                document.getElementById('bidButton').remove();
+                document.getElementById('bidInput').remove();
+            }
         }
     });
 }
@@ -76,5 +81,12 @@ function initAuctionSpecific() {
     var highestBid = parseFloat(highestBidText.replace('Price: $', '').trim());
 
     bidField.setAttribute("min", highestBid + 1);
+
+    if(document.getElementById('timeRemaining-' + auctionId).textContent == "Time Remaining: CLOSED"){
+        console.log("true")
+        console.log("removing")
+        document.getElementById('bidButton').remove();
+        document.getElementById('bidInput').remove();
+    }
 }
 

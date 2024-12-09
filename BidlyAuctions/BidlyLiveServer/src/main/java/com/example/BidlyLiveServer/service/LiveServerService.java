@@ -57,6 +57,7 @@ public class LiveServerService {
                 dutchUpdate.setReductionIntervalStore(item.getReductionInterval());
                 dutchUpdate.setReductionAmount(item.getReductionAmount());
                 dutchUpdate.setReductionInterval(item.getReductionInterval());
+                dutchUpdate.setPriceFloor(dutchUpdate.getHighestBid()/10);
                 dutchUpdates.add(dutchUpdate);
                 System.out.println(item.getTitle());
             }
@@ -73,6 +74,11 @@ public class LiveServerService {
         }
         for(LiveUpdate time: updates){
 
+            if(time.getTimeRemaining().equals("CLOSED")){
+                auctionEnd(time.getAid());
+                continue;
+            }
+
             StringTokenizer tokenizer = new StringTokenizer(time.getTimeRemaining(), ":Dhms", false);
             int days = Integer.parseInt(tokenizer.nextToken().trim());
             int hours = Integer.parseInt(tokenizer.nextToken().trim());
@@ -83,7 +89,6 @@ public class LiveServerService {
 
             if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
                 time.setTimeRemaining("CLOSED");
-                auctionEnd(time.getAid());
                 continue;  // Stop further updates
             }
 
@@ -129,6 +134,9 @@ public class LiveServerService {
                     return;
                 }else{
                     int newPrice = dutchUpdate.getHighestBid()-dutchUpdate.getReductionAmount();
+                    if(dutchUpdate.getPriceFloor() >= newPrice){
+                        dutchUpdate.setHighestBid(dutchUpdate.getPriceFloor());
+                    }
                     dutchUpdate.setHighestBid(newPrice);
                     dutchUpdate.setReductionInterval(dutchUpdate.getReductionIntervalStore());
                 }
@@ -192,6 +200,7 @@ public class LiveServerService {
             dutchUpdate.setReductionIntervalStore(newAuction.getReductionInterval());
             dutchUpdate.setReductionAmount(newAuction.getReductionAmount());
             dutchUpdate.setReductionInterval(newAuction.getReductionInterval());
+            dutchUpdate.setPriceFloor(dutchUpdate.getHighestBid()/10);
             dutchUpdates.add(dutchUpdate);
             System.out.println(newAuction.getTitle());
         }

@@ -67,6 +67,22 @@ h1 {
     font-size: 1.1rem;
 }
 
+#searchBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
+
+#searchInput {
+    padding: 10px;
+    border: 2px solid green;
+    border-radius: 8px;
+    font-size: 1.2em;
+    width: 560px;
+    box-sizing: border-box;
+}
+
 #auctionList {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));

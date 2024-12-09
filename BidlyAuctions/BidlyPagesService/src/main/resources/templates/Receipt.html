@@ -75,13 +75,13 @@
         </tr>
         <tr>
             <td>Total Paid</td>
-            <td th:text="${finalPrice"></td>
+            <td th:text="${finalPrice}"></td>
         </tr>
         </tbody>
     </table>
     <div class="section-container">
         <h2>Shipping Details</h2>
-        <p>The item will be shipped in ${shippingDate} days.</p>
+        <p th:text="The item will be shipped in ${shipping} days"></p>
         <form action="/catalogue" method="get">
             <button type="submit">Back to main page</button>
         </form>
