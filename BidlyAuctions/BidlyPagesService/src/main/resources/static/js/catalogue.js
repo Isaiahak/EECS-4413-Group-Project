@@ -10,6 +10,7 @@ socket.onopen = function() {
 };
 
 socket.onmessage = function(event) {
+<<<<<<< HEAD
     console.log("WebSocket message received:", event.data);
 
     // Log WebSocket readyState for each message received
@@ -18,6 +19,11 @@ socket.onmessage = function(event) {
     try {
         const message = JSON.parse(event.data);
         console.log("Parsed message:");
+=======
+
+    try {
+        const message = JSON.parse(event.data);
+>>>>>>> 5038a01 (added the shipping date)
 
         switch (message.type) {
             case "init":
@@ -76,7 +82,11 @@ function initCatalogue(catalogueItems) {
             itemElement.setAttribute("id", item.aid);
 
             itemElement.innerHTML = `
+<<<<<<< HEAD
                 <input type="radio" id="itemSelect" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid})">
+=======
+                <input type="radio" id="itemSelect" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid},'${item.type}')">
+>>>>>>> 5038a01 (added the shipping date)
                 <h3>${item.title}</h3>
                 <p id="price-${item.aid}">Price: $${item.highestBid}</p>
                 <p id="timeRemaining-${item.aid}">Time Remaining: CLOSED</p>
@@ -96,7 +106,11 @@ function addCatItem(catalogueItem) {
 
         // You can customize the HTML based on the CatalogueItem fields
         itemElement.innerHTML = `
+<<<<<<< HEAD
             <input type="radio" id="itemSelect" name="auctionSelect" value="${catalogueItem.aid}" onclick="selectAuction(${catalogueItem.aid})">
+=======
+            <input type="radio" id="itemSelect" name="auctionSelect" value="${catalogueItem.aid}" onclick="selectAuction(${catalogueItem.aid},${catalogueItem.type})">
+>>>>>>> 5038a01 (added the shipping date)
             <h3>${catalogueItem.title}</h3>
             <p id="price-${catalogueItem.aid}">Price: $${catalogueItem.highestBid}</p>
             <p id="timeRemaining-${catalogueItem.aid}">Time Remaining: ${catalogueItem.auctionTime}</p>
@@ -117,8 +131,14 @@ function update(updates){
     });
 }
 
+<<<<<<< HEAD
 function selectAuction(auctionId) {
     selectedAuctionId = auctionId; // Store the selected auction ID
+=======
+function selectAuction(auctionId, type) {
+    selectedAuctionId = auctionId;// Store the selected auction ID
+    selectedType = type;
+>>>>>>> 5038a01 (added the shipping date)
 
     // Enable the "Bid Now" button only if an auction is selected
     if (selectedAuctionId) {
@@ -129,6 +149,7 @@ function selectAuction(auctionId) {
 
 function placeBid() {
     if (selectedAuctionId) {
+<<<<<<< HEAD
         // Redirect to the auction page, passing the auction ID as a query parameter
         if(catalogueItem.getType() == "dutch"){
             window.location.href = `/dutch-auction?auctionId=${selectedAuctionId}`;
@@ -137,6 +158,18 @@ function placeBid() {
             window.location.href = `/auction?auctionId=${selectedAuctionId}`;
         }
         console.log("redirecting");
+=======
+        if(selectedType=="forward"){
+            // Redirect to the auction page, passing the auction ID as a query parameter
+            console.log("redirecting");
+            window.location.href = `/auction?auctionId=${selectedAuctionId}`;
+        }else if (selectedType == "dutch"){
+            // Redirect to the auction page, passing the auction ID as a query parameter
+            console.log("redirecting");
+            window.location.href = `/dutch-auction?auctionId=${selectedAuctionId}`;
+        }
+
+>>>>>>> 5038a01 (added the shipping date)
     } else {
         alert("Please select an auction to place a bid.");
     }

@@ -1,10 +1,20 @@
 package com.example.BidlyLiveServer.dto;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5038a01 (added the shipping date)
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+<<<<<<< HEAD
+=======
+//Catalogue Item DTO, used to send to Live Server and Pages Microservices.
+//Defines table structure for catalogue table in DB
+//Used to perform DB operations.
+>>>>>>> 5038a01 (added the shipping date)
 @Entity
 @Table(name = "catalogue")
 public class CatalogueItem {
@@ -37,6 +47,18 @@ public class CatalogueItem {
     @Column(name = "shippingPrice")
     private String shippingPrice;
 
+<<<<<<< HEAD
+=======
+    @Column(name = "itemid")
+    private long itemid;
+
+    @Column(name = "reductionAmount")
+    private int reductionAmount;
+
+    @Column(name = "reductionInterval")
+    private String reductionInterval;
+
+>>>>>>> 5038a01 (added the shipping date)
     public long getAid() {
         return aid;
     }
@@ -108,4 +130,31 @@ public class CatalogueItem {
     public void setShippingPrice(String shippingPrice) {
         this.shippingPrice = shippingPrice;
     }
+<<<<<<< HEAD
+=======
+
+    public int getReductionAmount() {
+        return reductionAmount;
+    }
+
+    public void setReductionAmount(int reductionAmount) {
+        this.reductionAmount = reductionAmount;
+    }
+
+    public String getReductionInterval() {
+        return reductionInterval;
+    }
+
+    public void setReductionInterval(String reductionInterval) {
+        this.reductionInterval = reductionInterval;
+    }
+
+    public long getItemID() {
+        return itemid;
+    }
+
+    public void setItemID(long itemID) {
+        this.itemid = itemID;
+    }
+>>>>>>> 5038a01 (added the shipping date)
 }

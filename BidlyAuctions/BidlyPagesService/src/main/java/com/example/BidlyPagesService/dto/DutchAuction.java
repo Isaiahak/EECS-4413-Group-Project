@@ -1,66 +1,37 @@
-package com.example.BidlyCatalogue.dto;
+package com.example.BidlyPagesService.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-//Auction DTO, received from Pages to create auctions.
-//Defines table structure for auction table in DB
-//Used to perform DB operations.
-@Entity
-@Table(name = "auction")
-public class Auction {
 
-    @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+//Auction DTO Used to create and send auction information to Catalogue Service
+//NOTE: During development, the catalogue service was not able to read the AuctionDTO
+//      Unless the JsonProperty tags were used. It seems to be working without it now
+//      However, we will keep this here untill proper testing is done.
+public class DutchAuction {
+    @JsonProperty("aid")
     private Long aid;
 
-    @Column(name = "title", nullable = false)
+    @JsonProperty("title")
     private String title;
 
-    @Column(name = "\"desc\"")
+    @JsonProperty("desc")
     private String desc;
 
-    @Column(name = "currentHighestBid")
-    private int highestBid;
+    @JsonProperty("price")
+    private int price;
 
-    @Column(name = "type")
+    @JsonProperty("type")
     private String type;
 
-    @Column(name = "time_limit")
+    @JsonProperty("time-interval")
     private String timeRemaining;
 
-    @Column(name = "itemID")
+    @JsonProperty("itemid")
     private long itemid;
 
-    @Column(name = "highestBidder")
+    @JsonProperty("userid")
     private String userid;
 
-<<<<<<< HEAD
-=======
-    @Column(name = "reductionAmount")
-    private int reductionAmount;
-
-    @Column(name = "reductionInterval")
-    private String reductionInterval;
-
-
-
->>>>>>> 5038a01 (added the shipping date)
-
-
-
-    public Auction( String title, String desc, int highestBid, String type, String timeRemaining) {
-        this.title = title;
-        this.desc = desc;
-        this.highestBid = highestBid;
-        this.type = type;
-        this.timeRemaining = timeRemaining;
-    }
-    public Auction(){
-
-    }
-
-<<<<<<< HEAD
-=======
     public int getReductionAmount() {
         return reductionAmount;
     }
@@ -69,15 +40,23 @@ public class Auction {
         this.reductionAmount = reductionAmount;
     }
 
-    public String getReductionInterval() {
-        return reductionInterval;
+    @JsonProperty("reductionAmount")
+    private int reductionAmount;
+
+
+    public DutchAuction(String title, String desc, int price, String type, String timeRemaining, int reductionAmount) {
+        this.title = title;
+        this.desc = desc;
+        this.price = price;
+        this.type = type;
+        this.timeRemaining = timeRemaining;
+        this.reductionAmount = reductionAmount;
     }
 
-    public void setReductionInterval(String reductionInterval) {
-        this.reductionInterval = reductionInterval;
+    public DutchAuction(){
+
     }
 
->>>>>>> 5038a01 (added the shipping date)
     public Long getAid() {
         return aid;
     }
@@ -103,11 +82,11 @@ public class Auction {
     }
 
     public int getHighestBid() {
-        return highestBid;
+        return price;
     }
 
     public void setHighestBid(int highestBid) {
-        this.highestBid = highestBid;
+        this.price = highestBid;
     }
 
     public String getType() {

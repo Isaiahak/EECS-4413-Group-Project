@@ -2,7 +2,10 @@ package com.example.BidlyLiveServer.service;
 
 
 
+<<<<<<< HEAD
 import com.example.BidlyLiveServer.dto.Auction;
+=======
+>>>>>>> 5038a01 (added the shipping date)
 import com.example.BidlyLiveServer.dto.CatalogueItem;
 import com.example.BidlyLiveServer.dto.LiveUpdate;
 import com.example.BidlyLiveServer.dto.UpdateAuctionRequest;
@@ -14,7 +17,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import java.io.IOException;
+=======
+>>>>>>> 5038a01 (added the shipping date)
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -22,6 +28,7 @@ import java.util.StringTokenizer;
 @Service
 public class LiveServerService {
 
+<<<<<<< HEAD
     @Autowired
     private ArrayList<LiveUpdate> updates;
 
@@ -29,6 +36,18 @@ public class LiveServerService {
     @Autowired
     private LiveServerWebSocketHandler liveServerWebSocketHandler;
 
+=======
+
+    private ArrayList<LiveUpdate> updates = new ArrayList<>();
+
+
+    private ArrayList<LiveUpdate> dutchUpdates = new ArrayList<>();
+
+    @Autowired
+    private LiveServerWebSocketHandler liveServerWebSocketHandler;
+
+
+>>>>>>> 5038a01 (added the shipping date)
     @Autowired
     private CatalogueDB catalogueRepo;
 
@@ -39,6 +58,7 @@ public class LiveServerService {
     public void init(){
         List<CatalogueItem> catalogueItems = catalogueRepo.findAll();
         for(CatalogueItem item : catalogueItems){
+<<<<<<< HEAD
             LiveUpdate timeUpdate = new LiveUpdate();
             timeUpdate.setTitle(item.getTitle());
             timeUpdate.setAid(item.getAid());
@@ -46,6 +66,32 @@ public class LiveServerService {
             timeUpdate.setHighestBid(item.getHighestBid());
             updates.add(timeUpdate);
             System.out.println(item.getTitle());
+=======
+            if(item.getType().equals("forward")){
+                LiveUpdate timeUpdate = new LiveUpdate();
+                timeUpdate.setTitle(item.getTitle());
+                timeUpdate.setAid(item.getAid());
+                timeUpdate.setTimeRemaining(item.getAuctionTime());
+                timeUpdate.setHighestBid(item.getHighestBid());
+                updates.add(timeUpdate);
+                System.out.println(item.getTitle());
+            } else if(item.getType().equals("dutch")){
+                LiveUpdate dutchUpdate = new LiveUpdate();
+                dutchUpdate.setAid(item.getAid());
+                dutchUpdate.setTitle(item.getTitle());
+                dutchUpdate.setHighestBid(item.getHighestBid());
+                dutchUpdate.setTimeRemaining("NOW");
+                dutchUpdate.setReductionIntervalStore(item.getReductionInterval());
+                dutchUpdate.setReductionAmount(item.getReductionAmount());
+                dutchUpdate.setReductionInterval(item.getReductionInterval());
+                dutchUpdates.add(dutchUpdate);
+                System.out.println(item.getTitle());
+            }
+
+        }
+        for(LiveUpdate u : updates){
+            System.out.println(u.getTitle());
+>>>>>>> 5038a01 (added the shipping date)
         }
     }
 
@@ -55,8 +101,11 @@ public class LiveServerService {
         }
         for(LiveUpdate time: updates){
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5038a01 (added the shipping date)
             StringTokenizer tokenizer = new StringTokenizer(time.getTimeRemaining(), ":Dhms", false);
             int days = Integer.parseInt(tokenizer.nextToken().trim());
             int hours = Integer.parseInt(tokenizer.nextToken().trim());
@@ -94,6 +143,7 @@ public class LiveServerService {
         }
     }
 
+<<<<<<< HEAD
     public void reducePrice() throws Exception {
         if(dutchAuctions.size() == 0){
             return ;
@@ -105,11 +155,60 @@ public class LiveServerService {
             time.setHighestBid((int) (time.getInitialPrice() * 0.9));
         }
 
+=======
+    public void updateDutch() throws Exception {
+        if(dutchUpdates.size() == 0){
+            return ;
+        }
+        for(LiveUpdate dutchUpdate: dutchUpdates){
+
+            StringTokenizer tokenizer = new StringTokenizer(dutchUpdate.getReductionInterval(), ":Dhms", false);
+            int days = Integer.parseInt(tokenizer.nextToken().trim());
+            int hours = Integer.parseInt(tokenizer.nextToken().trim());
+            int minutes = Integer.parseInt(tokenizer.nextToken().trim());
+            int seconds = Integer.parseInt(tokenizer.nextToken().trim());
+
+            seconds -= interval;
+
+            if (days == 0 && hours == 0 && minutes == 0 && seconds == 0) {
+                if(dutchUpdate.getHighestBid() <= dutchUpdate.getPriceFloor()){
+                    return;
+                }else{
+                    int newPrice = dutchUpdate.getHighestBid()-dutchUpdate.getReductionAmount();
+                    dutchUpdate.setHighestBid(newPrice);
+                    dutchUpdate.setReductionInterval(dutchUpdate.getReductionIntervalStore());
+                }
+                continue;  // Stop further updates
+            }
+
+            // Handle negative seconds and adjust minutes, hours, and days
+            if (seconds < 0) {
+                minutes --;  // Convert excess seconds to minutes
+                seconds = 60 + seconds % 60; // Adjust seconds back to a positive value
+            }
+
+            // Handle negative minutes and adjust hours and days
+            if (minutes < 0) {
+                hours --;  // Convert excess minutes to hours
+                minutes = 60 + minutes % 60; // Adjust minutes back to a positive value
+            }
+
+            // Handle negative hours and adjust days
+            if (hours < 0) {
+                days --;  // Convert excess hours to days
+                hours = 24 + hours % 24; // Adjust hours back to a positive value
+            }
+
+            // Construct the new time string in the format D: h:m:s
+            dutchUpdate.setReductionInterval(String.format("%dD:%dh:%dm:%ds", days, hours, minutes, seconds));
+        }
+>>>>>>> 5038a01 (added the shipping date)
     }
 
     @Scheduled(fixedDelay = 1000)
     public void pushUpdates() throws Exception {
         updateTime();
+<<<<<<< HEAD
         liveServerWebSocketHandler.sendAuctionUpdate(updates);
         for(LiveUpdate update: updates){
             System.out.println(update.getTitle()+update.getTimeRemaining());
@@ -138,6 +237,41 @@ public class LiveServerService {
             newTimeUpdate.setTitle(newAuction.getTitle());
             newTimeUpdate.setTimeRemaining(newAuction.getAuctionTime());
             updates.add(newTimeUpdate);
+=======
+        updateDutch();
+        liveServerWebSocketHandler.sendAuctionUpdate(updates);
+        liveServerWebSocketHandler.sendAuctionUpdate(dutchUpdates);
+        for(LiveUpdate update: updates){
+            System.out.println(update.getTitle()+update.getTimeRemaining());
+        }
+        for(LiveUpdate update: dutchUpdates){
+            System.out.println(update.getTitle()+update.getTimeRemaining());
+        }
+    }
+
+    public void addAuction(CatalogueItem newAuction){
+        if(newAuction.getType().equals("forward")){
+            LiveUpdate timeUpdate = new LiveUpdate();
+            timeUpdate.setType("forward");
+            timeUpdate.setTitle(newAuction.getTitle());
+            timeUpdate.setAid(newAuction.getAid());
+            timeUpdate.setTimeRemaining(newAuction.getAuctionTime());
+            timeUpdate.setHighestBid(newAuction.getHighestBid());
+            updates.add(timeUpdate);
+            System.out.println(newAuction.getTitle());
+        } else if(newAuction.getType().equals("dutch")){
+            LiveUpdate dutchUpdate = new LiveUpdate();
+            dutchUpdate.setType("dutch");
+            dutchUpdate.setAid(newAuction.getAid());
+            dutchUpdate.setTitle(newAuction.getTitle());
+            dutchUpdate.setHighestBid(newAuction.getHighestBid());
+            dutchUpdate.setTimeRemaining("NOW");
+            dutchUpdate.setReductionIntervalStore(newAuction.getReductionInterval());
+            dutchUpdate.setReductionAmount(newAuction.getReductionAmount());
+            dutchUpdate.setReductionInterval(newAuction.getReductionInterval());
+            dutchUpdates.add(dutchUpdate);
+            System.out.println(newAuction.getTitle());
+>>>>>>> 5038a01 (added the shipping date)
         }
     }
 
@@ -156,11 +290,28 @@ public class LiveServerService {
         removeAuction(aid);
     }
 
+<<<<<<< HEAD
     public void removeAuction(Long aid){
         boolean returnValue = false;
         for (LiveUpdate update : dutchAuctions){
             if(update.getAid().equals(aid)){
                 dutchAuctions.remove(update);
+=======
+    public boolean removeAuction(Long aid){
+        boolean returnValue = false;
+        for (LiveUpdate update : updates){
+            if(update.getAid().equals(aid)){
+                updates.remove(update);
+                return true;
+            }
+        }
+        return returnValue;
+    }
+    public void auctionBuyout(Long aid){
+        for(LiveUpdate update : dutchUpdates){
+            if(update.getAid().equals(aid)){
+                update.setTimeRemaining("CLOSED");
+>>>>>>> 5038a01 (added the shipping date)
             }
         }
     }

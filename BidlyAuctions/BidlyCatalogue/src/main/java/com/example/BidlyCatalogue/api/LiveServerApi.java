@@ -38,4 +38,15 @@ public class LiveServerApi {
         restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
     }
+<<<<<<< HEAD
+=======
+
+    public void callLiveServerBuyout(UpdateAuctionRequest updateAuctionRequest){
+        String url = "http://localhost:8086/api/live/buyout";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<UpdateAuctionRequest> requestEntity = new HttpEntity<>(updateAuctionRequest, headers);
+        restTemplate.postForEntity(url, requestEntity, Boolean.class);
+    }
+>>>>>>> 5038a01 (added the shipping date)
 }

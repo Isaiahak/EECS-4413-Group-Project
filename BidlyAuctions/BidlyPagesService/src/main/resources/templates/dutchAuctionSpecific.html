@@ -2,33 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Auction Details</title>
-<<<<<<< HEAD
-</head>
-<body onload="initAuctionSpecific()">
-
-<div id = header>
-    <h1>Auction Details</h1>
-    <h3 id="username" th:text="${uid}"></h3>
-</div>
-
-
-<div>
-    <h3 th:text="${auction.title}"></h3>
-
-    <p th:id="'price-' + ${auction.aid}" th:text="'Price: $' + ${auction.highestBid}"></p>
-    <p th:id="'timeRemaining-' + ${auction.aid}" th:text="'Time Remaining: ' + ${auction.timeRemaining}"></p>
-
-    <form action="/auction" method="POST">
-        <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
-        <input type="hidden" name="username" th:value="${uid}">
-        <input type="number" name="bidAmount" id="bidInput" placeholder="Enter bid amount">
-        <button type="submit">Place Bid</button>
-    </form>
-</div>
-
-<script th:src="@{/js/auctionSpecific.js}"></script>
-
-=======
     <link rel="stylesheet" th:href="@{/css/auctionSpecific.css}"/>
 </head>
 <body>
@@ -77,16 +50,14 @@
         </div>
 
 
-        <form action="/auction" method="POST">
+        <form action="/dutch-auction" method="POST">
             <input id="auctionId" type="hidden" name="auctionId" th:value="${auction.aid}">
             <input type="hidden" name="username" th:value="${uid}">
-            <input type="number" name="bidAmount" id="bidInput" th:min="${auction.highestBid}+1" placeholder="Enter bid amount" required>
-            <button type="submit">Place Bid</button>
+            <button type="submit">BUYOUT</button>
         </form>
     </div>
 </div>
 
 <script th:src="@{/js/auctionSpecific.js}"></script>
->>>>>>> 5038a01 (added the shipping date)
 </body>
 </html>

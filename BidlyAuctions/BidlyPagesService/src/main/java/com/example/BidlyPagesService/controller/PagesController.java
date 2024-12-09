@@ -109,6 +109,10 @@ public class PagesController {
         Auction auction = apiService.callCatalogueGetAuction(auctionId);
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
+<<<<<<< HEAD
+=======
+        System.out.println("we got to this part get map");
+>>>>>>> 5038a01 (added the shipping date)
         model.addAttribute("auction", auction);
 
         return "auctionSpecific";
@@ -131,6 +135,7 @@ public class PagesController {
     }
 
     @GetMapping("/dutch-auction")
+<<<<<<< HEAD
     public String display(@RequestParam("auctionId") Long auctionId, Model model){
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
@@ -142,6 +147,33 @@ public class PagesController {
     public String buyout(){
         apiService.removeDutch(auctionid);
         return "redirect:/payment";
+=======
+    public String viewDutchAuction(@RequestParam("auctionId") Long auctionId, Model model) {
+
+        //REST call to retrieve selected auction information
+        //This information will be used by this microservice to generate
+        //the auction specific page with the correct information.
+        Auction auction = apiService.callCatalogueGetAuction(auctionId);
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println("we got to this part get map");
+        model.addAttribute("auction", auction);
+
+        return "dutchAuctionSpecific";
+    }
+
+
+    //Post mapping for when user selects place bid button.
+    @PostMapping("/dutch-auction")
+    public String buyout(@RequestParam("auctionId") Long auctionId, Model model) {
+        String uid = (String) model.asMap().get("uid");
+        model.addAttribute("uid", uid);
+        System.out.println(uid);
+        //REST call to catalogue to process and update the placed bid.
+        boolean buyout = apiService.callCatalogueBuyout(auctionId, uid);
+
+        return "redirect:/auction-results?auctionId="+auctionId;
+>>>>>>> 5038a01 (added the shipping date)
     }
 
     @GetMapping("/auction-results")
@@ -195,17 +227,40 @@ public class PagesController {
                               @ModelAttribute("ItemDescription") String itemDescription,
                               RedirectAttributes redirectAttributes) {
         double finalPrice;
+<<<<<<< HEAD
         System.out.println(aid);
+=======
+
+        System.out.println(aid);
+        CatalogueItem catalogue = callGetACatalogueItem(aid);
+        String shippingDate = catalogue.getShippingDate();
+
+>>>>>>> 5038a01 (added the shipping date)
         //if ("submit".equals(action)) {
             System.out.println("submit");
             redirectAttributes.addAttribute("auctionId", aid);
             if ("expedited".equals(shippingtype)) {
                 finalPrice = winPrice + expeditedShipping;
+<<<<<<< HEAD
                 model.addAttribute("FinalPrice", finalPrice);
                 redirectAttributes.addAttribute("FinalPrice", finalPrice);
             } else if ("no-expedited".equals(shippingtype)) {
                 finalPrice = winPrice + shippingPrice;
                 model.addAttribute("FinalPrice", finalPrice);
+=======
+                Integer shippingDateInt = Integer.parseInt(shippingDate);
+                shippingDate = Integer.toString(shippingDateInt / 2);
+                model.addAttribute("FinalPrice", finalPrice);
+                model.addAttribute("ShippingDate", shippingDate);
+                redirectAttributes.addAttribute("ShippingDate", shippingDate);
+                redirectAttributes.addAttribute("FinalPrice", finalPrice);
+
+            } else if ("standard".equals(shippingtype)) {
+                finalPrice = winPrice + shippingPrice;
+                model.addAttribute("FinalPrice", finalPrice);
+                model.addAttribute("ShippingDate", shippingDate);
+                redirectAttributes.addAttribute("ShippingDate", shippingDate);
+>>>>>>> 5038a01 (added the shipping date)
                 redirectAttributes.addAttribute("FinalPrice", finalPrice);
             }
             System.out.println("payment");
@@ -246,6 +301,10 @@ public class PagesController {
                                  @RequestParam("securityCode") String securityCode,
                                  @RequestParam("auctionId") Long aid,
                                  @RequestParam("FinalPrice") Double finalPrice,
+<<<<<<< HEAD
+=======
+                                 @RequestParam("ShippingDate") String shippingDate,
+>>>>>>> 5038a01 (added the shipping date)
                                  RedirectAttributes redirectAttributes
                                  ) {
         System.out.println(aid);
@@ -267,6 +326,10 @@ public class PagesController {
             returnString = "redirect:/receipt";
             redirectAttributes.addAttribute("auctionId", aid);
             redirectAttributes.addAttribute("FinalPrice", finalPrice);
+<<<<<<< HEAD
+=======
+            redirectAttributes.addAttribute("ShippingDate", shippingDate);
+>>>>>>> 5038a01 (added the shipping date)
 
         }
         System.out.println("catalogue");
@@ -274,7 +337,11 @@ public class PagesController {
     }
 
     @GetMapping("/receipt")
+<<<<<<< HEAD
     public String getReceiptInfo(@RequestParam("auctionId") Long aid,@RequestParam("FinalPrice") double finalPrice, Model model) {
+=======
+    public String getReceiptInfo(@RequestParam("auctionId") Long aid,@RequestParam("FinalPrice") double finalPrice,@RequestParam("ShippingDate") String shippingDate, Model model) {
+>>>>>>> 5038a01 (added the shipping date)
         String uid = (String) model.asMap().get("uid");
         model.addAttribute("uid", uid);
 
@@ -285,12 +352,16 @@ public class PagesController {
         String city = userInfo.getCity();
         String province = userInfo.getProvince();
         String postalCode = userInfo.getZipcode();
+<<<<<<< HEAD
 
         // TODO: Shipping address is not set when an auction is created, we need to handle that.
         // TODO: We cannot use the Catalogue item to retrieve information since the process payment method removes it.
         //String shippingDate = item.getShippingDate();
         //model.addAttribute("shippingDate", shippingDate);
 
+=======
+        model.addAttribute("shippingDate", shippingDate);
+>>>>>>> 5038a01 (added the shipping date)
         model.addAttribute("firstName", firstName);
         model.addAttribute("lastName", lastName);
         model.addAttribute("street", street);

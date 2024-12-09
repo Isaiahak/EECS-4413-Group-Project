@@ -1,0 +1,121 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Center the container */
+body, html {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+    font-family: Roboto, serif;
+}
+
+/* Style for the container */
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+    gap: 2rem;
+    flex-wrap: wrap; /* Ensures responsiveness, wraps when space is tight */
+}
+
+/* Styling for the table (Winning Bidder section) */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    margin-top: 5rem; /* Added margin-top to bring the table down slightly */
+    margin-bottom: 2rem; /* Adds space below the table */
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f0f0f0;
+    font-size: 50px;
+    color: #4CAF50;
+}
+
+td {
+    background-color: #fafafa;
+}
+
+/* Styling for the card info (Form section) */
+form {
+    width: 100%;
+    background-color: #fff;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid #90EE90;
+}
+
+button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Logo container style */
+.logo-container {
+    position: absolute;  /* Position it at the top-left corner */
+    top: 20px;           /* Adjust from the top */
+    left: 20px;          /* Adjust from the left */
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+}
+
+/* Logo SVG style */
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+#LogoBT{
+    color: grey;
+}
+
+#LogoAT{
+    color: #4CAF50;
+}
