@@ -1,30 +1,22 @@
 package com.example.BidlyPagesService.dto;
 
-<<<<<<< HEAD
 //Live Update DTO, sent from Live Server Service, used to update time and highest bid in real time
-=======
->>>>>>> 5038a01 (added the shipping date)
+
 public class LiveUpdate {
 
     private Long aid;
     private String title;
     private String timeRemaining;
     private int highestBid;
-<<<<<<< HEAD
-=======
     private String reductionInterval;
     private String reductionIntervalStore;
     private int reductionAmount;
     private int priceFloor;
     private String type;
 
->>>>>>> 5038a01 (added the shipping date)
-
     public LiveUpdate(){
     }
 
-<<<<<<< HEAD
-=======
     public String getReductionIntervalStore() {
         return reductionIntervalStore;
     }
@@ -65,7 +57,6 @@ public class LiveUpdate {
         this.type = type;
     }
 
->>>>>>> 5038a01 (added the shipping date)
     public Long getAid() {
         return aid;
     }
@@ -98,9 +89,3 @@ public class LiveUpdate {
         this.highestBid = highestBid;
     }
 }
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 5038a01 (added the shipping date)

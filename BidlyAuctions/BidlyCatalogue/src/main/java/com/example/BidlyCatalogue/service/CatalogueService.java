@@ -5,10 +5,7 @@ import com.example.BidlyCatalogue.dto.UpdateAuctionRequest;
 import com.example.BidlyCatalogue.repo.AuctionRepo;
 import com.example.BidlyCatalogue.repo.CatalogueRepo;
 import com.example.BidlyCatalogue.repo.PaymentRepo;
-<<<<<<< HEAD
-=======
 import org.hibernate.sql.Update;
->>>>>>> 5038a01 (added the shipping date)
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -50,11 +47,8 @@ public class CatalogueService {
         catalogueItem.setTitle(auction.getTitle());
         catalogueItem.setHighestBid(auction.getHighestBid());
         catalogueItem.setAuctionTime(auction.getTimeRemaining());
-<<<<<<< HEAD
-=======
         catalogueItem.setReductionAmount(auction.getReductionAmount());
         catalogueItem.setReductionInterval(auction.getReductionInterval());
->>>>>>> 5038a01 (added the shipping date)
         catalogueItem.setType(auction.getType());
 
         try{
@@ -119,8 +113,6 @@ public class CatalogueService {
         catalogueRepo.save(catalogueItem);
         return true;
     }
-<<<<<<< HEAD
-=======
 
     @Transactional
     public boolean setBuyoutWinner(UpdateAuctionRequest updateRequest){
@@ -130,5 +122,4 @@ public class CatalogueService {
 
         return true;
     }
->>>>>>> 5038a01 (added the shipping date)
 }

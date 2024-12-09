@@ -44,15 +44,12 @@ public class CatalogueItem {
     @Column(name = "itemid")
     private long itemid;
 
-<<<<<<< HEAD
-=======
     @Column(name = "reductionAmount")
     private int reductionAmount;
 
     @Column(name = "reductionInterval")
     private String reductionInterval;
 
->>>>>>> 5038a01 (added the shipping date)
     public long getAid() {
         return aid;
     }
@@ -125,8 +122,6 @@ public class CatalogueItem {
         this.shippingPrice = shippingPrice;
     }
 
-<<<<<<< HEAD
-=======
     public int getReductionAmount() {
         return reductionAmount;
     }
@@ -143,7 +138,6 @@ public class CatalogueItem {
         this.reductionInterval = reductionInterval;
     }
 
->>>>>>> 5038a01 (added the shipping date)
     public long getItemID() {
         return itemid;
     }

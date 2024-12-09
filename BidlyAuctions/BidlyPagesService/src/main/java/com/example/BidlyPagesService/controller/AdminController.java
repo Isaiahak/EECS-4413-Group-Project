@@ -4,10 +4,7 @@ package com.example.BidlyPagesService.controller;
 import com.example.BidlyPagesService.api.ApiService;
 import com.example.BidlyPagesService.dto.Auction;
 import com.example.BidlyPagesService.dto.CatalogueItem;
-<<<<<<< HEAD
-=======
 import com.example.BidlyPagesService.dto.DutchAuction;
->>>>>>> 5038a01 (added the shipping date)
 import com.example.BidlyPagesService.webSocket.AuctionWebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,26 +28,6 @@ public class AdminController {
     //Get Mapping for submit Auction page. Here, we will be able to add new auctions
     @GetMapping("/submit-auction")
     public String getAuction(Model model){
-<<<<<<< HEAD
-        return "AdminAddAuctions";
-    }
-
-    //Post Mapping for submit auction page, to add the new auction in to the system.
-    @PostMapping("/submit-auction")
-    public String addAuction(@RequestParam String title,
-                             @RequestParam String desc,
-                             @RequestParam int startingPrice,
-                             @RequestParam String type,
-                             @RequestParam int days,
-                             @RequestParam int hours,
-                             @RequestParam int mins) throws IOException {
-
-        //Create Auction DTO to send to cataloge via REST
-        //Catalogue will complete the creation process
-        String timeRemaining = String.format("%dD:%dh:%dm:%ds", days, hours, mins, 0);
-
-        Auction auction = new Auction(title, desc, startingPrice, type, timeRemaining);
-=======
         return "AdminSelectCreateAuction";
     }
 
@@ -103,13 +80,11 @@ public class AdminController {
         auction.setHighestBid(startingPrice);
         auction.setType(type);
         auction.setTimeRemaining(timeRemaining);
->>>>>>> 5038a01 (added the shipping date)
 
         //Catalogue Microservice returns the newly created auction catalogue item
         //This service will use this catalogue Object to push a dynamic update to clients
         CatalogueItem newCatalogue = apiService.callCatalogueAddAuction(auction);
-<<<<<<< HEAD
-=======
+
         newCatalogue.setShippingDate(Integer.toString(Random.nextInt(11)));
         if(newCatalogue != null){
             webSocketHandler.addCatalogueItem(newCatalogue);
@@ -142,7 +117,6 @@ public class AdminController {
         //This service will use this catalogue Object to push a dynamic update to clients
         CatalogueItem newCatalogue = apiService.callCatalogueAddAuction(dutchAuction);
         newCatalogue.setShippingDate(Integer.toString(Random.nextInt(11)));
->>>>>>> 5038a01 (added the shipping date)
 
         if(newCatalogue != null){
             webSocketHandler.addCatalogueItem(newCatalogue);
@@ -151,12 +125,10 @@ public class AdminController {
             return "submit-auction";
         }
     }
-<<<<<<< HEAD
-=======
 
     @GetMapping("/add-dutch")
     public String addDutchAuction(Model model){
         return "AdminAddDutchAuction";
     }
->>>>>>> 5038a01 (added the shipping date)
+
 }

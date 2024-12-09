@@ -23,16 +23,7 @@ public class LiveServerController {
     public void updateBid(@RequestBody UpdateAuctionRequest updateRequest){
         liveServerService.updateAuctionBid(updateRequest);
     }
-<<<<<<< HEAD
 
-    @PostMapping("/remove-auction")
-    public void removeAuction(@RequestBody long auctionid){
-        liveServerService.removeAuction(auctionid);
-    }
-
-
-
-=======
     /* now done internally
     @PostMapping("/remove-auction")
     public void removeAuction(@RequestBody Auction auction){
@@ -45,6 +36,4 @@ public class LiveServerController {
         liveServerService.auctionBuyout(updateRequest.getAid());
     }
 
-
->>>>>>> 5038a01 (added the shipping date)
 }

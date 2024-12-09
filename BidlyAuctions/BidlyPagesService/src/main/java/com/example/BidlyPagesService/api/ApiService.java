@@ -1,19 +1,8 @@
 package com.example.BidlyPagesService.api;
 
-<<<<<<< HEAD
-import com.example.BidlyPagesService.dto.Auction;
-import com.example.BidlyPagesService.dto.CatalogueItem;
-import com.example.BidlyPagesService.dto.LoginRequestDTO;
-import com.example.BidlyPagesService.dto.UpdateAuctionRequest;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.*;
-import com.example.BidlyPagesService.dto.PaymentInfo;
-import com.example.BidlyPagesService.dto.UserInfo;
-=======
 import com.example.BidlyPagesService.dto.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
->>>>>>> 5038a01 (added the shipping date)
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -159,14 +148,6 @@ public class ApiService {
         return response.getBody();
     }
 
-<<<<<<< HEAD
-    public void removeDutch(long auctionid){
-        String url = "http://localhost:8086/api/live/remove-auction";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Long> requestEntity = new HttpEntity<>(auctionid, headers);
-        restTemplate.postForEntity(url,requestEntity,Long.class);
-=======
     public boolean callCatalogueBuyout(Long aid, String uid) {
         String url = "http://localhost:8084/api/catalogue/buyout";
         HttpHeaders headers = new HttpHeaders();
@@ -180,6 +161,6 @@ public class ApiService {
         ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
         return response.getBody();
->>>>>>> 5038a01 (added the shipping date)
+
     }
 }

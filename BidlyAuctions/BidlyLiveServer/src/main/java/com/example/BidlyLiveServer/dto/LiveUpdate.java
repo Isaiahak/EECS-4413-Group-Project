@@ -6,31 +6,16 @@ public class LiveUpdate {
     private String title;
     private String timeRemaining;
     private int highestBid;
-<<<<<<< HEAD
-
-    public int getInitialPrice() {
-        return initialPrice;
-    }
-
-    public void setInitialPrice(int initialPrice) {
-        this.initialPrice = initialPrice;
-    }
-
-    private int initialPrice;
-=======
     private String reductionInterval;
     private String reductionIntervalStore;
     private int reductionAmount;
     private int priceFloor;
     private String type;
 
->>>>>>> 5038a01 (added the shipping date)
 
     public LiveUpdate(){
     }
 
-<<<<<<< HEAD
-=======
     public String getReductionIntervalStore() {
         return reductionIntervalStore;
     }
@@ -71,7 +56,6 @@ public class LiveUpdate {
         this.type = type;
     }
 
->>>>>>> 5038a01 (added the shipping date)
     public Long getAid() {
         return aid;
     }

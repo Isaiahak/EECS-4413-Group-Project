@@ -32,19 +32,7 @@ public class Auction {
     @JsonProperty("userid")
     private String userid;
 
-<<<<<<< HEAD
 
-    public Auction(String title, String desc, int highestBid, String type, String timeRemaining) {
-        this.title = title;
-        this.desc = desc;
-        this.highestBid = highestBid;
-        this.type = type;
-        this.timeRemaining = timeRemaining;
-    }
-
-    public Auction(){
-
-=======
     //for dutch auctions
 
     @JsonProperty("reductionInterval")
@@ -71,7 +59,7 @@ public class Auction {
 
     public void setReductionAmount(int reductionAmount) {
         this.reductionAmount = reductionAmount;
->>>>>>> 5038a01 (added the shipping date)
+
     }
 
     public Long getAid() {

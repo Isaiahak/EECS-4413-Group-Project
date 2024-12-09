@@ -19,11 +19,8 @@ public class Auction {
     @Column(name = "\"desc\"")
     private String desc;
 
-<<<<<<< HEAD
-    @Column(name = "currentHighestBidder")
-=======
     @Column(name = "currentHighestBid")
->>>>>>> 5038a01 (added the shipping date)
+
     private int highestBid;
 
     @Column(name = "type")
@@ -38,19 +35,12 @@ public class Auction {
     @Column(name = "highestBidder")
     private String userid;
 
-<<<<<<< HEAD
-=======
     @Column(name = "reductionAmount")
     private int reductionAmount;
 
     @Column(name = "reductionInterval")
     private String reductionInterval;
 
-
-
-
-
->>>>>>> 5038a01 (added the shipping date)
 
     public Auction( String title, String desc, int highestBid, String type, String timeRemaining) {
         this.title = title;
@@ -63,8 +53,6 @@ public class Auction {
 
     }
 
-<<<<<<< HEAD
-=======
     public int getReductionAmount() {
         return reductionAmount;
     }
@@ -81,7 +69,6 @@ public class Auction {
         this.reductionInterval = reductionInterval;
     }
 
->>>>>>> 5038a01 (added the shipping date)
     public Long getAid() {
         return aid;
     }

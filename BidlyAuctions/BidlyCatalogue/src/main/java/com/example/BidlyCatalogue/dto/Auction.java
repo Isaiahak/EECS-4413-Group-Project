@@ -59,8 +59,6 @@ public class Auction {
 
     }
 
-<<<<<<< HEAD
-=======
     public int getReductionAmount() {
         return reductionAmount;
     }
@@ -77,7 +75,6 @@ public class Auction {
         this.reductionInterval = reductionInterval;
     }
 
->>>>>>> 5038a01 (added the shipping date)
     public Long getAid() {
         return aid;
     }

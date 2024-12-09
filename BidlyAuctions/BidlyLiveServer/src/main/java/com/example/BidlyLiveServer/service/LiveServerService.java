@@ -1,11 +1,5 @@
 package com.example.BidlyLiveServer.service;
 
-
-
-<<<<<<< HEAD
-import com.example.BidlyLiveServer.dto.Auction;
-=======
->>>>>>> 5038a01 (added the shipping date)
 import com.example.BidlyLiveServer.dto.CatalogueItem;
 import com.example.BidlyLiveServer.dto.LiveUpdate;
 import com.example.BidlyLiveServer.dto.UpdateAuctionRequest;
@@ -16,27 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-<<<<<<< HEAD
-import java.io.IOException;
-=======
->>>>>>> 5038a01 (added the shipping date)
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
 @Service
 public class LiveServerService {
-
-<<<<<<< HEAD
-    @Autowired
-    private ArrayList<LiveUpdate> updates;
-
-    @Autowired ArrayList<LiveUpdate> dutchAuctions;
-    @Autowired
-    private LiveServerWebSocketHandler liveServerWebSocketHandler;
-
-=======
 
     private ArrayList<LiveUpdate> updates = new ArrayList<>();
 
@@ -46,8 +25,6 @@ public class LiveServerService {
     @Autowired
     private LiveServerWebSocketHandler liveServerWebSocketHandler;
 
-
->>>>>>> 5038a01 (added the shipping date)
     @Autowired
     private CatalogueDB catalogueRepo;
 
@@ -58,15 +35,6 @@ public class LiveServerService {
     public void init(){
         List<CatalogueItem> catalogueItems = catalogueRepo.findAll();
         for(CatalogueItem item : catalogueItems){
-<<<<<<< HEAD
-            LiveUpdate timeUpdate = new LiveUpdate();
-            timeUpdate.setTitle(item.getTitle());
-            timeUpdate.setAid(item.getAid());
-            timeUpdate.setTimeRemaining(item.getAuctionTime());
-            timeUpdate.setHighestBid(item.getHighestBid());
-            updates.add(timeUpdate);
-            System.out.println(item.getTitle());
-=======
             if(item.getType().equals("forward")){
                 LiveUpdate timeUpdate = new LiveUpdate();
                 timeUpdate.setTitle(item.getTitle());
@@ -91,21 +59,15 @@ public class LiveServerService {
         }
         for(LiveUpdate u : updates){
             System.out.println(u.getTitle());
->>>>>>> 5038a01 (added the shipping date)
         }
     }
 
     public void updateTime() throws Exception {
-        if(updates.size() == 0){
+        if(updates.isEmpty() || updates == null){
             return ;
         }
         for(LiveUpdate time: updates){
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 5038a01 (added the shipping date)
             StringTokenizer tokenizer = new StringTokenizer(time.getTimeRemaining(), ":Dhms", false);
             int days = Integer.parseInt(tokenizer.nextToken().trim());
             int hours = Integer.parseInt(tokenizer.nextToken().trim());
@@ -143,23 +105,12 @@ public class LiveServerService {
         }
     }
 
-<<<<<<< HEAD
-    public void reducePrice() throws Exception {
-        if(dutchAuctions.size() == 0){
-            return ;
-        }
-        for(LiveUpdate time: dutchAuctions) {
-            if(time.getInitialPrice() / time.getHighestBid() == 2 ){
-                break;
-            }
-            time.setHighestBid((int) (time.getInitialPrice() * 0.9));
-        }
 
-=======
     public void updateDutch() throws Exception {
-        if(dutchUpdates.size() == 0){
+        if(updates.isEmpty() || updates == null){
             return ;
         }
+        
         for(LiveUpdate dutchUpdate: dutchUpdates){
 
             StringTokenizer tokenizer = new StringTokenizer(dutchUpdate.getReductionInterval(), ":Dhms", false);
@@ -202,42 +153,11 @@ public class LiveServerService {
             // Construct the new time string in the format D: h:m:s
             dutchUpdate.setReductionInterval(String.format("%dD:%dh:%dm:%ds", days, hours, minutes, seconds));
         }
->>>>>>> 5038a01 (added the shipping date)
     }
 
     @Scheduled(fixedDelay = 1000)
     public void pushUpdates() throws Exception {
         updateTime();
-<<<<<<< HEAD
-        liveServerWebSocketHandler.sendAuctionUpdate(updates);
-        for(LiveUpdate update: updates){
-            System.out.println(update.getTitle()+update.getTimeRemaining());
-        }
-    }
-
-    @Scheduled(fixedDelay = 60000)
-    public void reduceDutch() throws Exception {
-        reducePrice();
-        liveServerWebSocketHandler.sendAuctionUpdate(updates);
-    }
-
-    public void addAuction(CatalogueItem newAuction) {
-        if (newAuction.getType().compareTo("dutch") == 0) {
-            LiveUpdate newTimeUpdate = new LiveUpdate();
-            newTimeUpdate.setAid(newAuction.getAid());
-            newTimeUpdate.setTitle(newAuction.getTitle());
-            newTimeUpdate.setHighestBid(newAuction.getHighestBid());
-            newTimeUpdate.setInitialPrice(newAuction.getHighestBid());
-            newTimeUpdate.setTimeRemaining("0D:0h:0m:1s");
-            dutchAuctions.add(newTimeUpdate);
-        }
-        else {
-            LiveUpdate newTimeUpdate = new LiveUpdate();
-            newTimeUpdate.setAid(newAuction.getAid());
-            newTimeUpdate.setTitle(newAuction.getTitle());
-            newTimeUpdate.setTimeRemaining(newAuction.getAuctionTime());
-            updates.add(newTimeUpdate);
-=======
         updateDutch();
         liveServerWebSocketHandler.sendAuctionUpdate(updates);
         liveServerWebSocketHandler.sendAuctionUpdate(dutchUpdates);
@@ -271,7 +191,6 @@ public class LiveServerService {
             dutchUpdate.setReductionInterval(newAuction.getReductionInterval());
             dutchUpdates.add(dutchUpdate);
             System.out.println(newAuction.getTitle());
->>>>>>> 5038a01 (added the shipping date)
         }
     }
 
@@ -290,13 +209,6 @@ public class LiveServerService {
         removeAuction(aid);
     }
 
-<<<<<<< HEAD
-    public void removeAuction(Long aid){
-        boolean returnValue = false;
-        for (LiveUpdate update : dutchAuctions){
-            if(update.getAid().equals(aid)){
-                dutchAuctions.remove(update);
-=======
     public boolean removeAuction(Long aid){
         boolean returnValue = false;
         for (LiveUpdate update : updates){
@@ -311,7 +223,6 @@ public class LiveServerService {
         for(LiveUpdate update : dutchUpdates){
             if(update.getAid().equals(aid)){
                 update.setTimeRemaining("CLOSED");
->>>>>>> 5038a01 (added the shipping date)
             }
         }
     }

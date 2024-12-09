@@ -10,20 +10,9 @@ socket.onopen = function() {
 };
 
 socket.onmessage = function(event) {
-<<<<<<< HEAD
-    console.log("WebSocket message received:", event.data);
-
-    // Log WebSocket readyState for each message received
-    console.log("WebSocket readyState:", socket.readyState);
-
     try {
         const message = JSON.parse(event.data);
-        console.log("Parsed message:");
-=======
 
-    try {
-        const message = JSON.parse(event.data);
->>>>>>> 5038a01 (added the shipping date)
 
         switch (message.type) {
             case "init":

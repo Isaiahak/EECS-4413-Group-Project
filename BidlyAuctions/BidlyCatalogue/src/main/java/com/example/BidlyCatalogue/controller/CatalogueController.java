@@ -86,8 +86,6 @@ public class CatalogueController {
         catalogueService.removeAuction(aid);
         return ResponseEntity.ok(true);
     }
-<<<<<<< HEAD
-=======
 
     @PostMapping("/buyout")
     public ResponseEntity<Boolean> processBuyout(@RequestBody UpdateAuctionRequest updateRequest) {
@@ -95,6 +93,4 @@ public class CatalogueController {
         liveServerApi.callLiveServerBuyout(updateRequest);
         return  ResponseEntity.ok(success);
     }
-
->>>>>>> 5038a01 (added the shipping date)
 }
