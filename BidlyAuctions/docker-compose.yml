@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  postgres-userdb:
+    image: postgres:latest
+    container_name: bidly-postgres-userdb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: BidlyUserDB
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data_user_db:/var/lib/postgresql/data
+    networks:
+      - bidly_network
+
+  postgres-auctionsdb:
+    image: postgres:latest
+    container_name: bidly-postgres-auctionsdb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: BidlyAuctionsDB
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data_auctions_db:/var/lib/postgresql/data
+    networks:
+      - bidly_network
+
+volumes:
+  postgres_data_user_db:
+    driver: local
+  postgres_data_auctions_db:
+    driver: local
+
+networks:
+  bidly_network:
+    driver: bridge
