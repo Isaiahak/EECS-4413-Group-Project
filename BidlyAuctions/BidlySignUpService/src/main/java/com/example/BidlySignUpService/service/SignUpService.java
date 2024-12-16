@@ -75,16 +75,16 @@ public class SignUpService {
 
         }
 
-        UserInfo uinf = new UserInfo();
-        uinf.setUid(uc.getUid());
-        uinf.setFirstName(firstName);
-        uinf.setLastName(lastName);
-        uinf.setStreet(street);
-        uinf.setCity(city);
-        uinf.setProvince(province);
-        uinf.setZipcode(zipcode);
+        UserInfo uinfo = new UserInfo();
+        uinfo.setUsername(uc.getUsername());
+        uinfo.setFirstName(firstName);
+        uinfo.setLastName(lastName);
+        uinfo.setStreet(street);
+        uinfo.setCity(city);
+        uinfo.setProvince(province);
+        uinfo.setZipcode(zipcode);
         try {
-            uinfRepo.save(uinf); // Save UserInfo
+            uinfRepo.save(uinfo); // Save UserInfo
             System.out.println("info success");
         } catch (Exception e) {
             System.out.println("info fail");

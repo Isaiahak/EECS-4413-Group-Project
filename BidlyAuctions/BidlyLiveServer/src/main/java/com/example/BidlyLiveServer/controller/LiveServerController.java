@@ -1,6 +1,7 @@
 package com.example.BidlyLiveServer.controller;
 
 
+import com.example.BidlyLiveServer.dto.Auction;
 import com.example.BidlyLiveServer.dto.CatalogueItem;
 import com.example.BidlyLiveServer.dto.UpdateAuctionRequest;
 import com.example.BidlyLiveServer.service.LiveServerService;
@@ -22,4 +23,17 @@ public class LiveServerController {
     public void updateBid(@RequestBody UpdateAuctionRequest updateRequest){
         liveServerService.updateAuctionBid(updateRequest);
     }
+    /* now done internally
+    @PostMapping("/remove-auction")
+    public void removeAuction(@RequestBody Auction auction){
+        liveServerService.removeAuction(auction);
+    }
+    */
+
+    @PostMapping("/buyout")
+    public void buyout(@RequestBody UpdateAuctionRequest updateRequest){
+        liveServerService.auctionBuyout(updateRequest.getAid());
+    }
+
+
 }

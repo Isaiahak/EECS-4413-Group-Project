@@ -13,14 +13,9 @@ socket.onopen = function() {
 };
 
 socket.onmessage = function(event) {
-    console.log("WebSocket message received:", event.data);
-
-    // Log WebSocket readyState for each message received
-    console.log("WebSocket readyState:", socket.readyState);
 
     try {
         const message = JSON.parse(event.data);
-        console.log("Parsed message:");
 
         switch (message.type) {
             case "init":
@@ -79,13 +74,14 @@ function initCatalogue(catalogueItems) {
             itemElement.setAttribute("id", item.aid);
 
             itemElement.innerHTML = `
-                <input type="radio" id="itemSelect" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid})">
+                <input type="radio" id="itemSelect-${item.aid}" name="auctionSelect" value="${item.aid}" onclick="selectAuction(${item.aid},'${item.type}')">
                 <h3>${item.title}</h3>
                 <p id="price-${item.aid}">Price: $${item.highestBid}</p>
-                <p id="timeRemaining-${item.aid}">Time Remaining: ${item.auctionTime}</p>
+                <p id="timeRemaining-${item.aid}">Time Remaining: CLOSED</p>
             `;
 
             auctionListContainer.appendChild(itemElement);
+
         });
     }, 0);  // Run after the current call stack has cleared
 }
@@ -99,7 +95,7 @@ function addCatItem(catalogueItem) {
 
         // You can customize the HTML based on the CatalogueItem fields
         itemElement.innerHTML = `
-            <input type="radio" id="itemSelect" name="auctionSelect" value="${catalogueItem.aid}" onclick="selectAuction(${catalogueItem.aid})">
+            <input type="radio" id="itemSelect-${catalogueItem.aid}" name="auctionSelect" value="${catalogueItem.aid}" onclick="selectAuction(${catalogueItem.aid},${catalogueItem.type})">
             <h3>${catalogueItem.title}</h3>
             <p id="price-${catalogueItem.aid}">Price: $${catalogueItem.highestBid}</p>
             <p id="timeRemaining-${catalogueItem.aid}">Time Remaining: ${catalogueItem.auctionTime}</p>
@@ -117,11 +113,17 @@ function update(updates){
 
         time.textContent = `Time Remaining: ${item.timeRemaining}`;
         bid.textContent = `Price: $${item.highestBid}`;
+
+        if(item.timeRemaining == "CLOSED"){
+            const radioButton = document.getElementById(`itemSelect-${item.aid}`);
+            radioButton.remove();
+        }
     });
 }
 
-function selectAuction(auctionId) {
-    selectedAuctionId = auctionId; // Store the selected auction ID
+function selectAuction(auctionId, type) {
+    selectedAuctionId = auctionId;// Store the selected auction ID
+    selectedType = type;
 
     // Enable the "Bid Now" button only if an auction is selected
     if (selectedAuctionId) {
@@ -132,16 +134,24 @@ function selectAuction(auctionId) {
 
 function placeBid() {
     if (selectedAuctionId) {
-        // Redirect to the auction page, passing the auction ID as a query parameter
-        console.log("redirecting");
-        window.location.href = `/auction?auctionId=${selectedAuctionId}`;
+        if(selectedType=="forward"){
+            // Redirect to the auction page, passing the auction ID as a query parameter
+            console.log("redirecting");
+            window.location.href = `/auction?auctionId=${selectedAuctionId}`;
+        }else if (selectedType == "dutch"){
+            // Redirect to the auction page, passing the auction ID as a query parameter
+            console.log("redirecting");
+            window.location.href = `/dutch-auction?auctionId=${selectedAuctionId}`;
+        }
+
     } else {
         alert("Please select an auction to place a bid.");
     }
 }
 
-function closed(aid){
-    alert("Auction" + aid + "Has Ended")
+function closed(auction){
+    alert("Auction" + auction.aid + "Has Ended");
+    window.location.href = `${auction.redirectUrl}?auctionId=${aid}`;
 }
 
 // Function to filter auction items based on search input

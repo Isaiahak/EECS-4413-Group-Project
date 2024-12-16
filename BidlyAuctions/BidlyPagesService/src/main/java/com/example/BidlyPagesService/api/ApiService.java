@@ -1,8 +1,6 @@
 package com.example.BidlyPagesService.api;
-import com.example.BidlyPagesService.dto.Auction;
-import com.example.BidlyPagesService.dto.CatalogueItem;
-import com.example.BidlyPagesService.dto.LoginRequestDTO;
-import com.example.BidlyPagesService.dto.UpdateAuctionRequest;
+
+import com.example.BidlyPagesService.dto.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -91,11 +89,25 @@ public class ApiService {
         return response.getBody();
     }
 
-    public boolean callCataloguePlaceBid(Long aid, int bidAmount){
+    public CatalogueItem callGetACatalogueItem(long itemid){
+        String url = "http://localhost:8084/api/catalogue/fetch-catalogueitem";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<Long> requestEntity = new HttpEntity<>(itemid, headers);
+        ResponseEntity<CatalogueItem> response = restTemplate.postForEntity(url, requestEntity, CatalogueItem.class);
+
+        return response.getBody();
+
+    }
+
+
+    public boolean callCataloguePlaceBid(Long aid, int bidAmount, String uid){
         System.out.println(aid);
         UpdateAuctionRequest updateRequest = new UpdateAuctionRequest();
         updateRequest.setAid(aid);
         updateRequest.setBid(bidAmount);
+        updateRequest.setUid(uid);
+        System.out.println("Resst Call "+updateRequest.getUid());
         String url = "http://localhost:8084/api/catalogue/place-bid";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -112,6 +124,41 @@ public class ApiService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> requestEntity = new HttpEntity<>(username, headers);
         ResponseEntity<Long> response = restTemplate.postForEntity(url, requestEntity, Long.class);
+
+        return response.getBody();
+    }
+
+    public boolean sendPaymentInfo(PaymentInfo paymentInfo){
+        String url = "http://localhost:8084/api/catalogue/process";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<PaymentInfo> requestEntity = new HttpEntity<>(paymentInfo, headers);
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
+
+        return response.getBody();
+    }
+
+    public UserInfo fetchUserInfo(String userid){
+        String url = "http://localhost:8081/api/fetch-uinfo";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> requestEntity = new HttpEntity<>(userid, headers);
+        ResponseEntity<UserInfo> response = restTemplate.postForEntity(url, requestEntity, UserInfo.class);
+
+        return response.getBody();
+    }
+
+    public boolean callCatalogueBuyout(Long aid, String uid) {
+        String url = "http://localhost:8084/api/catalogue/buyout";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        UpdateAuctionRequest updateRequest = new UpdateAuctionRequest();
+        updateRequest.setAid(aid);
+        updateRequest.setUid(uid);
+
+        HttpEntity<UpdateAuctionRequest> requestEntity = new HttpEntity<>(updateRequest, headers);
+        ResponseEntity<Boolean> response = restTemplate.postForEntity(url, requestEntity, Boolean.class);
 
         return response.getBody();
     }

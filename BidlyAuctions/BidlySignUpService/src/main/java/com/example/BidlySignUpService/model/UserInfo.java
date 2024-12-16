@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "userinfo")
 public class UserInfo {
     @Id
-    @Column(name = "uid")
-    private Long uid;
+    @Column(name = "username")
+    private String username;
 
     private String firstName;
     private String lastName;
@@ -16,8 +16,8 @@ public class UserInfo {
     private String province;
     private String zipcode;
 
-    public Long getUid() {
-        return uid;
+    public String getUsername() {
+        return username;
     }
 
     public String getFirstName() {
@@ -45,8 +45,8 @@ public class UserInfo {
     }
 
 
-    public void setUid(Long uid) {
-        this.uid = uid;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setFirstName(String firstName) {

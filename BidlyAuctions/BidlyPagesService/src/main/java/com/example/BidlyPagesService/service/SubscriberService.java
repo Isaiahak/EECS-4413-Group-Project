@@ -41,7 +41,7 @@ public class SubscriberService {
             System.out.println(users.get(userSession.getUsername()));
         }
     }
-    public void subscribe (Long aid, String username){
+    public void subscribe(Long aid, String username){
         if(subscriptions.containsKey(aid)){
             if(!subscriptions.get(aid).contains(username)){
                 ArrayList<String> auctionSubs = subscriptions.get(aid);
@@ -60,12 +60,17 @@ public class SubscriberService {
         ArrayList<String> auctionSubs = subscriptions.get(aid);
 
         if(auctionSubs == null){
-            return null;
+            return sessions;
         }
         for(String subscriber : auctionSubs){
+
             sessions.add(users.get(subscriber));
         }
 
          return sessions;
+    }
+
+    public void removeSubscribers(long aid){
+        subscriptions.remove(aid);
     }
 }

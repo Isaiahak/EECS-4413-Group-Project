@@ -19,7 +19,7 @@ public class Auction {
     @Column(name = "\"desc\"")
     private String desc;
 
-    @Column(name = "currentHighestBidder")
+    @Column(name = "currentHighestBid")
     private int highestBid;
 
     @Column(name = "type")
@@ -27,6 +27,22 @@ public class Auction {
 
     @Column(name = "time_limit")
     private String timeRemaining;
+
+    @Column(name = "itemID")
+    private long itemid;
+
+    @Column(name = "highestBidder")
+    private String userid;
+
+    @Column(name = "reductionAmount")
+    private int reductionAmount;
+
+    @Column(name = "reductionInterval")
+    private String reductionInterval;
+
+
+
+
 
 
     public Auction( String title, String desc, int highestBid, String type, String timeRemaining) {
@@ -38,6 +54,22 @@ public class Auction {
     }
     public Auction(){
 
+    }
+
+    public int getReductionAmount() {
+        return reductionAmount;
+    }
+
+    public void setReductionAmount(int reductionAmount) {
+        this.reductionAmount = reductionAmount;
+    }
+
+    public String getReductionInterval() {
+        return reductionInterval;
+    }
+
+    public void setReductionInterval(String reductionInterval) {
+        this.reductionInterval = reductionInterval;
     }
 
     public Long getAid() {
@@ -86,5 +118,21 @@ public class Auction {
 
     public void setTimeRemaining(String timeRemaining) {
         this.timeRemaining = timeRemaining;
+    }
+
+    public long getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(long itemid) {
+        this.itemid = itemid;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
     }
 }

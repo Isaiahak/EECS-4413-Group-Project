@@ -17,7 +17,16 @@ public class AuctionService {
         auctionList.addAll(auctions);
 
     }
-
+    /*
+    public boolean removeAuction(Long aid){
+        Auction auction = auctionRepo.findById(aid);
+        if(auction!= null){
+            auctionRepo.delete(auction);
+            return true;
+        }
+        return false;
+    }
+    */
     public List<Auction> getAllAuctions(){
         return auctionList;
     }

@@ -8,7 +8,7 @@
 <body>
 
 <h1>Create Auction</h1>
-<form action="/submit-auction" method="POST">
+<form action="/add-dutch" method="POST">
   <label for="title">Title:</label>
   <input type="text" id="title" name="title" required><br><br>
 
@@ -17,7 +17,7 @@
 
   <label for="startingPrice">Starting Price (integer):</label>
   <input type="number" id="startingPrice" name="startingPrice" required min="1" step="1"><br><br>
-  <input type="hidden" id="type" value="dutch">
+  <input type="hidden" id="type" name="type" value="dutch">
   <label for="timeRemaining">Price Reduction Interval:</label>
   <div id = "timeRemaining">
     <label for="days">Days</label>

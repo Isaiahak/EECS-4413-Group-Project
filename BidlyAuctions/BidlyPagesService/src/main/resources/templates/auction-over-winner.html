@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Auction Winner</title>
+    <link rel="stylesheet" th:href="@{/css/auctionWinner.css}"/>
+</head>
+<body>
+<div id="header">
+    <div class="logo-container">
+        <svg class="logo" viewBox="0 0 100 100">
+            <!-- Circle background -->
+            <circle cx="50" cy="50" r="45" fill="#2e7d32"/>
+
+            <!-- Gavel head -->
+            <rect x="30" y="25" width="40" height="20" rx="5" fill="white"/>
+
+            <!-- Gavel handle -->
+            <rect x="45" y="45" width="10" height="35" rx="2" fill="white"/>
+
+            <!-- Sound waves / bid indication -->
+            <path d="M 65,15 Q 75,25 75,35" stroke="white" fill="none" stroke-width="3"/>
+            <path d="M 70,10 Q 85,25 85,40" stroke="white" fill="none" stroke-width="3"/>
+
+            <!-- Dollar sign -->
+            <text x="25" y="65" fill="white" font-size="20" font-weight="bold">$</text>
+        </svg>
+        <span class="brand-name">BidlyAuctions</span>
+    </div>
+    <h1>You Won This Auction!</h1>
+    <div id="username" th:text="${uid}"></div>
+</div>
+
+<div class="auction-result-container">
+    <h2>Auction Details</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Item Description</td>
+            <td th:text="${ItemDescription}"></td>
+        </tr>
+        <tr>
+            <td>Shipping Price</td>
+            <td th:text="${ShippingPrice}"></td>
+        </tr>
+        <tr>
+            <td>Expedited Shipping</td>
+            <td th:text="${ExpeditedShipping}"></td>
+        </tr>
+        <tr>
+            <td>Winning Price</td>
+            <td th:text="${WinningPrice}"></td>
+        </tr>
+        <tr>
+            <td>Highest Bidder</td>
+            <td th:text="${HighestBidder}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Shipping Options</h2>
+    <form action="/auction-over-winner" method="post" class="shipping-form">
+        <div class="shipping-option">
+            <input type="radio" name="shipping" id="standard-shipping" value="standard" checked>
+            <label for="standard-shipping">Standard Shipping (5-7 days)</label>
+            <input type="radio" name="shipping" id="expedited-shipping" value="expedited" checked>
+            <label for="standard-shipping">Expedited Shipping (2-4 days)</label>
+        </div>
+
+        <input type="hidden" name="ExpeditedShipping" th:value="${ExpeditedShipping}">
+        <input type="hidden" name="ShippingPrice" th:value="${ShippingPrice}">
+        <input type="hidden" name="auctionId" th:value="${auction.aid}">
+        <input type="hidden" name="HighestBidder" th:value="${HighestBidder}">
+        <input type="hidden" name="WinningPrice" th:value="${WinningPrice}">
+        <input type="hidden" name="ItemDescription" th:value="${ItemDescription}">
+
+        <button type="submit">Pay Now</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,12 +1,11 @@
 package com.example.BidlySignUpService.controller;
 import com.example.BidlySignUpService.dto.LoginRequestDTO;
+import com.example.BidlySignUpService.model.UserInfo;
 import com.example.BidlySignUpService.service.LoginService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
 
 //REST Recieiver for login services
 @RestController
@@ -27,8 +26,18 @@ public class LoginController {
     }
 
     @PostMapping("/fetch-uid")
-    public ResponseEntity<Long> fetchUid(@RequestBody String username){
+    public ResponseEntity<String>fetchUid(@RequestBody String username){
         return ResponseEntity.ok(loginService.fetchUid(username));
+    }
+
+    @PostMapping("/fetch-uinfo")
+    public ResponseEntity<UserInfo> fetchUserInfo(@RequestBody String username){
+        UserInfo userInfo = loginService.fetchUserInfo(username);
+        if(userInfo!= null){
+            return ResponseEntity.ok(userInfo);
+        } else{
+            return ResponseEntity.ok(null);
+        }
     }
 
 }
