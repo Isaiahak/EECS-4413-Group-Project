@@ -23,7 +23,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: BidlyAuctionsDB
     ports:
-      - "5434:5432"
+      - "5432:5432"
     volumes:
       - postgres_data_auctions_db:/var/lib/postgresql/data
     networks:
