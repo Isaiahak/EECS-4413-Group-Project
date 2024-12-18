@@ -1,40 +1,56 @@
-version: '3.8'
-
 services:
-  postgres-userdb:
-    image: postgres:latest
-    container_name: bidly-postgres-userdb
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: BidlyUserDB
+  bidly-catalogue-service:
+    image: bidly-catalogue-image
+    container_name: bidly-catalogue-container
     ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data_user_db:/var/lib/postgresql/data
+      - "8084:8084"
+    networks:
+      - bidly_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/BidlyAuctionsDB
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+
+  bidly-sign-up-service-service:
+    image: bidly-sign-up-service-image
+    container_name: bidly-sign-up-service-container
+    ports:
+      - "8081:8081"
+    networks:
+      - bidly_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/BidlyUserDB
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
+
+  bidly-security-service:
+    image: bidly-security-image
+    container_name: bidly-security-container
+    ports:
+      - "8083:8083"
     networks:
       - bidly_network
 
-  postgres-auctionsdb:
-    image: postgres:latest
-    container_name: bidly-postgres-auctionsdb
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: BidlyAuctionsDB
+  bidly-live-server-service:
+    image: bidly-live-server-image
+    container_name: bidly-live-server-container
     ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data_auctions_db:/var/lib/postgresql/data
+      - "8086:8086"
     networks:
       - bidly_network
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://host.docker.internal:5432/BidlyAuctionsDB
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: password
 
-volumes:
-  postgres_data_user_db:
-    driver: local
-  postgres_data_auctions_db:
-    driver: local
-
+  bidly-pages-service-service:
+    image: bidly-pages-service-image
+    container_name: bidly-pages-service-container
+    ports:
+      - "8080:8080"
+    networks:
+      - bidly_network
+  
 networks:
   bidly_network:
     driver: bridge
